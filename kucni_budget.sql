@@ -1,4 +1,4 @@
-#c:\xampp\mysql\bin\mysql -uroot --default_character_set=utf8 <C:\Users\xyz\Documents\GitHub\ERA_sql\kucni_budget.sql
+#c:\xampp\mysql\bin\mysql -uroot --default_character_set=utf8 <C:\Users\xyz\Documents\GitHub\Java_zavrsni\kucni_budget.sql
 
 drop database if exists kucni_budget;
 create database kucni_budget;
@@ -56,3 +56,10 @@ insert into kategorija(naziv) values
 
 insert into dnevna_potrosnja(korisnik,kategorija,datum,potrosnja) values
 (4,1,'928-03-06',3000000),(2,3,'1134-04-12',12000),(8,2,'1342-06-07',20);
+
+#POPIS_POTROŠNJE_KATEGORIJA
+#select a.prezime_obitelji,concat(b.ime,' ',b.prezime), d.naziv, c.datum, c.potrosnja
+#from obitelj a
+#inner join korisnik b on a.id=b.obitelj
+#inner join dnevna_potrosnja c on c.korisnik=b.id
+#inner join kategorija d on d.id=c.kategorija;
