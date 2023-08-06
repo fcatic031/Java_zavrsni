@@ -3,6 +3,7 @@ package zavrsni;
 import java.util.ArrayList;
 import java.util.List;
 
+import zavrsni.model.Korisnik;
 import zavrsni.model.Obitelj;
 
 public class ObradaObitelj {
@@ -71,7 +72,16 @@ public class ObradaObitelj {
 		pregledObitelj();
 		int index = Pomocno.unosBroja("Unesi broj obitelji koji zelis promjeniti ", "Izmedju "+1+" i "+ obitelji.size(), 1, obitelji.size());
 		obitelji.remove(index-1);
-		
+	}
+	
+
+	public int[] popisId() {
+		int[] sifre = new int[obitelji.size()];
+		for (int i=0; i<obitelji.size(); i++) {
+			Obitelj o = obitelji.get(i);
+			sifre[i] = o.getId();
+		}
+		return sifre;
 	}
 
 
@@ -79,16 +89,21 @@ public class ObradaObitelj {
 		pregledObitelj();
 		int index = Pomocno.unosBroja("Unesi broj obitelji koji zelis promjeniti ", "Izmedju "+1+" i "+ obitelji.size(), 1, obitelji.size());
 		Obitelj o = obitelji.get(index-1);
-		o.setId(Pomocno.unosBroja("Unesi novi id koji zelis promjeniti ", "Pozitivan broj", 1, Integer.MAX_VALUE));
-		o.setObiteljskoPrezime(Pomocno.unosStringa("Unesi novo obiteljsko ime ", "Greska"));
-	
+		int noviId=0;
+		int[] sifre = popisId();
+		Pomocno.unosIdPetlja(noviId,sifre);
 		
+		o.setId(noviId);
+		o.setObiteljskoPrezime(Pomocno.unosStringa("Unesi novo obiteljsko ime ", "Greska"));
 	}
 
 
 	private void unosObitelj() {
 		Obitelj o = new Obitelj();
-		o.setId(Pomocno.unosBroja("Unesi novi id ", "Pozitivan broj", 1, Integer.MAX_VALUE));
+		int noviId=0;
+		int[] sifre = popisId();
+		Pomocno.unosIdPetlja(noviId,sifre);
+		o.setId(noviId);
 		o.setObiteljskoPrezime(Pomocno.unosStringa("Unesi novo obiteljsko ime ", "Greska"));
 		obitelji.add(o);
 	}
@@ -101,8 +116,6 @@ public class ObradaObitelj {
 		for (Obitelj o: obitelji) {
 			System.out.println(b++ + ") "+o.getObiteljskoPrezime());
 		}
-		
 		System.out.println("+++++++++++++++++");
-		
 	}
 }

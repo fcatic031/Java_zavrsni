@@ -16,12 +16,6 @@ public class Korisnik extends Entitet{
 		super();
 	}
 	
-	public Korisnik(int id, String ime, String prezime) {
-		super(id);
-		this.ime=ime;
-		this.prezime=prezime;
-	}
-	
 	public Korisnik(int id, String ime, String prezime, String email, Date datumRodjenja, boolean spol,
 			Obitelj obitelj) {
 		super(id);
