@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Pomocno {
 	
 	public static Scanner ulaz;
-	private static final String FORMAT_DATE="dd. MM. yyyy";
+	private static final String FORMAT_DATE="dd.MM.yyyy";
 	private static SimpleDateFormat df= new SimpleDateFormat(FORMAT_DATE);
 	
 	public static int unosBroja(String poruka,String greska,int min,int max) {

@@ -36,7 +36,7 @@ public class ObradaDnevnaPotrosnja {
 	private void odabirStavke() {
 		switch (Pomocno.unosBroja("Unesi broj stavke ", "Između 1 i 5", 1, 5)) {
 		case 1:
-			pregledDnevnihPotrsnja();
+			pregledDnevnihPotrosnji();
 			prikaziIzbornik();
 			break;
 		case 2:
@@ -44,11 +44,11 @@ public class ObradaDnevnaPotrosnja {
 			prikaziIzbornik();
 			break;
 		case 3:
-			// promjenaKorisnik();
+			promjenaDnevnaPotrosnja();
 			prikaziIzbornik();
 			break;
 		case 4:
-			// brisanjeKorisnik();
+			brisanjeDnevnaPotrosnja();
 			prikaziIzbornik();
 			break;
 		case 5:
@@ -59,7 +59,7 @@ public class ObradaDnevnaPotrosnja {
 
 	}
 
-	private void pregledDnevnihPotrsnja() {
+	private void pregledDnevnihPotrosnji() {
 		int b = 1;
 		System.out.println("+++++++++++++++++");
 		System.out.println("DNEVNA++POTROSNJA");
@@ -93,5 +93,23 @@ public class ObradaDnevnaPotrosnja {
 		izbornik.getObradaKorisnik().pregledKorisnik();
 		int index=Pomocno.unosBroja("Unesi broj korisnika iz tablice ", "Pogreska", 1, izbornik.getObradaKorisnik().getKorisnici().size());
 		return izbornik.getObradaKorisnik().getKorisnici().get(index-1);
+	}
+	
+	private void promjenaDnevnaPotrosnja() {
+		pregledDnevnihPotrosnji();
+		int index = Pomocno.unosBroja("Unesi broj potrosnje koju zelite promjeniti", "Pogreska ", 1, dnevnePotrosnje.size());
+		DnevnaPotrosnja d = dnevnePotrosnje.get(index-1);
+		d.setId(Pomocno.unosBroja("Unesi id koji zelis za zeljenu potrosnju ", "Pogreska! Mora biti pozitivan broj", 1, Integer.MAX_VALUE));
+		d.setKorisnik(postaviKorisnika());
+		d.setKategorija(postaviKategoriju());
+		d.setDatum(Pomocno.unosDatuma("Unesi datum "));
+		d.setPotrosnja(Pomocno.unosFloat("Unesi potroseni iznos ", "Pogreska "));
+		
+	}
+	
+	private void brisanjeDnevnaPotrosnja() {
+		pregledDnevnihPotrosnji();
+		int index = Pomocno.unosBroja("Unesi broj potrosnje koju zelite obrisati ", "Pogreska ", 1, dnevnePotrosnje.size());
+		dnevnePotrosnje.remove(index-1);
 	}
 }

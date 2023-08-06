@@ -58,7 +58,7 @@ public class ObradaObitelj {
 			prikaziIzbornik();
 			break;
 		case 4:
-			brisanjeKategorije();
+			brisanjeObitelji();
 			prikaziIzbornik();
 			break;
 		case 5:
@@ -67,11 +67,10 @@ public class ObradaObitelj {
 		}
 	}
 
-	private void brisanjeKategorije() {
+	private void brisanjeObitelji() {
 		pregledObitelj();
 		int index = Pomocno.unosBroja("Unesi broj obitelji koji zelis promjeniti ", "Izmedju "+1+" i "+ obitelji.size(), 1, obitelji.size());
-		Obitelj o = obitelji.get(index-1);
-		obitelji.remove(o);
+		obitelji.remove(index-1);
 		
 	}
 
