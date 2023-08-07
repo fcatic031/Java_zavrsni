@@ -101,7 +101,7 @@ public class ObradaKorisnik {
 		int index=Pomocno.unosBroja("Unesi broj obitelji koji zelis ", "Pogreska", 1, izbornik.getObradaObitelj().getObitelji().size());
 		return izbornik.getObradaObitelj().getObitelji().get(index-1);
 	}
-	
+
 
 
 	public void pregledKorisnik() {
@@ -141,7 +141,7 @@ public class ObradaKorisnik {
 		if (obitelj) {
 			System.out.print("Obitelj|");
 		}
-		
+		System.out.println();
 		for (Korisnik k: korisnici) {
 			if (id) {
 				System.out.print(k.getId());
@@ -209,7 +209,6 @@ public class ObradaKorisnik {
 		int index = Pomocno.unosBroja("Unesite broj korisnika iz tablice kojeg zelite obrisati ", "Broj mora biti cijelobrojan iz tablice ", 1, korisnici.size());
 		korisnici.remove(index-1);
 	}
-	
 	
 	
 }

@@ -10,7 +10,7 @@ public class Izbornik {
 	private ObradaDnevnaPotrosnja obradaDnevnaPotrosnja;
 
 	public Izbornik() {
-		obradaObitelj = new ObradaObitelj();
+		obradaObitelj = new ObradaObitelj(this);
 		obradaKategorija= new ObradaKategorija();
 		obradaKorisnik= new ObradaKorisnik(this);
 		obradaDnevnaPotrosnja= new ObradaDnevnaPotrosnja(this);

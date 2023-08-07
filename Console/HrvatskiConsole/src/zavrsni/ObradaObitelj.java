@@ -9,18 +9,21 @@ import zavrsni.model.Obitelj;
 public class ObradaObitelj {
 	
 	private List<Obitelj> obitelji;
-	
+	private Izbornik izbornik;
 	
 	
 	public List<Obitelj> getObitelji() {
 		return obitelji;
 	}
 
-
+	public ObradaObitelj(Izbornik izbornik) {
+		this();
+		this.izbornik=izbornik;
+	}
+	
 	public ObradaObitelj() {
 		obitelji= new ArrayList<Obitelj>();
 		testniPodaci();
-		
 	}
 	
 	private void testniPodaci() {
@@ -43,11 +46,11 @@ public class ObradaObitelj {
 		System.out.println("5)Izlaz");
 		odabirStavke();
 	}
-
+	
 	private void odabirStavke() {
 		switch(Pomocno.unosBroja("Unesi broj stavke ", "Mora biti izmedju 1 i 5", 1, 5)) {
 		case 1:
-			pregledObitelj();
+			pregledObiteljOpcija();
 			prikaziIzbornik();
 			break;
 		case 2:
@@ -117,5 +120,28 @@ public class ObradaObitelj {
 			System.out.println(b++ + ") "+o.getObiteljskoPrezime());
 		}
 		System.out.println("+++++++++++++++++");
+	}
+	
+	public void pregledObiteljOpcija() {
+		boolean unos = Pomocno.unosBoolean("Zelite li vidjeti sve clanove obitelji ", "Pogreska! da ili ne!", "da", "ne");
+		if (unos) {
+			System.out.println("+++++++++++++++++");
+			System.out.println("++++OBITELJI+++++");
+			System.out.println("+++++++++++++++++");
+			for (Obitelj o: obitelji) {
+				System.out.print(o.getObiteljskoPrezime()+": ");
+				for (Korisnik k:izbornik.getObradaKorisnik().getKorisnici()) {
+					if (k.getObitelj()==o) {
+						System.out.print(k.getIme()+" "+k.getPrezime()+", ");
+					}
+				}
+				System.out.println();
+			}
+			System.out.println("+++++++++++++++++");
+		}else {
+			pregledObitelj();
+		}
+		
+		
 	}
 }

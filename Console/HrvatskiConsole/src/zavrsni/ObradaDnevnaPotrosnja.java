@@ -1,6 +1,7 @@
 package zavrsni;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import zavrsni.model.DnevnaPotrosnja;
@@ -15,12 +16,27 @@ public class ObradaDnevnaPotrosnja {
 	public ObradaDnevnaPotrosnja(Izbornik izbornik) {
 		this();
 		this.izbornik=izbornik;
+		testniPodaci();
 	}
 
 	public ObradaDnevnaPotrosnja() {
 		dnevnePotrosnje = new ArrayList<DnevnaPotrosnja>();
 	}
 	
+	private void testniPodaci() {
+		dnevnePotrosnje.add(new DnevnaPotrosnja(1,izbornik.getObradaKorisnik().getKorisnici().get(1),izbornik.getObradaKategorija().getKategorije().get(1),new Date(),5.55f));
+		dnevnePotrosnje.add(new DnevnaPotrosnja(2,izbornik.getObradaKorisnik().getKorisnici().get(1),izbornik.getObradaKategorija().getKategorije().get(2),new Date(),50.2f));
+		dnevnePotrosnje.add(new DnevnaPotrosnja(3,izbornik.getObradaKorisnik().getKorisnici().get(1),izbornik.getObradaKategorija().getKategorije().get(2),new Date(),32.40f));
+		dnevnePotrosnje.add(new DnevnaPotrosnja(4,izbornik.getObradaKorisnik().getKorisnici().get(1),izbornik.getObradaKategorija().getKategorije().get(2),new Date(),6.30f));
+		dnevnePotrosnje.add(new DnevnaPotrosnja(5,izbornik.getObradaKorisnik().getKorisnici().get(1),izbornik.getObradaKategorija().getKategorije().get(2),new Date(),12.3f));
+		dnevnePotrosnje.add(new DnevnaPotrosnja(6,izbornik.getObradaKorisnik().getKorisnici().get(1),izbornik.getObradaKategorija().getKategorije().get(1),new Date(),6.60f));
+		dnevnePotrosnje.add(new DnevnaPotrosnja(7,izbornik.getObradaKorisnik().getKorisnici().get(2),izbornik.getObradaKategorija().getKategorije().get(1),new Date(),12.90f));
+		dnevnePotrosnje.add(new DnevnaPotrosnja(8,izbornik.getObradaKorisnik().getKorisnici().get(2),izbornik.getObradaKategorija().getKategorije().get(3),new Date(),5.10f));
+		dnevnePotrosnje.add(new DnevnaPotrosnja(9,izbornik.getObradaKorisnik().getKorisnici().get(2),izbornik.getObradaKategorija().getKategorije().get(2),new Date(),20.00f));
+		dnevnePotrosnje.add(new DnevnaPotrosnja(10,izbornik.getObradaKorisnik().getKorisnici().get(2),izbornik.getObradaKategorija().getKategorije().get(2),new Date(),3.60f));
+		dnevnePotrosnje.add(new DnevnaPotrosnja(11,izbornik.getObradaKorisnik().getKorisnici().get(2),izbornik.getObradaKategorija().getKategorije().get(1),new Date(),17.20f));
+		
+	}
 	
 
 	public void prikaziIzbornik() {
@@ -51,6 +67,10 @@ public class ObradaDnevnaPotrosnja {
 			brisanjeDnevnaPotrosnja();
 			prikaziIzbornik();
 			break;
+		case 6:
+			System.out.println("Statistika");
+			prikaziIzbornik();
+			break;
 		case 5:
 			System.out.println("");
 			break;
@@ -65,11 +85,11 @@ public class ObradaDnevnaPotrosnja {
 		System.out.println("DNEVNA++POTROSNJA");
 		System.out.println("+++++++++++++++++");
 		for (DnevnaPotrosnja d : dnevnePotrosnje) {
-			System.out.println(b++ + ") " + d.getKorisnik().getIme() + " " + d.getKorisnik().getPrezime() + " "
+			System.out.println(b++  + ") "+ d.getDatum() +"|"+ d.getKorisnik().getIme() + " " + d.getKorisnik().getPrezime() + " "
 					+ d.getKategorija().getNaziv() + " " + d.getPotrosnja());
 			
 		}
-
+		
 		System.out.println("+++++++++++++++++");
 
 	}
@@ -81,6 +101,7 @@ public class ObradaDnevnaPotrosnja {
 		d.setKategorija(postaviKategoriju());
 		d.setDatum(Pomocno.unosDatuma("Unesi dan "));
 		d.setPotrosnja(Pomocno.unosFloat("Unesi potrosen iznos ", "Pogreska"));
+		dnevnePotrosnje.add(d);
 	}
 
 	private Kategorija postaviKategoriju() {
