@@ -23,6 +23,10 @@ public class ObradaDnevnaPotrosnja {
 		dnevnePotrosnje = new ArrayList<DnevnaPotrosnja>();
 	}
 	
+	public List<DnevnaPotrosnja> getDnevnePotrosnje(){
+		return dnevnePotrosnje;
+	}
+	
 	private void testniPodaci() {
 		dnevnePotrosnje.add(new DnevnaPotrosnja(1,izbornik.getObradaKorisnik().getKorisnici().get(1),izbornik.getObradaKategorija().getKategorije().get(1),new Date(),5.55f));
 		dnevnePotrosnje.add(new DnevnaPotrosnja(2,izbornik.getObradaKorisnik().getKorisnici().get(1),izbornik.getObradaKategorija().getKategorije().get(2),new Date(),50.2f));
@@ -68,7 +72,7 @@ public class ObradaDnevnaPotrosnja {
 			prikaziIzbornik();
 			break;
 		case 6:
-			System.out.println("Statistika");
+			//statistikaPotrosnja();
 			prikaziIzbornik();
 			break;
 		case 5:
@@ -120,12 +124,29 @@ public class ObradaDnevnaPotrosnja {
 		pregledDnevnihPotrosnji();
 		int index = Pomocno.unosBroja("Unesi broj potrosnje koju zelite promjeniti", "Pogreska ", 1, dnevnePotrosnje.size());
 		DnevnaPotrosnja d = dnevnePotrosnje.get(index-1);
+		DnevnaPotrosnja d2= new DnevnaPotrosnja();
+		d2.setId(d.getId());
+		d2.setKorisnik(d.getKorisnik());
+		d2.setKategorija(d.getKategorija());
+		d2.setDatum(d.getDatum());
+		d2.setPotrosnja(d.getPotrosnja());
 		d.setId(Pomocno.unosBroja("Unesi id koji zelis za zeljenu potrosnju ", "Pogreska! Mora biti pozitivan broj", 1, Integer.MAX_VALUE));
 		d.setKorisnik(postaviKorisnika());
 		d.setKategorija(postaviKategoriju());
 		d.setDatum(Pomocno.unosDatuma("Unesi datum "));
 		d.setPotrosnja(Pomocno.unosFloat("Unesi potroseni iznos ", "Pogreska "));
-		
+		boolean potvrda = Pomocno.unosBoolean("Zelite li dalje zadrzati promjene? ", "Pogreska! da ili ne?", "da", "ne");
+		if (potvrda==false) {
+			d.setId(d2.getId());
+			d.setKorisnik(d2.getKorisnik());
+			d.setKategorija(d2.getKategorija());
+			d.setDatum(d2.getDatum());
+			d.setPotrosnja(d2.getPotrosnja());
+			boolean potvrda2 = Pomocno.unosBoolean("Zelite li dalje napraviti neku promjenu? ", "Pogreska! da ili ne?", "da", "ne");
+			if (potvrda2) {
+				promjenaDnevnaPotrosnja();
+			}
+		}
 	}
 	
 	private void brisanjeDnevnaPotrosnja() {
@@ -133,4 +154,5 @@ public class ObradaDnevnaPotrosnja {
 		int index = Pomocno.unosBroja("Unesi broj potrosnje koju zelite obrisati ", "Pogreska ", 1, dnevnePotrosnje.size());
 		dnevnePotrosnje.remove(index-1);
 	}
+	
 }

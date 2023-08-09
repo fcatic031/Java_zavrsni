@@ -3,6 +3,8 @@ package zavrsni;
 import java.util.ArrayList;
 import java.util.List;
 
+import zavrsni.model.DnevnaPotrosnja;
+import zavrsni.model.Kategorija;
 import zavrsni.model.Korisnik;
 import zavrsni.model.Obitelj;
 
@@ -43,12 +45,13 @@ public class ObradaObitelj {
 		System.out.println("2)Unos");
 		System.out.println("3)Promjena");
 		System.out.println("4)Obrisati");
-		System.out.println("5)Izlaz");
+		System.out.println("5)Statistika");
+		System.out.println("6)Nazad");
 		odabirStavke();
 	}
 	
 	private void odabirStavke() {
-		switch(Pomocno.unosBroja("Unesi broj stavke ", "Mora biti izmedju 1 i 5", 1, 5)) {
+		switch(Pomocno.unosBroja("Unesi broj stavke ", "Mora biti izmedju 1 i 5", 1, 6)) {
 		case 1:
 			pregledObiteljOpcija();
 			prikaziIzbornik();
@@ -65,8 +68,12 @@ public class ObradaObitelj {
 			brisanjeObitelji();
 			prikaziIzbornik();
 			break;
+		case 6:
+			System.out.println("===+++++++++++++++===");
+			break;
 		case 5:
-			System.out.println("GOODBYE");
+			statistikaObitelj();
+			prikaziIzbornik();
 			break;
 		}
 	}
@@ -91,13 +98,27 @@ public class ObradaObitelj {
 	private void promjenaObitelji() {
 		pregledObitelj();
 		int index = Pomocno.unosBroja("Unesi broj obitelji koji zelis promjeniti ", "Izmedju "+1+" i "+ obitelji.size(), 1, obitelji.size());
+		//Obitelj o = new Obitelj();
 		Obitelj o = obitelji.get(index-1);
+		Obitelj o2= new Obitelj();
+		o2.setId(o.getId());
+		o2.setObiteljskoPrezime(o.getObiteljskoPrezime());
 		int noviId=0;
 		int[] sifre = popisId();
 		Pomocno.unosIdPetlja(noviId,sifre);
 		
 		o.setId(noviId);
 		o.setObiteljskoPrezime(Pomocno.unosStringa("Unesi novo obiteljsko ime ", "Greska"));
+		boolean potvrda = Pomocno.unosBoolean("Zelite li dalje zadrzati promjene? ", "Pogreska! da ili ne?", "da", "ne");
+		if (potvrda==false) {
+			o.setId(o2.getId());
+			o.setObiteljskoPrezime(o2.getObiteljskoPrezime());
+			boolean potvrda2 = Pomocno.unosBoolean("Zelite li dalje napraviti neku promjenu? ", "Pogreska! da ili ne?", "da", "ne");
+			if (potvrda2) {
+				promjenaObitelji();
+			}
+		}
+		
 	}
 
 
@@ -141,7 +162,30 @@ public class ObradaObitelj {
 		}else {
 			pregledObitelj();
 		}
+	}
+	
+	private void statistikaObitelj() {
+		System.out.println("===OSNOVNA STATISTIKA===");
+		float korisnik_obitelj = izbornik.getObradaKorisnik().getKorisnici().size()/obitelji.size();
+		System.out.println("Prosječan broj clanova u obitelji: "+korisnik_obitelj);
 		
+		System.out.println("========================");
+		pregledObitelj();
+		int index = Pomocno.unosBroja("Odaberi obitelj o kojoj zelis vidjeti statistiku ", "Izmedju 1 i "+obitelji.size(), 1, obitelji.size());
+		Obitelj o = obitelji.get(index-1);
+		float iznos=0;
+		for (Kategorija k : izbornik.getObradaKategorija().getKategorije()) {
+			float iznos2=0;
+			System.out.print(k.getNaziv()+": ");
+			for (DnevnaPotrosnja d : izbornik.getObradaDnevnaPotrosnja().getDnevnePotrosnje()) {
+				if (d.getKorisnik().getObitelj()==o && d.getKategorija()==k) {
+					iznos2+=d.getPotrosnja();
+				}
+			}
+			System.out.println(iznos2);
+			iznos+=iznos2;
+		}
 		
+		System.out.println("Ukupno potroseni iznos: " + iznos);
 	}
 }

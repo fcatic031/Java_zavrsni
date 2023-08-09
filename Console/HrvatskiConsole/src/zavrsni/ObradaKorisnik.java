@@ -195,6 +195,14 @@ public class ObradaKorisnik {
 				break;
 			}
 		}
+		Korisnik noviKorisnik2 = new Korisnik();
+		noviKorisnik2.setId(noviKorisnik.getId());
+		noviKorisnik2.setIme(noviKorisnik.getIme());
+		noviKorisnik2.setPrezime(noviKorisnik.getPrezime());
+		noviKorisnik2.setDatumRodjenja(noviKorisnik.getDatumRodjenja());
+		noviKorisnik2.setEmail(noviKorisnik.getEmail());
+		noviKorisnik2.setObitelj(noviKorisnik.getObitelj());
+		noviKorisnik2.setSpol(noviKorisnik.isSpol());
 		noviKorisnik.setId(noviId);
 		noviKorisnik.setIme(Pomocno.unosStringa("Unesi ime novog korisnika ", "Pogreska "));
 		noviKorisnik.setPrezime(Pomocno.unosStringa("Unesi prezime novog korisnika ", "Pogreska "));
@@ -202,6 +210,20 @@ public class ObradaKorisnik {
 		noviKorisnik.setDatumRodjenja(Pomocno.unosDatuma("Unesi datum rodjenja novog korisnika "));
 		noviKorisnik.setSpol(Pomocno.unosBoolean("Musko ili zensko? ", "Unesite 'musko' ili 'zensko' (caps lock nije bitan)","musko","zensko"));
 		noviKorisnik.setObitelj(postaviObitelj());
+		boolean potvrda = Pomocno.unosBoolean("Zelite li dalje zadrzati promjene? ", "Pogreska! da ili ne?", "da", "ne");
+		if (potvrda==false) {
+			noviKorisnik.setId(noviKorisnik2.getId());
+			noviKorisnik.setIme(noviKorisnik2.getIme());
+			noviKorisnik.setPrezime(noviKorisnik2.getPrezime());
+			noviKorisnik.setDatumRodjenja(noviKorisnik2.getDatumRodjenja());
+			noviKorisnik.setEmail(noviKorisnik2.getEmail());
+			noviKorisnik.setObitelj(noviKorisnik2.getObitelj());
+			noviKorisnik.setSpol(noviKorisnik2.isSpol());
+			boolean potvrda2 = Pomocno.unosBoolean("Zelite li dalje napraviti neku promjenu? ", "Pogreska! da ili ne?", "da", "ne");
+			if (potvrda2) {
+				promjenaKorisnik();
+			}
+		}
 	}
 	
 	public void brisanjeKorisnik() {

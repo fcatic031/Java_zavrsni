@@ -16,7 +16,7 @@ public class Pomocno {
 		int i;
 		while (true) {
 			try {
-				System.out.print(poruka);
+				System.out.print("+ "+poruka);
 				i=Integer.parseInt(ulaz.nextLine());
 				if (i>=min && i<=max) {
 					return i;
@@ -33,7 +33,7 @@ public class Pomocno {
 		
 		while (true) {
 			boolean fact=true;
-			noviId = unosBroja("Unesite novi id ", "Error! Mora bit pozitivan cijelobrojan broj ", 1, Integer.MAX_VALUE);
+			noviId = unosBroja("+ Unesite novi id ", "Error! Mora bit pozitivan cijelobrojan broj ", 1, Integer.MAX_VALUE);
 			for (int id : sifre) {
 				if (id==noviId) {
 					System.out.println("Ovo je vec postojeci id");
@@ -49,7 +49,7 @@ public class Pomocno {
 	public static String unosStringa(String poruka, String greska) {
 		String s="";
 		while (true) {
-			System.out.print(poruka);
+			System.out.print("+ "+poruka);
 			s=ulaz.nextLine();
 			if (s.trim().length()>0) {
 				return s;
@@ -61,7 +61,7 @@ public class Pomocno {
 	public static Date unosDatuma(String poruka) {
 		while (true) {
 			try {
-				System.out.print(poruka);
+				System.out.print("+ "+poruka);
 				return df.parse(ulaz.nextLine());
 			} catch (Exception e) {
 				System.out.println("Unos datuma u formatu "+ FORMAT_DATE+ " npr. "+ df.format(new Date()) + " za danas");
@@ -74,7 +74,7 @@ public class Pomocno {
 //		String poruka="Musko ili zensko";
 //		String greska="Krivi unos";
 		while (true){
-			System.out.print(poruka);
+			System.out.print("+ "+ poruka);
 			String unos=ulaz.nextLine().trim().toLowerCase();
 			if (unos.equals(da)) {
 				return true;
@@ -90,7 +90,7 @@ public class Pomocno {
 	public static float unosFloat(String poruka, String greska) {
 		while (true) {
 			try {
-				System.out.print(poruka);
+				System.out.print("+ "+poruka);
 				return Float.parseFloat(ulaz.nextLine());
 			} catch (Exception e) {
 				System.out.println(greska);

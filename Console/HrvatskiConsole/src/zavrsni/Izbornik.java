@@ -11,7 +11,7 @@ public class Izbornik {
 
 	public Izbornik() {
 		obradaObitelj = new ObradaObitelj(this);
-		obradaKategorija= new ObradaKategorija();
+		obradaKategorija= new ObradaKategorija(this);
 		obradaKorisnik= new ObradaKorisnik(this);
 		obradaDnevnaPotrosnja= new ObradaDnevnaPotrosnja(this);
 		Pomocno.ulaz = new Scanner(System.in);
@@ -20,12 +20,13 @@ public class Izbornik {
 	}
 
 	public void prikaziIzbornik() {
-		System.out.println("++++IZBORNIK+++");
-		System.out.println("\t1) Potrosnja");
-		System.out.println("\t2) Kategorije");
-		System.out.println("\t3) Obitelji");
-		System.out.println("\t4) Korisnici");
-		System.out.println("\t5) Izlaz");
+		System.out.println("===++++IZBORNIK+++===");
+		System.out.println("|||1) Potrosnja   |||");
+		System.out.println("|||2) Kategorije  |||");
+		System.out.println("|||3) Obitelji    |||");
+		System.out.println("|||4) Korisnici   |||");
+		System.out.println("|||5) Izlaz       |||");
+		System.out.println("===+++++++++++++++===");
 		ucitajStavkuIzbornika();
 	}
 
@@ -48,7 +49,7 @@ public class Izbornik {
 			prikaziIzbornik();
 			break;
 		case 5:
-			System.out.println("GOODBYE");
+			System.out.println("===++DOVIDJENJA+++===");
 			break;
 		}
 
@@ -64,6 +65,10 @@ public class Izbornik {
 
 	public ObradaKorisnik getObradaKorisnik() {
 		return obradaKorisnik;
+	}
+	
+	public ObradaDnevnaPotrosnja getObradaDnevnaPotrosnja() {
+		return obradaDnevnaPotrosnja;
 	}
 	
 	

@@ -8,7 +8,7 @@ import zavrsni.model.Kategorija;
 public class ObradaKategorija {
 	
 	private List<Kategorija> kategorije;
-	
+	private Izbornik izbornik;
 	
 	
 	public List<Kategorija> getKategorije() {
@@ -18,6 +18,11 @@ public class ObradaKategorija {
 	public ObradaKategorija() {
 		kategorije = new ArrayList<Kategorija>();
 		testniPodaci();
+	}
+	
+	public ObradaKategorija(Izbornik izbornik) {
+		this();
+		this.izbornik=izbornik;
 	}
 	
 	private void testniPodaci() {
@@ -75,8 +80,20 @@ public class ObradaKategorija {
 		pregledKategorija();
 		int index=Pomocno.unosBroja("Unesi broj kategorije koji zelis promjeniti ", "Greska", 1, kategorije.size());
 		Kategorija k = kategorije.get(index-1);
+		Kategorija k2 = new Kategorija();
+		k2.setId(k.getId());
+		k2.setNaziv(k.getNaziv());
 		k.setId(Pomocno.unosBroja("Unesi ID koji zelis da bude ", "greska", 1, Integer.MAX_VALUE));
-		k.setNaziv(Pomocno.unosStringa("Unesi novi naziv kategorije", "Greska"));
+		k.setNaziv(Pomocno.unosStringa("Unesi novi naziv kategorije ", "Greska"));
+		boolean potvrda = Pomocno.unosBoolean("Zelite li zadrzati promjene ", "Pogreska! da ili ne?", "da", "ne");
+		if (potvrda==false) {
+			k.setId(k2.getId());
+			k.setNaziv(k2.getNaziv());
+			boolean potvrda2 = Pomocno.unosBoolean("Zelite li dalje napraviti neku promjenu ", "Pogreska! da ili ne?", "da", "ne");
+			if (potvrda2) {
+				promjenaKategorije();
+			}
+		}
 	}
 
 	private void unosKategorija() {
