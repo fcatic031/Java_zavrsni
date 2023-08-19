@@ -69,10 +69,16 @@ public class Pomocno {
 		}
 	}
 	
+	public static Date datum(int dan, int mjesec, int godina) {
+		Date d = new Date(godina-1900,mjesec-1,dan);
+//		Date d = new Date();
+//		d.setYear(godina-1900);
+//		d.setMonth(mjesec-1);
+//		d.setDate(dan);
+		return d;
+	}
 	
 	public static boolean unosBoolean(String poruka,String greska, String da, String ne) {
-//		String poruka="Musko ili zensko";
-//		String greska="Krivi unos";
 		while (true){
 			System.out.print("+ "+ poruka);
 			String unos=ulaz.nextLine().trim().toLowerCase();
@@ -97,6 +103,15 @@ public class Pomocno {
 			}
 		}
 	}
+	
+	public static String Razmaci(String znak, int n) {
+		String s = "";
+		for (int i=0; i<n; i++) {
+			s=s+znak;
+		}
+		return s;
+	}
+	
 	
 	
 }

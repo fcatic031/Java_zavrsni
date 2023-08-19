@@ -81,6 +81,11 @@ public class ObradaObitelj {
 	private void brisanjeObitelji() {
 		pregledObitelj();
 		int index = Pomocno.unosBroja("Unesi broj obitelji koji zelis promjeniti ", "Izmedju "+1+" i "+ obitelji.size(), 1, obitelji.size());
+		//Brisanje clanova obitelji s obitelji
+		boolean korisniciBrisanje = Pomocno.unosBoolean("Zelite li obrisati i sve clanove te obitelji? ", "Pogreska", "da", "ne");
+		if (korisniciBrisanje) {
+			izbornik.getObradaKorisnik().getKorisnici().removeIf(k -> k.getObitelj()==obitelji.get(index-1));
+		}
 		obitelji.remove(index-1);
 	}
 	
