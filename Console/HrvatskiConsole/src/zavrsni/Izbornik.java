@@ -20,18 +20,27 @@ public class Izbornik {
 	}
 
 	public void prikaziIzbornik() {
-		System.out.println("===++++IZBORNIK+++===");
-		System.out.println("|||1) Potrosnja   |||");
-		System.out.println("|||2) Kategorije  |||");
-		System.out.println("|||3) Obitelji    |||");
-		System.out.println("|||4) Korisnici   |||");
-		System.out.println("|||5) Izlaz       |||");
-		System.out.println("===+++++++++++++++===");
+//		System.out.println("===++++IZBORNIK+++===");
+//		System.out.println("|||1) Potrosnja   |||");
+//		System.out.println("|||2) Kategorije  |||");
+//		System.out.println("|||3) Obitelji    |||");
+//		System.out.println("|||4) Korisnici   |||");
+//		System.out.println("|||5) Izlaz       |||");
+//		System.out.println("===+++++++++++++++===");
+		Pomocno.naslovSredina("", "=", "||", 30);
+		Pomocno.naslovSredina("IZBORNIK", "=","||", 30);
+		Pomocno.naslovSredina("", "=", "||", 30);
+		Pomocno.naslovSredina("1)Potrosnja", " ","||", 30);
+		Pomocno.naslovSredina("2)Kategorija", " ","||", 30);
+		Pomocno.naslovSredina("3)Obitelj", " ","||", 30);
+		Pomocno.naslovSredina("4)Korisnik", " ","||", 30);
+		Pomocno.naslovSredina("5)Izlaz", " ","||", 30);
+		Pomocno.naslovSredina("", "=", "||", 30);
 		ucitajStavkuIzbornika();
 	}
 
 	private void ucitajStavkuIzbornika() {
-		switch (Pomocno.unosBroja("Unesi broj stavke ", "Mora biti izmedju 1 i 5", 1, 5)) {
+		switch (Pomocno.unosBroja("Unesi broj stavke: ", "Mora biti izmedju 1 i 5", 1, 6)) {
 		case 1:
 			obradaDnevnaPotrosnja.prikaziIzbornik();
 			prikaziIzbornik();
@@ -49,11 +58,14 @@ public class Izbornik {
 			prikaziIzbornik();
 			break;
 		case 5:
-			System.out.println("===++DOVIDJENJA+++===");
+			Pomocno.naslovSredina("DOVIDJENJA", "=", "||", 30);
+			break;
+		case 6:
+			Pomocno.naslovSredina("DOVIDJENJA", "=", "||", 30);
 			break;
 		}
-
 	}
+
 
 	public ObradaObitelj getObradaObitelj() {
 		return obradaObitelj;

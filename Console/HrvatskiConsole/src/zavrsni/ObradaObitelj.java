@@ -40,13 +40,14 @@ public class ObradaObitelj {
 	
 	
 	public void prikaziIzbornik() {
-		System.out.println("OBITELJ");
-		System.out.println("1)Pregled");
-		System.out.println("2)Unos");
-		System.out.println("3)Promjena");
-		System.out.println("4)Obrisati");
-		System.out.println("5)Statistika");
-		System.out.println("6)Nazad");
+		Pomocno.naslovSredina("OBITELJ", "+","||", 30);
+		Pomocno.naslovSredina("1)Pregled", " ","||", 30);
+		Pomocno.naslovSredina("2)Unos", " ","||", 30);
+		Pomocno.naslovSredina("3)Promjena", " ","||", 30);
+		Pomocno.naslovSredina("4)Obrisati", " ","||", 30);
+		Pomocno.naslovSredina("5)Statistika", " ","||", 30);
+		Pomocno.naslovSredina("6)Nazad", " ","||", 30);
+		Pomocno.naslovSredina("", "+", "||", 30);
 		odabirStavke();
 	}
 	
@@ -139,21 +140,23 @@ public class ObradaObitelj {
 
 	public void pregledObitelj() {
 		int b=1;
-		System.out.println("+++++++++++++++++");
-		System.out.println("++++OBITELJI+++++");
-		System.out.println("+++++++++++++++++");
+		Pomocno.naslovSredina("", "+","||", 30);
+		Pomocno.naslovSredina("OBITELJI", "+","||", 30);
+		Pomocno.naslovSredina("", "+","||", 30);
 		for (Obitelj o: obitelji) {
-			System.out.println(b++ + ") "+o.getObiteljskoPrezime());
+			Pomocno.naslovSredina(b++ +") "+o.getObiteljskoPrezime(), " ", "||", 30);
+			
 		}
-		System.out.println("+++++++++++++++++");
+		Pomocno.naslovSredina("", "+","||", 30);
+		
 	}
 	
 	public void pregledObiteljOpcija() {
-		boolean unos = Pomocno.unosBoolean("Zelite li vidjeti sve clanove obitelji ", "Pogreska! da ili ne!", "da", "ne");
+		boolean unos = Pomocno.unosBoolean("Zelite li vidjeti sve clanove obitelji: ", "Pogreska! da ili ne!", "da", "ne");
 		if (unos) {
-			System.out.println("+++++++++++++++++");
-			System.out.println("++++OBITELJI+++++");
-			System.out.println("+++++++++++++++++");
+			Pomocno.naslovSredina("", "+","||", 60);
+			Pomocno.naslovSredina("OBITELJI", "+","||", 60);
+			Pomocno.naslovSredina("", "+","||", 60);
 			for (Obitelj o: obitelji) {
 				System.out.print(o.getObiteljskoPrezime()+": ");
 				for (Korisnik k:izbornik.getObradaKorisnik().getKorisnici()) {
@@ -163,18 +166,16 @@ public class ObradaObitelj {
 				}
 				System.out.println();
 			}
-			System.out.println("+++++++++++++++++");
 		}else {
 			pregledObitelj();
 		}
 	}
 	
 	private void statistikaObitelj() {
-		System.out.println("===OSNOVNA STATISTIKA===");
+		Pomocno.naslovSredina("STATISTIKA", "+","||", 30);
 		float korisnik_obitelj = izbornik.getObradaKorisnik().getKorisnici().size()/obitelji.size();
-		System.out.println("Prosječan broj clanova u obitelji: "+korisnik_obitelj);
-		
-		System.out.println("========================");
+		Pomocno.naslovSredina("Prosječan clanova u obitelji: "+korisnik_obitelj, "+","||", 30);
+		Pomocno.naslovSredina("", "+","||", 30);
 		pregledObitelj();
 		int index = Pomocno.unosBroja("Odaberi obitelj o kojoj zelis vidjeti statistiku ", "Izmedju 1 i "+obitelji.size(), 1, obitelji.size());
 		Obitelj o = obitelji.get(index-1);
@@ -191,6 +192,8 @@ public class ObradaObitelj {
 			iznos+=iznos2;
 		}
 		
-		System.out.println("Ukupno potroseni iznos: " + iznos);
+		Pomocno.naslovSredina("Ukupni iznos: " + iznos, "+","||", 30);
 	}
+	
+	
 }

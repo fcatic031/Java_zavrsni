@@ -47,17 +47,19 @@ public class ObradaKorisnik {
 	}
 	
 	public void prikaziIzbornik() {
-		System.out.println("KORISNIK");
-		System.out.println("1)Pregled");
-		System.out.println("2)Unos");
-		System.out.println("3)Promjena");
-		System.out.println("4)Obrisati");
-		System.out.println("5)Izlaz");
+		Pomocno.naslovSredina("KORISNIK", "+","||", 30);
+		Pomocno.naslovSredina("1)Pregled", " ","||", 30);
+		Pomocno.naslovSredina("2)Unos", " ","||", 30);
+		Pomocno.naslovSredina("3)Promjena", " ","||", 30);
+		Pomocno.naslovSredina("4)Obrisati", " ","||", 30);
+		Pomocno.naslovSredina("5)Statistika", " ","||", 30);
+		Pomocno.naslovSredina("6)Nazad", " ","||", 30);
+		Pomocno.naslovSredina("", "+", "||", 30);
 		odabirStavke();
 	}
 	
 	private void odabirStavke() {
-		switch (Pomocno.unosBroja("Unesi broj stavke ", "Između 1 i 5", 1, 5)) {
+		switch (Pomocno.unosBroja("Unesi broj stavke ", "Između 1 i 5", 1, 6)) {
 		case 1:
 			pregledKorisnikOpcije();
 			prikaziIzbornik();
@@ -74,10 +76,13 @@ public class ObradaKorisnik {
 			brisanjeKorisnik();
 			prikaziIzbornik();
 			break;
-		case 5:
-			System.out.println("");
+		case 6:
+			Pomocno.naslovSredina("DOVIDJENJA", "+", "||", 30);
 			break;
-			
+		case 5:
+			System.out.println("STAT");
+			prikaziIzbornik();
+			break;
 		}
 		
 	}
@@ -106,14 +111,13 @@ public class ObradaKorisnik {
 
 	public void pregledKorisnik() {
 		int b=1;
-		System.out.println("++++++++++++++++++");
-		System.out.println("++++KORISNICI+++++");
-		System.out.println("++++++++++++++++++");
+		Pomocno.naslovSredina("", "+","||", 30);
+		Pomocno.naslovSredina("KORISNICI", "+","||", 30);
+		Pomocno.naslovSredina("", "+","||", 30);
 		for (Korisnik k: korisnici) {
 			System.out.println(b++ + ") "+k.getIme()+" "+k.getPrezime());
 		}
-		System.out.println("+++++++++++++++++");
-		
+		Pomocno.naslovSredina("", "+","||", 30);
 	}
 	
 	public void pregledKorisnikOpcije() {
@@ -123,47 +127,73 @@ public class ObradaKorisnik {
 		boolean datumRodjenja=Pomocno.unosBoolean("datum rodjenja? ", "da ili ne","da","ne");
 		boolean spol=Pomocno.unosBoolean("spol? ", "da ili ne","da","ne");
 		boolean obitelj=Pomocno.unosBoolean("obitelj? ", "da ili ne","da","ne");
+		int sirina=44;
 		if (id) {
-			System.out.print("id|");
+			//System.out.print("id|");
+			Pomocno.tablicaSredina("ID", " ", "|", 10);
+			sirina+=12;
 		}
-		System.out.print("ime|");
-		System.out.print("prezime|");
-		
+		//System.out.print("ime|");
+		//System.out.print("prezime|");
+		Pomocno.tablicaSredina("Ime", " ", "|", 20);
+		Pomocno.tablicaSredina("Prezime", " ", "|", 20);
 		if (email) {
-			System.out.print("email|");
+			//System.out.print("email|");
+			Pomocno.tablicaSredina("E-mail", " ", "|", 20);
+			sirina+=22;
 		}
 		if (datumRodjenja) {
-			System.out.print("Datum rodjenja|");
+			//System.out.print("Datum rodjenja|");
+			Pomocno.tablicaSredina("Datum rodjenja", " ", "|", 40);
+			sirina+=42;
 		}
 		if (spol) {
-			System.out.print("Spol|");
+//			System.out.print("Spol|");
+			Pomocno.tablicaSredina("Spol", " ", "|", 8);
+			sirina+=10;
 		}
 		if (obitelj) {
-			System.out.print("Obitelj|");
+			//System.out.print("Obitelj|");
+			Pomocno.tablicaSredina("Obitelj", " ", "|", 20);
+			sirina+=22;
 		}
 		System.out.println();
+		Pomocno.naslovSredina("", "=", "", sirina);
 		for (Korisnik k: korisnici) {
 			if (id) {
-				System.out.print(k.getId());
+				//System.out.print(k.getId());
+				Pomocno.tablicaSredina(""+k.getId(), " ", "|", 10);
 			}
-			System.out.print("|"+k.getIme()+"|"+k.getPrezime()+"|");
+			//System.out.print("|"+k.getIme()+"|"+k.getPrezime()+"|");
+			Pomocno.tablicaSredina(k.getIme(), " ", "|", 20);
+			Pomocno.tablicaSredina(k.getPrezime(), " ", "|", 20);
 			if (email) {
-				System.out.print(k.getEmail());
+				//System.out.print(k.getEmail());
+				Pomocno.tablicaSredina(k.getEmail(), " ", "|", 20);
 			}
 			if (datumRodjenja) {
-				System.out.print("|"+k.getDatumRodjenja());
+//				System.out.print("|"+k.getDatumRodjenja());
+				Pomocno.tablicaSredina(k.getDatumRodjenja()+"", " ", "|", 40);
 			}
 			if (spol) {
 				boolean s = k.isSpol();
-				System.out.print("|");
-				System.out.print(s?"musko":"zensko");
+//				System.out.print("|");
+//				System.out.print(s?"musko":"zensko");
+				if (s) {
+					Pomocno.tablicaSredina("Musko", " ", "|", 8);
+				} else {
+					Pomocno.tablicaSredina("Zensko", " ", "|", 8);
+				}
+				//s ? Pomocno.naslovSredina("Musko", " ", "|", 8) : Pomocno.naslovSredina("Zensko", " ", "|", 8);
 			}
 			if (obitelj) {
 				Obitelj o = k.getObitelj();
-				System.out.print("|" +o.getObiteljskoPrezime());
+				//System.out.print("|" +o.getObiteljskoPrezime());
+				Pomocno.tablicaSredina(o.getObiteljskoPrezime(), " ", "|", 20);
 			}
 			System.out.println();
 		}
+		Pomocno.naslovSredina("", "=", "", sirina);
 	}
 	
 	public int[] popisId() {
@@ -231,6 +261,8 @@ public class ObradaKorisnik {
 		int index = Pomocno.unosBroja("Unesite broj korisnika iz tablice kojeg zelite obrisati ", "Broj mora biti cijelobrojan iz tablice ", 1, korisnici.size());
 		korisnici.remove(index-1);
 	}
+	
+	
 	
 	
 }

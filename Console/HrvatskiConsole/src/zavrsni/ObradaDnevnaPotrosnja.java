@@ -1,5 +1,7 @@
 package zavrsni;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,26 +38,42 @@ public class ObradaDnevnaPotrosnja {
 		dnevnePotrosnje.add(new DnevnaPotrosnja(5,izbornik.getObradaKorisnik().getKorisnici().get(1),izbornik.getObradaKategorija().getKategorije().get(2),new Date(122,4,1),12.3f));
 		dnevnePotrosnje.add(new DnevnaPotrosnja(6,izbornik.getObradaKorisnik().getKorisnici().get(1),izbornik.getObradaKategorija().getKategorije().get(1),new Date(121,6,1),6.60f));
 		dnevnePotrosnje.add(new DnevnaPotrosnja(7,izbornik.getObradaKorisnik().getKorisnici().get(2),izbornik.getObradaKategorija().getKategorije().get(1),new Date(121,4,9),12.90f));
-		dnevnePotrosnje.add(new DnevnaPotrosnja(8,izbornik.getObradaKorisnik().getKorisnici().get(2),izbornik.getObradaKategorija().getKategorije().get(3),Pomocno.datum(13,3, 1997),5.10f));
+		dnevnePotrosnje.add(new DnevnaPotrosnja(8,izbornik.getObradaKorisnik().getKorisnici().get(2),izbornik.getObradaKategorija().getKategorije().get(3),Pomocno.datum(13,3, 2023),5.10f));
 		dnevnePotrosnje.add(new DnevnaPotrosnja(9,izbornik.getObradaKorisnik().getKorisnici().get(2),izbornik.getObradaKategorija().getKategorije().get(2),new Date(),20.00f));
 		dnevnePotrosnje.add(new DnevnaPotrosnja(10,izbornik.getObradaKorisnik().getKorisnici().get(2),izbornik.getObradaKategorija().getKategorije().get(2),new Date(),3.60f));
 		dnevnePotrosnje.add(new DnevnaPotrosnja(11,izbornik.getObradaKorisnik().getKorisnici().get(2),izbornik.getObradaKategorija().getKategorije().get(1),new Date(),17.20f));
+		dnevnePotrosnje.add(new DnevnaPotrosnja(12,izbornik.getObradaKorisnik().getKorisnici().get(3),izbornik.getObradaKategorija().getKategorije().get(0),Pomocno.datum(14, 5, 2017),220.20f));
+		dnevnePotrosnje.add(new DnevnaPotrosnja(17,izbornik.getObradaKorisnik().getKorisnici().get(2),izbornik.getObradaKategorija().getKategorije().get(1),Pomocno.datum(14,3,2023),11.90f));
+		dnevnePotrosnje.add(new DnevnaPotrosnja(18,izbornik.getObradaKorisnik().getKorisnici().get(2),izbornik.getObradaKategorija().getKategorije().get(3),Pomocno.datum(15,3, 2023),7.10f));
+		dnevnePotrosnje.add(new DnevnaPotrosnja(27,izbornik.getObradaKorisnik().getKorisnici().get(2),izbornik.getObradaKategorija().getKategorije().get(1),Pomocno.datum(25,3, 2023),12.90f));
+		dnevnePotrosnje.add(new DnevnaPotrosnja(28,izbornik.getObradaKorisnik().getKorisnici().get(2),izbornik.getObradaKategorija().getKategorije().get(3),Pomocno.datum(13,4, 2023),5.10f));
+		dnevnePotrosnje.add(new DnevnaPotrosnja(37,izbornik.getObradaKorisnik().getKorisnici().get(2),izbornik.getObradaKategorija().getKategorije().get(1),Pomocno.datum(15,4, 2023),12.90f));
+		dnevnePotrosnje.add(new DnevnaPotrosnja(38,izbornik.getObradaKorisnik().getKorisnici().get(2),izbornik.getObradaKategorija().getKategorije().get(3),Pomocno.datum(18,3, 2023),5.10f));
+		dnevnePotrosnje.add(new DnevnaPotrosnja(47,izbornik.getObradaKorisnik().getKorisnici().get(2),izbornik.getObradaKategorija().getKategorije().get(1),Pomocno.datum(14,3, 2023),2.90f));
+		dnevnePotrosnje.add(new DnevnaPotrosnja(48,izbornik.getObradaKorisnik().getKorisnici().get(2),izbornik.getObradaKategorija().getKategorije().get(0),Pomocno.datum(17,4, 2023),52.10f));
+		dnevnePotrosnje.add(new DnevnaPotrosnja(57,izbornik.getObradaKorisnik().getKorisnici().get(2),izbornik.getObradaKategorija().getKategorije().get(1),Pomocno.datum(5,4, 2023),12.90f));
+		dnevnePotrosnje.add(new DnevnaPotrosnja(58,izbornik.getObradaKorisnik().getKorisnici().get(2),izbornik.getObradaKategorija().getKategorije().get(3),Pomocno.datum(23,5, 2023),5.10f));
+		dnevnePotrosnje.add(new DnevnaPotrosnja(67,izbornik.getObradaKorisnik().getKorisnici().get(2),izbornik.getObradaKategorija().getKategorije().get(1),Pomocno.datum(12,5, 2023),12.90f));
+		dnevnePotrosnje.add(new DnevnaPotrosnja(68,izbornik.getObradaKorisnik().getKorisnici().get(2),izbornik.getObradaKategorija().getKategorije().get(3),Pomocno.datum(13,5, 2023),5.10f));
+		
 		
 	}
 	
 
 	public void prikaziIzbornik() {
-		System.out.println("++DNEVNA+POTROSNJA++");
-		System.out.println("1)Pregled");
-		System.out.println("2)Unos");
-		System.out.println("3)Promjena");
-		System.out.println("4)Obrisati");
-		System.out.println("5)Izlaz");
+		Pomocno.naslovSredina("DNEVNA POTROSNJA", "+","||", 30);
+		Pomocno.naslovSredina("1)Pregled", " ","||", 30);
+		Pomocno.naslovSredina("2)Unos", " ","||", 30);
+		Pomocno.naslovSredina("3)Promjena", " ","||", 30);
+		Pomocno.naslovSredina("4)Obrisati", " ","||", 30);
+		Pomocno.naslovSredina("5)Statistika", " ","||", 30);
+		Pomocno.naslovSredina("6)Nazad", " ","||", 30);
+		Pomocno.naslovSredina("", "+", "||", 30);
 		odabirStavke();
 	}
 
 	private void odabirStavke() {
-		switch (Pomocno.unosBroja("Unesi broj stavke ", "Između 1 i 5", 1, 5)) {
+		switch (Pomocno.unosBroja("Unesi broj stavke ", "Između 1 i 6", 1, 6)) {
 		case 1:
 			pregledDnevnihPotrosnji();
 			prikaziIzbornik();
@@ -72,11 +90,11 @@ public class ObradaDnevnaPotrosnja {
 			brisanjeDnevnaPotrosnja();
 			prikaziIzbornik();
 			break;
-		case 6:
-			//statistikaPotrosnja();
+		case 5:
+			statistikaPotrosnja();
 			prikaziIzbornik();
 			break;
-		case 5:
+		case 6:
 			System.out.println("");
 			break;
 
@@ -123,7 +141,7 @@ public class ObradaDnevnaPotrosnja {
 	
 	private void promjenaDnevnaPotrosnja() {
 		pregledDnevnihPotrosnji();
-		int index = Pomocno.unosBroja("Unesi broj potrosnje koju zelite promjeniti", "Pogreska ", 1, dnevnePotrosnje.size());
+		int index = Pomocno.unosBroja("Unesi broj potrosnje koju zelite promjeniti: ", "Pogreska ", 1, dnevnePotrosnje.size());
 		DnevnaPotrosnja d = dnevnePotrosnje.get(index-1);
 		DnevnaPotrosnja d2= new DnevnaPotrosnja();
 		d2.setId(d.getId());
@@ -131,11 +149,11 @@ public class ObradaDnevnaPotrosnja {
 		d2.setKategorija(d.getKategorija());
 		d2.setDatum(d.getDatum());
 		d2.setPotrosnja(d.getPotrosnja());
-		d.setId(Pomocno.unosBroja("Unesi id koji zelis za zeljenu potrosnju ", "Pogreska! Mora biti pozitivan broj", 1, Integer.MAX_VALUE));
+		d.setId(Pomocno.unosBroja("Unesi id koji zelis za zeljenu potrosnju: ", "Pogreska! Mora biti pozitivan broj", 1, Integer.MAX_VALUE));
 		d.setKorisnik(postaviKorisnika());
 		d.setKategorija(postaviKategoriju());
-		d.setDatum(Pomocno.unosDatuma("Unesi datum "));
-		d.setPotrosnja(Pomocno.unosFloat("Unesi potroseni iznos ", "Pogreska "));
+		d.setDatum(Pomocno.unosDatuma("Unesi datum: "));
+		d.setPotrosnja(Pomocno.unosFloat("Unesi potroseni iznos: ", "Pogreska "));
 		boolean potvrda = Pomocno.unosBoolean("Zelite li dalje zadrzati promjene? ", "Pogreska! da ili ne?", "da", "ne");
 		if (potvrda==false) {
 			d.setId(d2.getId());
@@ -154,6 +172,46 @@ public class ObradaDnevnaPotrosnja {
 		pregledDnevnihPotrosnji();
 		int index = Pomocno.unosBroja("Unesi broj potrosnje koju zelite obrisati ", "Pogreska ", 1, dnevnePotrosnje.size());
 		dnevnePotrosnje.remove(index-1);
+	}
+	
+	private float mjesecnaPotrosnja(int godina, int mjesec, Kategorija k, Korisnik korisnik) {
+		LocalDate pocetniDatum = LocalDate.of(godina, mjesec, 1);
+		LocalDate zavrsniDatum = (mjesec!=12) ? LocalDate.of(godina, mjesec+1, 1) : LocalDate.of(godina+1, mjesec-11, 1);
+		//Period period = Period.between(pocetniDatum, zavrsniDatum);
+		float zbroj=0f;
+		for (DnevnaPotrosnja d: dnevnePotrosnje) {
+			LocalDate x = Pomocno.DateLocalDate(d.getDatum());
+			if (d.getKorisnik()==korisnik && d.getKategorija()==k && x.isBefore(zavrsniDatum) && x.isAfter(pocetniDatum)) {
+				zbroj+=d.getPotrosnja();
+			}
+		}
+		return zbroj;
+	}
+	
+	private void statistikaPotrosnja() {
+		izbornik.getObradaKorisnik().pregledKorisnik();
+		int index = Pomocno.unosBroja("Unesite broj korisnika: ", "Pogreska!", 1, izbornik.getObradaKorisnik().getKorisnici().size());
+		Korisnik korisnik = izbornik.getObradaKorisnik().getKorisnici().get(index-1);
+		int godina = Pomocno.unosBroja("Unesi godinu: ", "Pogreska!", 1970, 2023);
+		izbornik.getObradaKategorija().pregledKategorija();
+		int index2= Pomocno.unosBroja("Unesite broj kategorije: ", "Pogreska!", 1, izbornik.getObradaKategorija().getKategorije().size());
+		Kategorija k = izbornik.getObradaKategorija().getKategorije().get(index2-1);
+		Pomocno.naslovSredina(k.getNaziv(), "+", "|", 62);
+		for (int i=1; i<=12; i++) {
+			Pomocno.tablicaSredina(Pomocno.mjesec(i), " ", "|", 30);
+			Pomocno.tablicaSredina(""+mjesecnaPotrosnja(godina,i,k,korisnik), " ", "|", 30);
+			System.out.println();
+			//System.out.println(Pomocno.mjesec(i)+": "+mjesecnaPotrosnja(godina,i,k,korisnik));
+		}
+		Pomocno.naslovSredina("", "+", "|", 62);
+		//DRUGA IDEJA OBRADE SVIH KATEGORIJA U GODINI
+//		for (Kategorija k: izbornik.getObradaKategorija().getKategorije()) {
+//			System.out.println(k.getNaziv()+": ");
+//			for (int i=1; i<=12; i++) {
+//				System.out.println(i+": "+mjesecnaPotrosnja(godina,i,k,korisnik));
+//			}
+//		}
+		
 	}
 	
 }

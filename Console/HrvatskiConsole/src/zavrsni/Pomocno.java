@@ -1,6 +1,8 @@
 package zavrsni;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -78,6 +80,10 @@ public class Pomocno {
 		return d;
 	}
 	
+	public static LocalDate DateLocalDate(Date datum) {
+		return datum.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	}
+	
 	public static boolean unosBoolean(String poruka,String greska, String da, String ne) {
 		while (true){
 			System.out.print("+ "+ poruka);
@@ -112,6 +118,33 @@ public class Pomocno {
 		return s;
 	}
 	
+	public static void naslovSredina(String naslov, String znak1, String znak2, int sirina) {
+		if (sirina>naslov.length()) {
+			System.out.println(naslov.length()%2==0 ? znak2 + Razmaci(znak1,(sirina-naslov.length())/2) + naslov + Razmaci(znak1,(sirina-naslov.length())/2) + znak2
+			: znak2 + Razmaci(znak1,(sirina-naslov.length())/2) + naslov + Razmaci(znak1,(sirina-naslov.length())/2+1) + znak2);
+		} else {
+			System.out.println(naslov);
+		}
+		
+	}
+	
+	public static void tablicaSredina(String naslov, String znak1, String znak2, int sirina) {
+		if (sirina>naslov.length()) {
+			System.out.print(naslov.length()%2==0 ? znak2 + Razmaci(znak1,(sirina-naslov.length())/2) + naslov + Razmaci(znak1,(sirina-naslov.length())/2) + znak2
+			: znak2 + Razmaci(znak1,(sirina-naslov.length())/2) + naslov + Razmaci(znak1,(sirina-naslov.length())/2+1) + znak2);
+		} else {
+			System.out.println(naslov);
+		}
+		
+	}
+	
+	public static String mjesec(int n) {
+		String[] mjeseci = {"Sijecanj","Veljaca","Ozujak","Travanj","Svibanj","Lipanj","Srpanj","Kolovoz","Rujan","Listopad","Studeni","Prosinac"};
+		if (n<1 || n>12) {
+			return "ERROR";
+		}
+		return mjeseci[n-1];
+	}
 	
 	
 }
