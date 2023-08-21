@@ -5,6 +5,7 @@ import java.util.List;
 
 import zavrsni.model.DnevnaPotrosnja;
 import zavrsni.model.Kategorija;
+import zavrsni.model.Obitelj;
 
 public class ObradaKategorija {
 	
@@ -105,7 +106,11 @@ public class ObradaKategorija {
 
 	private void unosKategorija() {
 		Kategorija k = new Kategorija();
-		k.setId(Pomocno.unosBroja("Unesi broj ID koji zelis: ", "Pozitivan broj", 1, Integer.MAX_VALUE));
+		int noviId=0;
+		int[] sifre = popisId();
+		Pomocno.unosIdPetlja(noviId,sifre);
+		k.setId(noviId);
+		//k.setId(Pomocno.unosBroja("Unesi broj ID koji zelis: ", "Pozitivan broj", 1, Integer.MAX_VALUE));
 		k.setNaziv(Pomocno.unosStringa("Unesi naziv kategorije koju zelis: ", "Greska"));
 		kategorije.add(k);
 		
@@ -141,5 +146,14 @@ public class ObradaKategorija {
 			Pomocno.naslovSredina(k.getNaziv()+": "+iznos/n, " ","||", 30);
 			//System.out.println(k.getNaziv()+ ": " + iznos/n);
 		}
+	}
+	
+	public int[] popisId() {
+		int[] sifre = new int[kategorije.size()];
+		for (int i=0; i<kategorije.size(); i++) {
+			Kategorija o = kategorije.get(i);
+			sifre[i] = o.getId();
+		}
+		return sifre;
 	}
 }

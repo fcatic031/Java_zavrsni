@@ -89,7 +89,12 @@ public class ObradaKorisnik {
 
 	private void unosKorisnik() {
 		Korisnik k= new Korisnik();
-		k.setId(Pomocno.unosBroja("Unesi novi id ", "Pozitivan broj", 1, Integer.MAX_VALUE));
+		//Poseban ID
+		int noviId=0;
+		int[] sifre = popisId();
+		Pomocno.unosIdPetlja(noviId,sifre);
+		k.setId(noviId);
+		//k.setId(Pomocno.unosBroja("Unesi novi id ", "Pozitivan broj", 1, Integer.MAX_VALUE));
 		k.setIme(Pomocno.unosStringa("Unesi ime ", "Greska"));
 		k.setPrezime(Pomocno.unosStringa("Unesi prezime ", "Greska"));
 		k.setEmail(Pomocno.unosStringa("Unesi email ", "Greska"));
@@ -115,7 +120,8 @@ public class ObradaKorisnik {
 		Pomocno.naslovSredina("KORISNICI", "+","||", 30);
 		Pomocno.naslovSredina("", "+","||", 30);
 		for (Korisnik k: korisnici) {
-			System.out.println(b++ + ") "+k.getIme()+" "+k.getPrezime());
+			Pomocno.naslovSredina(b++ + ") "+k.getIme()+k.getPrezime(), " ", "|", 30);
+			//System.out.println(b++ + ") "+k.getIme()+" "+k.getPrezime());
 		}
 		Pomocno.naslovSredina("", "+","||", 30);
 	}
@@ -144,8 +150,8 @@ public class ObradaKorisnik {
 		}
 		if (datumRodjenja) {
 			//System.out.print("Datum rodjenja|");
-			Pomocno.tablicaSredina("Datum rodjenja", " ", "|", 40);
-			sirina+=42;
+			Pomocno.tablicaSredina("Datum rodjenja", " ", "|", 20); //20
+			sirina+=22; //22
 		}
 		if (spol) {
 //			System.out.print("Spol|");
@@ -173,7 +179,7 @@ public class ObradaKorisnik {
 			}
 			if (datumRodjenja) {
 //				System.out.print("|"+k.getDatumRodjenja());
-				Pomocno.tablicaSredina(k.getDatumRodjenja()+"", " ", "|", 40);
+				Pomocno.tablicaSredina(k.getDatumRodjenja().getDate()+"."+(k.getDatumRodjenja().getMonth()+1)+"."+(k.getDatumRodjenja().getYear()+1900), " ", "|", 20);
 			}
 			if (spol) {
 				boolean s = k.isSpol();
@@ -209,6 +215,7 @@ public class ObradaKorisnik {
 		pregledKorisnik();
 		int index = Pomocno.unosBroja("Unesite broj korisnika iz tablice kojeg zelite promjeniti ", "Broj mora biti cijelobrojan iz tablice ", 1, korisnici.size());
 		Korisnik  noviKorisnik = korisnici.get(index-1);
+		//Poseban ID
 		int noviId;
 		int[] sifre = popisId();
 		

@@ -80,6 +80,7 @@ public class Pomocno {
 		return d;
 	}
 	
+	
 	public static LocalDate DateLocalDate(Date datum) {
 		return datum.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 	}
