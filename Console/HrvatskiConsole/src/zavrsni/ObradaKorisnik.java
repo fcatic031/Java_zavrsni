@@ -120,7 +120,7 @@ public class ObradaKorisnik {
 		Pomocno.naslovSredina("KORISNICI", "+","||", 30);
 		Pomocno.naslovSredina("", "+","||", 30);
 		for (Korisnik k: korisnici) {
-			Pomocno.naslovSredina(b++ + ") "+k.getIme()+k.getPrezime(), " ", "|", 30);
+			Pomocno.naslovSredina(b++ + ") "+k.getIme()+" "+k.getPrezime(), " ", "||", 30);
 			//System.out.println(b++ + ") "+k.getIme()+" "+k.getPrezime());
 		}
 		Pomocno.naslovSredina("", "+","||", 30);

@@ -6,7 +6,6 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.Scanner;
 
-import zavrsni.model.Korisnik;
 
 public class Pomocno {
 	
