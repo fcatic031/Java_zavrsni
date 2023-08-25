@@ -36,13 +36,13 @@ public class ObradaKorisnik {
 		korisnici.add(new Korisnik(3,"Kremenko","Laprdic","krekhed@hotmail.com",new Date(),true, izbornik.getObradaObitelj().getObitelji().get(0)));
 		korisnici.add(new Korisnik(4,"Goran","Gustic","gusti99@hotmail.com",new Date(),true, izbornik.getObradaObitelj().getObitelji().get(1)));
 		korisnici.add(new Korisnik(5,"Petra","Adams","fseljic@hotmail.com",new Date(),false, izbornik.getObradaObitelj().getObitelji().get(4)));
-		korisnici.add(new Korisnik(6,"Kremenko","Laprdic","fseljic@hotmail.com",new Date(),true, izbornik.getObradaObitelj().getObitelji().get(0)));
+		korisnici.add(new Korisnik(6,"Sinisa","Laprdic","fseljic@hotmail.com",new Date(),true, izbornik.getObradaObitelj().getObitelji().get(0)));
 		korisnici.add(new Korisnik(7,"Ljubomir","Propeler","prpko@hotmail.com",new Date(),true, izbornik.getObradaObitelj().getObitelji().get(5)));
 		korisnici.add(new Korisnik(8,"Franka","Propeler","prpa5@hotmail.com",new Date(),false, izbornik.getObradaObitelj().getObitelji().get(5)));
 		korisnici.add(new Korisnik(9,"Gljevnka","Propeler","prop3@hotmail.com",new Date(),true, izbornik.getObradaObitelj().getObitelji().get(5)));
 		korisnici.add(new Korisnik(10,"Franko","Seljic","fseljic@hotmail.com",new Date(),true, izbornik.getObradaObitelj().getObitelji().get(1)));
-		korisnici.add(new Korisnik(11,"Fiona","Lapsus","fseljic@hotmail.com",new Date(),false, izbornik.getObradaObitelj().getObitelji().get(2)));
-		korisnici.add(new Korisnik(12,"Kremenko","Laprdic","fseljic@hotmail.com",new Date(),true, izbornik.getObradaObitelj().getObitelji().get(0)));
+		korisnici.add(new Korisnik(11,"Slavica","Lapsus","fseljic@hotmail.com",new Date(),false, izbornik.getObradaObitelj().getObitelji().get(2)));
+		korisnici.add(new Korisnik(12,"Slavko","Laprdic","fseljic@hotmail.com",new Date(),true, izbornik.getObradaObitelj().getObitelji().get(0)));
 	
 	}
 	
@@ -59,7 +59,7 @@ public class ObradaKorisnik {
 	}
 	
 	private void odabirStavke() {
-		switch (Pomocno.unosBroja("Unesi broj stavke ", "Između 1 i 5", 1, 6)) {
+		switch (Pomocno.unosBroja("Unesi broj stavke ", "Između 1 i 6", 1, 6)) {
 		case 1:
 			pregledKorisnikOpcije();
 			prikaziIzbornik();
@@ -150,8 +150,8 @@ public class ObradaKorisnik {
 		}
 		if (datumRodjenja) {
 			//System.out.print("Datum rodjenja|");
-			Pomocno.tablicaSredina("Datum rodjenja", " ", "|", 20); //20
-			sirina+=22; //22
+			Pomocno.tablicaSredina("Datum rodjenja", " ", "|", 20); 
+			sirina+=22; 
 		}
 		if (spol) {
 //			System.out.print("Spol|");

@@ -20,13 +20,6 @@ public class Izbornik {
 	}
 
 	public void prikaziIzbornik() {
-//		System.out.println("===++++IZBORNIK+++===");
-//		System.out.println("|||1) Potrosnja   |||");
-//		System.out.println("|||2) Kategorije  |||");
-//		System.out.println("|||3) Obitelji    |||");
-//		System.out.println("|||4) Korisnici   |||");
-//		System.out.println("|||5) Izlaz       |||");
-//		System.out.println("===+++++++++++++++===");
 		Pomocno.naslovSredina("", "=", "||", 30);
 		Pomocno.naslovSredina("IZBORNIK", "=","||", 30);
 		Pomocno.naslovSredina("", "=", "||", 30);

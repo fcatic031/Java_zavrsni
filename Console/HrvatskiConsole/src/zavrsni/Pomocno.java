@@ -3,6 +3,7 @@ package zavrsni;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -35,9 +36,11 @@ public class Pomocno {
 		while (true) {
 			boolean fact=true;
 			noviId = unosBroja("+ Unesite novi id ", "Error! Mora bit pozitivan cijelobrojan broj ", 1, Integer.MAX_VALUE);
+			int maxID = Arrays.stream(sifre).max().getAsInt() + 1;
 			for (int id : sifre) {
 				if (id==noviId) {
-					System.out.println("Ovo je vec postojeci id");
+					System.out.println("Ovo je vec postojeci id ");
+					System.out.println("Jedan od dostupnih id jest "+maxID);
 					fact=false;
 				}	
 			}

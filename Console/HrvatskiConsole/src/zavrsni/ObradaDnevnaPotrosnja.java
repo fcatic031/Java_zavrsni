@@ -170,8 +170,8 @@ public class ObradaDnevnaPotrosnja {
 		//d.setId(Pomocno.unosBroja("Unesi novi id ", "Pozitivan broj", 1, Integer.MAX_VALUE));
 		d.setKorisnik(postaviKorisnika());
 		d.setKategorija(postaviKategoriju());
-		d.setDatum(Pomocno.unosDatuma("Unesi dan "));
-		d.setPotrosnja(Pomocno.unosFloat("Unesi potrosen iznos ", "Pogreska"));
+		d.setDatum(Pomocno.unosDatuma("Unesi datum: "));
+		d.setPotrosnja(Pomocno.unosFloat("Unesi potrosen iznos: ", "Pogreska!"));
 		dnevnePotrosnje.add(d);
 	}
 
@@ -241,7 +241,26 @@ public class ObradaDnevnaPotrosnja {
 		int index = Pomocno.unosBroja("Unesite broj korisnika: ", "Pogreska!", 1, izbornik.getObradaKorisnik().getKorisnici().size());
 		Korisnik korisnik = izbornik.getObradaKorisnik().getKorisnici().get(index-1);
 		int godina = Pomocno.unosBroja("Unesi godinu: ", "Pogreska!", 1970, 2023);
-		izbornik.getObradaKategorija().pregledKategorija();
+		//izbornik.getObradaKategorija().pregledKategorija();
+		//<dodano zasto="Radi boljeg pregleda godisnje potrosnje po kategoriji">
+		float godisnjaPotrosnja=0f;
+		String godisnjaPotrosnjaTxt="";
+		int b=1;
+		Pomocno.naslovSredina("Kategorije", "+", "||", 30);
+		Pomocno.naslovSredina("", "+", "||", 30);
+		for (Kategorija k : izbornik.getObradaKategorija().getKategorije()) {
+			//Pomocno.tablicaSredina(k.getNaziv(), " ", "||", 30);
+			godisnjaPotrosnja=0;
+			for (DnevnaPotrosnja d : dnevnePotrosnje) {
+				if (d.getKorisnik()==korisnik && (d.getDatum().getYear()+1900)==godina &&d.getKategorija()==k) {
+					godisnjaPotrosnja+=d.getPotrosnja();
+				}
+			}
+			godisnjaPotrosnjaTxt = String.format("%.02f", godisnjaPotrosnja);
+			Pomocno.naslovSredina(b++ +") " +k.getNaziv() +" -> " + godisnjaPotrosnjaTxt, " ", "||", 30);
+		}
+		Pomocno.naslovSredina("", "+", "||", 30);
+		// </dodano>
 		int index2= Pomocno.unosBroja("Unesite broj kategorije: ", "Pogreska!", 1, izbornik.getObradaKategorija().getKategorije().size());
 		Kategorija k = izbornik.getObradaKategorija().getKategorije().get(index2-1);
 		Pomocno.naslovSredina(k.getNaziv(), "+", "|", 62);
