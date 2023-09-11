@@ -13,7 +13,7 @@ public class Kategorija extends Entitet{
 		super();
 	}
 
-	public Kategorija(int id, String naziv) {
+	public Kategorija(Integer id, String naziv) {
 		super(id);
 		this.naziv = naziv;
 	}

@@ -20,7 +20,7 @@ public class Korisnik extends Entitet{
 		super();
 	}
 	
-	public Korisnik(int id, String ime, String prezime, String email, Date datumRodjenja, boolean spol,
+	public Korisnik(Integer id, String ime, String prezime, String email, Date datumRodjenja, boolean spol,
 			Obitelj obitelj) {
 		super(id);
 		this.ime = ime;

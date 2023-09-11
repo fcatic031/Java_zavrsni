@@ -10,13 +10,13 @@ public abstract class Entitet {
 	
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	
 	public Entitet() {
 		super();
 	}
 
-	public Entitet(int id) {
+	public Entitet(Integer id) {
 		super();
 		this.id = id;
 	}
@@ -25,7 +25,7 @@ public abstract class Entitet {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

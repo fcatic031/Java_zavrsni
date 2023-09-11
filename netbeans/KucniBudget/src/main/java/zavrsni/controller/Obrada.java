@@ -34,7 +34,7 @@ public abstract class Obrada <T extends Entitet> {
 
     public void create() throws BudgetException{
         controlNull();
-        //entitet.setId(null);
+        entitet.setId(null);
         controlUnos();
         persist();
     }

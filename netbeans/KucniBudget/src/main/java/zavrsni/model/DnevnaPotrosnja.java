@@ -2,6 +2,8 @@ package zavrsni.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
+
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -10,14 +12,14 @@ public class DnevnaPotrosnja extends Entitet{
         @ManyToOne
 	private Korisnik korisnik;
 	@ManyToOne
-        private Kategorija kategorija;
+	private Kategorija kategorija;
 	private Date datum;
-	private float potrosnja;
+	private BigDecimal potrosnja;
 	
 	public DnevnaPotrosnja() {
 		super();
 	}
-	public DnevnaPotrosnja(int id, Korisnik korisnik, Kategorija kategorija, Date datum, float potrosnja) {
+	public DnevnaPotrosnja(Integer id, Korisnik korisnik, Kategorija kategorija, Date datum, BigDecimal potrosnja) {
 		super(id);
 		this.korisnik = korisnik;
 		this.kategorija = kategorija;
@@ -42,10 +44,10 @@ public class DnevnaPotrosnja extends Entitet{
 	public void setDatum(Date datum) {
 		this.datum = datum;
 	}
-	public float getPotrosnja() {
+	public BigDecimal getPotrosnja() {
 		return potrosnja;
 	}
-	public void setPotrosnja(float potrosnja) {
+	public void setPotrosnja(BigDecimal potrosnja) {
 		this.potrosnja = potrosnja;
 	}
 	

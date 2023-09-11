@@ -11,7 +11,7 @@ public class Obitelj extends Entitet{
 	
 	
 	
-	public Obitelj(int id, String obiteljskoPrezime) {
+	public Obitelj(Integer id, String obiteljskoPrezime) {
 		super(id);
 		this.obiteljskoPrezime = obiteljskoPrezime;
 	}
