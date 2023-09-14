@@ -13,7 +13,7 @@ public class Obitelj extends Entitet{
         @Column(nullable = false)
 	private String obiteljskoPrezime;
 
-	@OneToMany(mappedBy = "Obitelj")
+	@OneToMany(mappedBy = "obitelj")
 	private List<Korisnik> clanovi = new ArrayList<>();
 	
 	public Obitelj(Integer id, String obiteljskoPrezime) {

@@ -17,9 +17,14 @@ import zavrsni.util.HibernateUtil;
 public class Start {
 
     public static void main(String[] args) {
-        //HibernateUtil.getSession();
+        HibernateUtil.getSession();
         //new FakerInsert();
 
+
+    }
+
+
+    private void proba(){
         ObradaObitelj ob = new ObradaObitelj();
 
         Obitelj o = new Obitelj();
@@ -31,6 +36,6 @@ public class Start {
             System.out.println(b.getPoruka());
         }
         System.out.println("GOTOVOOO");
-         
+
     }
 }

@@ -6,6 +6,8 @@ package zavrsni.util;
 
 import org.hibernate.Session;
 import com.github.javafaker.Faker;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import zavrsni.model.DnevnaPotrosnja;
@@ -95,7 +97,7 @@ public class FakerInsert {
             d.setDatum(faker.date().birthday(0, 10));
             d.setKorisnik(korisnici.get(faker.number().numberBetween(0, BROJ_KORISNIKA-1)));
             d.setKategorija(kategorije.get(faker.number().numberBetween(0, BROJ_KATEGORIJA-1)));
-            d.setPotrosnja(faker.number().numberBetween(2, 1000));
+            d.setPotrosnja(new BigDecimal(faker.number().numberBetween(2, 1000)));
             
             session.persist(d);
             potrosnje.add(d);
