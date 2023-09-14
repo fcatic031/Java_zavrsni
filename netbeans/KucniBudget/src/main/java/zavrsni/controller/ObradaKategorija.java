@@ -21,12 +21,12 @@ public class ObradaKategorija extends Obrada<Kategorija> {
 
     @Override
     protected void controlPromjena() throws BudgetException {
-
+        controlKategorijaNaziv();
     }
 
     @Override
     protected void controlBrisanje() throws BudgetException {
-
+        //ako dnevne potrosnje imaju nemoj brisati
     }
 
     private void controlKategorijaNaziv() throws BudgetException {
