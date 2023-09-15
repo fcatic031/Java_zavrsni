@@ -29,7 +29,7 @@ public class ObradaDnevnaPotrosnja extends Obrada<DnevnaPotrosnja> {
 
     @Override
     protected void controlBrisanje() throws BudgetException {
-
+        
     }
 
     private void controlKorisnik() throws BudgetException{
@@ -49,10 +49,10 @@ public class ObradaDnevnaPotrosnja extends Obrada<DnevnaPotrosnja> {
     }
     private void controlPotrosnja() throws BudgetException{
         var x = entitet.getPotrosnja();
-        if (x==null){
+        if (x==null || x.compareTo(BigDecimal.ZERO)==0){
             throw new BudgetException("Nema unosa potrosnja");
         }
-        if (x.compareTo(BigDecimal.ZERO)<=0){
+        if (x.compareTo(BigDecimal.ZERO)<0){
             throw new BudgetException("Unos potrosnje mora biti pozitivan");
         }
     }

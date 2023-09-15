@@ -2,14 +2,19 @@ package zavrsni.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Korisnik extends Osoba{
 
-        @ManyToOne
+	@ManyToOne
 	private Obitelj obitelj;
-	
+
+	@OneToMany(mappedBy = "korisnik")
+	private List<DnevnaPotrosnja> potrosnje;
 	
 	public Korisnik() {
 		super();
@@ -26,8 +31,15 @@ public class Korisnik extends Osoba{
 	public void setObitelj(Obitelj obitelj) {
 		this.obitelj = obitelj;
 	}
-	
-	
+
+
+	public List<DnevnaPotrosnja> getPotrosnje() {
+		return potrosnje;
+	}
+
+	public void setPotrosnje(List<DnevnaPotrosnja> potrosnje) {
+		this.potrosnje = potrosnje;
+	}
 	
 	
 }

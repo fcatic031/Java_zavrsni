@@ -15,7 +15,9 @@ public class ObradaKorisnik extends ObradaOsoba<Korisnik> {
 
     @Override
     protected void controlBrisanje() throws BudgetException {
-
+        if (!entitet.getPotrosnje().isEmpty()){
+            throw new BudgetException("Korisnik ima potrosnje");
+        }
     }
 
 }

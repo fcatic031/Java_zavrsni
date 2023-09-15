@@ -98,7 +98,6 @@ public class FakerInsert {
             d.setKorisnik(korisnici.get(faker.number().numberBetween(0, BROJ_KORISNIKA-1)));
             d.setKategorija(kategorije.get(faker.number().numberBetween(0, BROJ_KATEGORIJA-1)));
             d.setPotrosnja(new BigDecimal(faker.number().numberBetween(2, 1000)));
-            
             session.persist(d);
             potrosnje.add(d);
         }

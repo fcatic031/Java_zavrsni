@@ -18,13 +18,14 @@ public class Start {
 
     public static void main(String[] args) {
         //HibernateUtil.getSession();
-        new FakerInsert();
+        //new FakerInsert();
+        dodavanjeObitelji();
 
 
     }
 
 
-    private void proba(){
+    private static void dodavanjeObitelji(){
         ObradaObitelj ob = new ObradaObitelj();
 
         Obitelj o = new Obitelj();
@@ -36,6 +37,5 @@ public class Start {
             System.out.println(b.getPoruka());
         }
         System.out.println("GOTOVOOO");
-
     }
 }

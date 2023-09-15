@@ -1,5 +1,6 @@
 package zavrsni.controller;
 
+import zavrsni.model.Korisnik;
 import zavrsni.model.Obitelj;
 import zavrsni.util.BudgetException;
 
@@ -24,7 +25,17 @@ public class ObradaObitelj extends Obrada<Obitelj> {
 
     @Override
     protected void controlBrisanje() throws BudgetException {
-
+        if (!entitet.getClanovi().isEmpty()){
+            Korisnik kor;
+            StringBuilder sb = new StringBuilder("Obitelj "+entitet.getObiteljskoPrezime()+" ima clanove: ");
+            for (Korisnik k : entitet.getClanovi()){
+                sb.append(k.getIme());
+                if (k!=entitet.getClanovi().get(entitet.getClanovi().size()-1)){
+                    sb.append(", ");
+                }
+            }
+            throw new BudgetException(sb.toString());
+        }
     }
 
 

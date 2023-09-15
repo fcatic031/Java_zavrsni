@@ -27,6 +27,9 @@ public class ObradaKategorija extends Obrada<Kategorija> {
     @Override
     protected void controlBrisanje() throws BudgetException {
         //ako dnevne potrosnje imaju nemoj brisati
+        if (!entitet.getPotrosnje().isEmpty()){
+            throw new BudgetException("Neke potrosnje imaju navedenu kategoriju: "+entitet.getNaziv());
+        }
     }
 
     private void controlKategorijaNaziv() throws BudgetException {
