@@ -17,8 +17,8 @@ import zavrsni.util.HibernateUtil;
 public class Start {
 
     public static void main(String[] args) {
-        HibernateUtil.getSession();
-        //new FakerInsert();
+        //HibernateUtil.getSession();
+        new FakerInsert();
 
 
     }

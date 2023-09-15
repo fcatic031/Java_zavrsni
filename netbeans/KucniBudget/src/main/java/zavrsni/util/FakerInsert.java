@@ -10,10 +10,9 @@ import com.github.javafaker.Faker;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import zavrsni.model.DnevnaPotrosnja;
-import zavrsni.model.Kategorija;
-import zavrsni.model.Korisnik;
-import zavrsni.model.Obitelj;
+
+import zavrsni.model.*;
+
 /**
  *
  * @author FILIP
@@ -24,13 +23,14 @@ public class FakerInsert {
     private static final int BROJ_KATEGORIJA=20;
     private static final int BROJ_KORISNIKA=2000;
     private static final int BROJ_POTROSNJI=15000;
-    
+    private static final int BROJ_OPERATERA=33;
     private Session session;
     private Faker faker;
     private List<Obitelj> obitelji;
     private List<Kategorija> kategorije;
     private List<Korisnik> korisnici;
     private List<DnevnaPotrosnja> potrosnje;
+    private List<Operater> operateri;
     
     public FakerInsert(){
         faker = new Faker();
@@ -103,7 +103,21 @@ public class FakerInsert {
             potrosnje.add(d);
         }
     }
-    
+
+    private void kreirajOperatere(){
+        Operater o;
+        for (int i=0;i<BROJ_OPERATERA;i++){
+            o = new Operater();
+            o.setIme(faker.dragonBall().character());
+            o.setPrezime(faker.company().name());
+            o.setEmail(o.getIme().trim().toLowerCase().replace(" ", "").substring(0, 1)+o.getPrezime().trim().toLowerCase().replace(" ", "")+"@"+faker.internet().domainName());
+            o.setDatumRodjenja(faker.date().birthday(15, 82));
+            o.setSpol(faker.bool().bool());
+            session.persist(o);
+            operateri.add(o);
+
+        }
+    }
     
     
 }
