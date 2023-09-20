@@ -4,7 +4,10 @@
 
 package zavrsni;
 
+import zavrsni.controller.ObradaDnevnaPotrosnja;
 import zavrsni.controller.ObradaObitelj;
+import zavrsni.model.DnevnaPotrosnja;
+import zavrsni.model.Korisnik;
 import zavrsni.model.Obitelj;
 import zavrsni.util.BudgetException;
 import zavrsni.util.FakerInsert;
@@ -38,4 +41,6 @@ public class Start {
         }
         System.out.println("GOTOVOOO");
     }
+
+
 }

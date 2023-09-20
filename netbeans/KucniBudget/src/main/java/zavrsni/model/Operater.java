@@ -8,11 +8,10 @@ import java.util.Date;
 public class Operater extends Osoba{
     //postoji mogucnost da cu praviti classu Osoba
     private String uloga;
-    private String sifra;
+    private String lozinka;
 
     public Operater() {
     }
-
 
     public String getUloga() {
         return uloga;
@@ -22,11 +21,11 @@ public class Operater extends Osoba{
         this.uloga = uloga;
     }
 
-    public String getSifra() {
-        return sifra;
+    public String getLozinka() {
+        return lozinka;
     }
 
-    public void setSifra(String sifra) {
-        this.sifra = sifra;
+    public void setLozinka(String lozinka) {
+        this.lozinka = lozinka;
     }
 }
