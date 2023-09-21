@@ -10,6 +10,7 @@ import com.github.javafaker.Faker;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import zavrsni.model.*;
 
@@ -31,7 +32,9 @@ public class FakerInsert {
     private List<Korisnik> korisnici;
     private List<DnevnaPotrosnja> potrosnje;
     private List<Operater> operateri;
-    
+    private final String[] uloge = {"Backend developer","Frontend developer","UI Designer","Human Resources"};
+
+
     public FakerInsert(){
         faker = new Faker();
         session = HibernateUtil.getSession();
@@ -44,6 +47,7 @@ public class FakerInsert {
         kreirajKategorije();
         kreirajKorisnike();
         kreirajPotrosnje();
+        kreirajOperatere();
         session.getTransaction().commit();
     }
 
@@ -112,9 +116,12 @@ public class FakerInsert {
             o.setEmail(o.getIme().trim().toLowerCase().replace(" ", "").substring(0, 1)+o.getPrezime().trim().toLowerCase().replace(" ", "")+"@"+faker.internet().domainName());
             o.setDatumRodjenja(faker.date().birthday(15, 82));
             o.setSpol(faker.bool().bool());
+            Random random = new Random();
+            int x = random.nextInt(uloge.length-1);
+            o.setUloga(uloge[x]);
+            o.setLozinka("lozinka");
             session.persist(o);
             operateri.add(o);
-
         }
     }
     

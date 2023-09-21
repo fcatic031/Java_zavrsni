@@ -1,6 +1,8 @@
 package zavrsni.view;
 
 import org.apache.commons.validator.routines.EmailValidator;
+import zavrsni.controller.ObradaOperater;
+import zavrsni.model.Operater;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,6 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Autorizacija {
+
+    private ObradaOperater obrada;
+
     private JButton btnAutoriziraj;
     private JTextField txtEmail;
     private JLabel lblLozinka;
@@ -40,6 +45,13 @@ public class Autorizacija {
             if (txtLozinka.getPassword().length==0){
                 error(txtLozinka);
                 lblLozinkaError.setText("Lozinka obavezno");
+                return;
+            }
+
+            Operater o = obrada.autoriziraj(email,txtLozinka.getPassword().toString());
+
+            if (o==null){
+                System.out.println("Neispravna kombinacija");
                 return;
             }
 
