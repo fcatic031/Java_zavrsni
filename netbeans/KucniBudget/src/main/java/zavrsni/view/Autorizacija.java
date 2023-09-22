@@ -3,6 +3,7 @@ package zavrsni.view;
 import org.apache.commons.validator.routines.EmailValidator;
 import zavrsni.controller.ObradaOperater;
 import zavrsni.model.Operater;
+import zavrsni.util.Alati;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,10 +24,12 @@ public class Autorizacija {
     private JPasswordField txtLozinka;
 
     public Autorizacija() {
-    btnAutoriziraj.addActionListener(new ActionListener() {
+        obrada = new ObradaOperater();
+        btnAutoriziraj.addActionListener(new ActionListener() {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+
             var email = txtEmail.getText();
             reset();
 
@@ -48,14 +51,19 @@ public class Autorizacija {
                 return;
             }
 
-            Operater o = obrada.autoriziraj(email,txtLozinka.getPassword().toString());
+            Operater o = obrada.autoriziraj(email,new String(txtLozinka.getPassword()));
 
             if (o==null){
                 System.out.println("Neispravna kombinacija");
                 return;
             }
 
-            System.out.println("Uspjeh");
+
+            JPanel panel1 = new Izbornik().panel;
+            JFrame frame = Alati.getFrame();
+            Alati.runApp(panel1,"Izbornik");
+            Alati.disposeApp(frame);
+            //System.out.println("Uspjeh");
         }
     });
 }

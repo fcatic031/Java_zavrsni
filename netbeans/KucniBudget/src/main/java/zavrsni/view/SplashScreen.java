@@ -28,7 +28,7 @@ public class SplashScreen {
 
             JPanel panel1 = new Autorizacija().panel;
             JFrame frame = Alati.getFrame();
-            Alati.runApp(panel1);
+            Alati.runApp(panel1,"Autorizacija");
             Alati.disposeApp(frame);
 
 

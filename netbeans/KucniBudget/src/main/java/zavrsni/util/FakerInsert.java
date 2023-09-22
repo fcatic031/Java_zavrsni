@@ -4,6 +4,8 @@
  */
 package zavrsni.util;
 
+import de.mkammerer.argon2.Argon2;
+import de.mkammerer.argon2.Argon2Factory;
 import org.hibernate.Session;
 import com.github.javafaker.Faker;
 
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import zavrsni.controller.ObradaOperater;
 import zavrsni.model.*;
 
 /**
@@ -27,7 +30,7 @@ public class FakerInsert {
     private static final int BROJ_OPERATERA=33;
     private Session session;
     private Faker faker;
-    private List<Obitelj> obitelji;
+    public List<Obitelj> obitelji;
     private List<Kategorija> kategorije;
     private List<Korisnik> korisnici;
     private List<DnevnaPotrosnja> potrosnje;
@@ -42,6 +45,7 @@ public class FakerInsert {
         kategorije = new ArrayList<>();
         korisnici = new ArrayList<>();
         potrosnje = new ArrayList<>();
+        operateri = new ArrayList<>();
         session.getTransaction().begin();
         kreirajObitelji();
         kreirajKategorije();
@@ -109,19 +113,24 @@ public class FakerInsert {
 
     private void kreirajOperatere(){
         Operater o;
+        ObradaOperater oo=new ObradaOperater();
+        Argon2 argon2 = Argon2Factory.create();
+        String hash = argon2.hash(10, 65536, 1, "lozinka".toCharArray());
+
         for (int i=0;i<BROJ_OPERATERA;i++){
             o = new Operater();
             o.setIme(faker.dragonBall().character());
             o.setPrezime(faker.company().name());
-            o.setEmail(o.getIme().trim().toLowerCase().replace(" ", "").substring(0, 1)+o.getPrezime().trim().toLowerCase().replace(" ", "")+"@"+faker.internet().domainName());
+            o.setEmail(o.getIme().trim().toLowerCase().replace(" ", "").substring(0, 1)+o.getPrezime().trim().toLowerCase().replace(" ", "")+"@gmail.com");
             o.setDatumRodjenja(faker.date().birthday(15, 82));
             o.setSpol(faker.bool().bool());
             Random random = new Random();
             int x = random.nextInt(uloge.length-1);
             o.setUloga(uloge[x]);
-            o.setLozinka("lozinka");
+            o.setLozinka(hash);
             session.persist(o);
             operateri.add(o);
+            oo.setEntitet(o);
         }
     }
     

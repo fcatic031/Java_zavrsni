@@ -12,13 +12,16 @@ public class Alati {
         return OPERATER.getIme()+" "+ OPERATER.getPrezime()+" ("+OPERATER.getUloga()+ ")";
     }
 
-    public static void runApp(JPanel panel){
+    public static void runApp(JPanel panel,String title){
         frame= new JFrame();
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setTitle(title);
         frame.pack();
         frame.setVisible(true);
     }
+
+
 
     public static JFrame getFrame(){
         return frame;
