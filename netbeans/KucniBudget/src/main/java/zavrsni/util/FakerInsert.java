@@ -37,9 +37,9 @@ public class FakerInsert {
     private List<Operater> operateri;
     private final String[] uloge = {"Backend developer","Frontend developer","UI Designer","Human Resources"};
 
-
     public FakerInsert(){
         faker = new Faker();
+
         session = HibernateUtil.getSession();
         obitelji = new ArrayList<>();
         kategorije = new ArrayList<>();
@@ -53,6 +53,7 @@ public class FakerInsert {
         kreirajPotrosnje();
         kreirajOperatere();
         session.getTransaction().commit();
+
     }
 
     private void kreirajObitelji() {
