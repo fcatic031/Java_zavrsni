@@ -27,6 +27,7 @@
         </constraints>
         <properties>
           <background color="-1"/>
+          <text value="ahoweinc@gmail.com"/>
         </properties>
       </component>
       <component id="99346" class="javax.swing.JLabel" binding="lblLozinka">
@@ -72,6 +73,7 @@
         </constraints>
         <properties>
           <background color="-1"/>
+          <text value="lozinka"/>
         </properties>
       </component>
     </children>

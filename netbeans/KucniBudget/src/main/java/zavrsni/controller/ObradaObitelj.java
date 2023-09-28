@@ -31,7 +31,7 @@ public class ObradaObitelj extends Obrada<Obitelj> {
             for (Korisnik k : entitet.getClanovi()){
                 sb.append(k.getIme());
                 if (k!=entitet.getClanovi().get(entitet.getClanovi().size()-1)){
-                    sb.append(", ");
+                    sb.append(", \n");
                 }
             }
             throw new BudgetException(sb.toString());

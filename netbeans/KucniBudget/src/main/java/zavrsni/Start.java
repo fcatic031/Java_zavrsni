@@ -32,9 +32,9 @@ public class Start {
         //new FakerInsert();
         //dodavanjeObitelji();
 
-        //JPanel panel = new SplashScreen().panel;
-        //Alati.runApp(panel,"LOADING...");
-        JSON();
+        JPanel panel = new SplashScreen().panel;
+        Alati.runApp(panel,"LOADING...");
+        //JSON();
     }
 
     private static void dodavanjeObitelji(){
