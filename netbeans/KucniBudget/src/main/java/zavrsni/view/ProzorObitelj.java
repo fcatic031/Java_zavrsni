@@ -1,6 +1,7 @@
 package zavrsni.view;
 
 import zavrsni.controller.ObradaObitelj;
+import zavrsni.model.Obitelj;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -18,6 +19,7 @@ public class ProzorObitelj implements ViewInterface{
 
     public ProzorObitelj() {
         obrada= new ObradaObitelj();
+        load();
         btnDodaj.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -27,14 +29,25 @@ public class ProzorObitelj implements ViewInterface{
         lstValues.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                
+                if (e.getValueIsAdjusting()){
+                    return;
+                }
+                if (lstValues.getSelectedValue()==null){
+                    return;
+                }
+                obrada.setEntitet((Obitelj) lstValues.getSelectedValue());
+
+                fillView();
             }
         });
     }
 
     @Override
     public void load() {
-
+        DefaultListModel<Obitelj> model = new DefaultListModel<>();
+        model.addAll(obrada.read());
+        lstValues.setModel(model);
+        lstValues.repaint();
     }
 
     @Override

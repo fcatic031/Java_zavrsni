@@ -41,4 +41,8 @@ public class Obitelj extends Entitet{
 		this.clanovi = clanovi;
 	}
 
+	@Override
+	public String toString() {
+		return obiteljskoPrezime;
+	}
 }
