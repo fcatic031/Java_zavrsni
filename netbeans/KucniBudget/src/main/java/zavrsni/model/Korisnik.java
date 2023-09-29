@@ -40,6 +40,9 @@ public class Korisnik extends Osoba{
 	public void setPotrosnje(List<DnevnaPotrosnja> potrosnje) {
 		this.potrosnje = potrosnje;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return getIme() + " "+ getPrezime();
+	}
 }

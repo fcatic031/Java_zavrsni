@@ -43,5 +43,8 @@ public class Kategorija extends Entitet{
 		this.potrosnje = potrosnje;
 	}
 
-
+	@Override
+	public String toString() {
+		return naziv;
+	}
 }

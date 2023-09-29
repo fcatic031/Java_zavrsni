@@ -20,6 +20,16 @@ public Izbornik() {
             JPanel panel1 = new ProzorObitelj().panel;
             JFrame frame = Alati.getFrame();
             Alati.runApp(panel1,"Obitelj");
+            Alati.disposeApp(frame);
+        }
+    });
+    btnKategorija.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JPanel panel1 = new ProzorKategorija().panel;
+            JFrame frame = Alati.getFrame();
+            Alati.runApp(panel1,"Kategorija");
+            Alati.disposeApp(frame);
         }
     });
 }
