@@ -1,8 +1,8 @@
 package zavrsni.view;
 
 import org.apache.commons.validator.routines.EmailValidator;
-import zavrsni.controller.ObradaOperater;
-import zavrsni.model.Operater;
+import zavrsni.controller.ObradaKorisnik;
+import zavrsni.model.Korisnik;
 import zavrsni.util.Alati;
 
 import javax.swing.*;
@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 
 public class Autorizacija {
 
-    private ObradaOperater obrada;
+    private ObradaKorisnik obrada;
 
     private JButton btnAutoriziraj;
     private JTextField txtEmail;
@@ -24,7 +24,7 @@ public class Autorizacija {
     private JPasswordField txtLozinka;
 
     public Autorizacija() {
-        obrada = new ObradaOperater();
+        obrada = new ObradaKorisnik();
         btnAutoriziraj.addActionListener(new ActionListener() {
 
         @Override
@@ -51,9 +51,9 @@ public class Autorizacija {
                 return;
             }
 
-            Operater o = obrada.autoriziraj(email,new String(txtLozinka.getPassword()));
+            Korisnik k = obrada.autoriziraj(email,new String(txtLozinka.getPassword()));
 
-            if (o==null){
+            if (k==null){
                 System.out.println("Neispravna kombinacija");
                 return;
             }

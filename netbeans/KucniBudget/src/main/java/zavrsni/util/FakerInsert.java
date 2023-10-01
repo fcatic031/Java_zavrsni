@@ -12,9 +12,7 @@ import com.github.javafaker.Faker;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-import zavrsni.controller.ObradaOperater;
 import zavrsni.model.*;
 
 /**
@@ -34,7 +32,7 @@ public class FakerInsert {
     private List<Kategorija> kategorije;
     private List<Korisnik> korisnici;
     private List<DnevnaPotrosnja> potrosnje;
-    private List<Operater> operateri;
+    private List<Korisnik> operateri;
     private final String[] uloge = {"Backend developer","Frontend developer","UI Designer","Human Resources"};
 
     public FakerInsert(){
@@ -51,7 +49,6 @@ public class FakerInsert {
         kreirajKategorije();
         kreirajKorisnike();
         kreirajPotrosnje();
-        kreirajOperatere();
         session.getTransaction().commit();
 
     }
@@ -81,6 +78,8 @@ public class FakerInsert {
     private void kreirajKorisnike() {
         Korisnik k;
         Obitelj o;
+        Argon2 argon2 = Argon2Factory.create();
+        String hash = argon2.hash(10, 65536, 1, "lozinka".toCharArray());
         for (int i=0; i<BROJ_KORISNIKA;i++){
             k = new Korisnik();
             k.setIme(faker.hobbit().character());
@@ -93,6 +92,8 @@ public class FakerInsert {
             k.setEmail(k.getIme().trim().toLowerCase().replace(" ", "").substring(0, 1)+k.getPrezime().trim().toLowerCase().replace(" ", "")+"@"+faker.internet().domainName());
             k.setDatumRodjenja(faker.date().birthday(15, 82));
             k.setSpol(faker.bool().bool());
+            k.setUloga(true);
+            k.setLozinka(hash);
             session.persist(k);
             korisnici.add(k);
         }
@@ -112,28 +113,4 @@ public class FakerInsert {
         }
     }
 
-    private void kreirajOperatere(){
-        Operater o;
-        ObradaOperater oo=new ObradaOperater();
-        Argon2 argon2 = Argon2Factory.create();
-        String hash = argon2.hash(10, 65536, 1, "lozinka".toCharArray());
-
-        for (int i=0;i<BROJ_OPERATERA;i++){
-            o = new Operater();
-            o.setIme(faker.dragonBall().character());
-            o.setPrezime(faker.company().name());
-            o.setEmail(o.getIme().trim().toLowerCase().replace(" ", "").substring(0, 1)+o.getPrezime().trim().toLowerCase().replace(" ", "")+"@gmail.com");
-            o.setDatumRodjenja(faker.date().birthday(15, 82));
-            o.setSpol(faker.bool().bool());
-            Random random = new Random();
-            int x = random.nextInt(uloge.length-1);
-            o.setUloga(uloge[x]);
-            o.setLozinka(hash);
-            session.persist(o);
-            operateri.add(o);
-            oo.setEntitet(o);
-        }
-    }
-    
-    
 }

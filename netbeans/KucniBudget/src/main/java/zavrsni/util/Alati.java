@@ -1,11 +1,11 @@
 package zavrsni.util;
 
-import zavrsni.model.Operater;
+import zavrsni.model.Korisnik;
 
 import javax.swing.*;
 
 public class Alati {
-    public static Operater OPERATER;
+    public static Korisnik OPERATER;
     public static JFrame frame;
 
     public static String getOperater(){

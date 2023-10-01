@@ -22,7 +22,6 @@
     <mapping class="zavrsni.model.Obitelj"/>
     <mapping class="zavrsni.model.Korisnik"/>
     <mapping class="zavrsni.model.DnevnaPotrosnja"/>
-    <mapping class="zavrsni.model.Operater" />
     
   </session-factory>
 </hibernate-configuration>
