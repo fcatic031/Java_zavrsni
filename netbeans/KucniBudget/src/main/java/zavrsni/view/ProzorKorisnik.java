@@ -1,12 +1,14 @@
 package zavrsni.view;
 
 import zavrsni.controller.ObradaKorisnik;
-import zavrsni.model.Kategorija;
 import zavrsni.model.Korisnik;
+import zavrsni.util.Alati;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ProzorKorisnik implements ViewInterface{
     protected JPanel panel;
@@ -18,6 +20,10 @@ public class ProzorKorisnik implements ViewInterface{
     private JTextField txtObitelj;
     private JTextField txtUloga;
     private JTextField txtLozinka;
+    private JButton btnNazad;
+    private JButton btnDodaj;
+    private JButton btnPromjeni;
+    private JButton btnObrisi;
     private ObradaKorisnik obrada;
 
 public ProzorKorisnik() {
@@ -37,6 +43,33 @@ public ProzorKorisnik() {
             fillView();
         }
     });
+    btnDodaj.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    });
+    btnPromjeni.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    });
+    btnObrisi.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    });
+    btnNazad.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JPanel panel1 = new Izbornik().panel;
+            JFrame frame = Alati.getFrame();
+            Alati.runApp(panel1,"Izbornik");
+            Alati.disposeApp(frame);
+        }
+    });
 }
 
     @Override
@@ -49,11 +82,26 @@ public ProzorKorisnik() {
 
     @Override
     public void fillModel() {
+        var e = obrada.getEntitet();
 
+        e.setIme(txtIme.getText());
+        e.setPrezime(txtPrezime.getText());
+        e.setEmail(txtEmail.getText());
+        //e.setDatumRodjenja();
+
+        //e.setObitelj();
     }
 
     @Override
     public void fillView() {
+        var e = obrada.getEntitet();
+
+        txtIme.setText(e.getIme());
+        txtPrezime.setText(e.getPrezime());
+        txtEmail.setText(e.getEmail());
+        txtObitelj.setText(e.getObitelj().getObiteljskoPrezime());
+        txtDatumRodjenja.setText(e.getDatumRodjenja().toString());
+
 
     }
 }
