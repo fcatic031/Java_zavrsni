@@ -2,6 +2,7 @@ package zavrsni.controller;
 
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
+import org.apache.commons.validator.routines.EmailValidator;
 import zavrsni.model.Korisnik;
 import zavrsni.util.BudgetException;
 
@@ -31,6 +32,7 @@ public class ObradaKorisnik extends Obrada<Korisnik> {
         controlEmail();
         controlDatumRodjenja();
         controlSpol();
+        controlObitelj();
     }
 
     @Override
@@ -56,6 +58,10 @@ public class ObradaKorisnik extends Obrada<Korisnik> {
         }
         if (!entitet.getEmail().contains("@")){
             throw new BudgetException("E-mail ne sadrzi \"@\"");
+        }
+
+        if (!EmailValidator.getInstance().isValid(entitet.getEmail())){
+            throw new BudgetException("E-mail nije validan");
         }
     }
     private void controlDatumRodjenja() throws BudgetException {

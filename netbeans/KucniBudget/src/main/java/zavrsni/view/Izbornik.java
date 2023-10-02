@@ -8,9 +8,9 @@ import java.awt.event.ActionListener;
 
 public class Izbornik {
     protected JPanel panel;
-    private JButton button1;
-    private JButton button2;
-    private JButton button3;
+    private JButton btnPotrosnja;
+    private JButton btnStatistika;
+    private JButton btnKorisnik;
     private JButton btnObitelj;
     private JButton btnKategorija;
 public Izbornik() {
@@ -29,6 +29,15 @@ public Izbornik() {
             JPanel panel1 = new ProzorKategorija().panel;
             JFrame frame = Alati.getFrame();
             Alati.runApp(panel1,"Kategorija");
+            Alati.disposeApp(frame);
+        }
+    });
+    btnKorisnik.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JPanel panel1 = new ProzorKorisnik().panel;
+            JFrame frame = Alati.getFrame();
+            Alati.runApp(panel1,"Korisnik");
             Alati.disposeApp(frame);
         }
     });
