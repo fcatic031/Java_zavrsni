@@ -6,7 +6,9 @@ import org.apache.commons.validator.routines.EmailValidator;
 import zavrsni.model.Korisnik;
 import zavrsni.util.BudgetException;
 
+import java.text.Collator;
 import java.util.List;
+import java.util.Locale;
 
 public class ObradaKorisnik extends Obrada<Korisnik> {
 
@@ -14,6 +16,25 @@ public class ObradaKorisnik extends Obrada<Korisnik> {
     @Override
     public List<Korisnik> read() {
         return session.createQuery("from Korisnik",Korisnik.class).list();
+    }
+
+
+    public List<Korisnik> read(String uvjet) {
+        uvjet = uvjet==null ? "" : uvjet;
+        uvjet = uvjet.trim();
+        uvjet = "%"+uvjet+"%";
+
+        List<Korisnik> list = session.createQuery("from Korisnik k " +
+                " where concat(k.ime,' ',k.prezime,' ',k.ime,' ') like :uvjet "
+                +" order by k.prezime,k.ime",Korisnik.class)
+                .setParameter("uvjet",uvjet)
+                .list();
+
+        Collator spCollator = Collator.getInstance(Locale.of("hr", "HR"));
+
+        list.sort((e1, e2)-> spCollator.compare(e1.getPrezime(), e2.getPrezime()));
+
+        return list;
     }
 
     @Override

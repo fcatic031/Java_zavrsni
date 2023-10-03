@@ -24,6 +24,9 @@ public class ProzorKorisnik implements ViewInterface{
     private JButton btnDodaj;
     private JButton btnPromjeni;
     private JButton btnObrisi;
+    private JTextField txtTrazi;
+    private JLabel lblTrazi;
+    private JButton btnTrazi;
     private ObradaKorisnik obrada;
 
 public ProzorKorisnik() {
@@ -68,6 +71,15 @@ public ProzorKorisnik() {
             JFrame frame = Alati.getFrame();
             Alati.runApp(panel1,"Izbornik");
             Alati.disposeApp(frame);
+        }
+    });
+    btnTrazi.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            DefaultListModel<Korisnik> model = new DefaultListModel<>();
+            model.addAll(obrada.read(txtTrazi.getText()));
+            lstValues.setModel(model);
+            lstValues.repaint();
         }
     });
 }

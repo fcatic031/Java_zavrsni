@@ -41,6 +41,7 @@ public class Start {
         Alati.runApp(panel,"LOADING...");
         //JSON();
 
+
     }
 
     private static void dodavanjeObitelji(){
