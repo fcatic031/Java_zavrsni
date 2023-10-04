@@ -68,6 +68,7 @@ public class ProzorKategorija implements ViewInterface {
                     load();
                 } catch (BudgetException ex){
                     JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),ex.getPoruka());
+                    obrada.refresh();
                 }
             }
         });
