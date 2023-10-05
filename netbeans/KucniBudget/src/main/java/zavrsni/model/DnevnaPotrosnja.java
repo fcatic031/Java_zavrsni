@@ -50,6 +50,9 @@ public class DnevnaPotrosnja extends Entitet{
 	public void setPotrosnja(BigDecimal potrosnja) {
 		this.potrosnja = potrosnja;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return getDatum().toString()+" "+getKorisnik().getPrezime()+" "+getKorisnik().getIme();
+	}
 }
