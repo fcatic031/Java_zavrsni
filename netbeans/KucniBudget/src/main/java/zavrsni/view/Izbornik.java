@@ -41,5 +41,14 @@ public Izbornik() {
             Alati.disposeApp(frame);
         }
     });
+    btnPotrosnja.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JPanel panel1 = new ProzorDnevnaPotrosnja().panel;
+            JFrame frame = Alati.getFrame();
+            Alati.runApp(panel1,"Dnevna potrošnja");
+            Alati.disposeApp(frame);
+        }
+    });
 }
 }

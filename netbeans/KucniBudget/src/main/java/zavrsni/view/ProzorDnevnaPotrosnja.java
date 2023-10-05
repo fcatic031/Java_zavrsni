@@ -1,26 +1,45 @@
 package zavrsni.view;
 
+import com.github.lgooddatepicker.components.DatePicker;
+import com.github.lgooddatepicker.components.DatePickerSettings;
+import com.github.lgooddatepicker.components.DateTimePicker;
+import com.github.lgooddatepicker.components.TimePickerSettings;
 import zavrsni.controller.ObradaDnevnaPotrosnja;
+import zavrsni.controller.ObradaKategorija;
+import zavrsni.controller.ObradaKorisnik;
 import zavrsni.model.DnevnaPotrosnja;
+import zavrsni.model.Kategorija;
+import zavrsni.model.Korisnik;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class ProzorDnevnaPotrosnja implements ViewInterface {
     protected JPanel panel;
     private JList lstValues;
-    private JTextField txtDatum;
-    private JTextField txtKorisnik;
-    private JTextField txtKategorija;
     private JTextField txtPotrosnja;
+    private JComboBox cmbKorisnik;
+    private JComboBox cmbKategorija;
+    private DatePicker dpDatum;
 
 
     private ObradaDnevnaPotrosnja obrada;
 
 public ProzorDnevnaPotrosnja() {
     obrada = new ObradaDnevnaPotrosnja();
+
+    loadKorisnik();
+    loadKategorija();
+    settingsDate();
     load();
 
     lstValues.addListSelectionListener(new ListSelectionListener() {
@@ -40,6 +59,43 @@ public ProzorDnevnaPotrosnja() {
     });
 }
 
+public void loadKorisnik(){
+    DefaultComboBoxModel<Korisnik> model = new DefaultComboBoxModel<>();
+    Korisnik k = new Korisnik();
+    k.setId(0);
+    k.setIme("Odaberite ");
+    k.setPrezime("korisnika: ");
+    model.addElement(k);
+
+    model.addAll(new ObradaKorisnik().read());
+
+    cmbKorisnik.setModel(model);
+    cmbKorisnik.repaint();
+}
+
+public void loadKategorija(){
+    DefaultComboBoxModel<Kategorija> model = new DefaultComboBoxModel<>();
+    Kategorija k = new Kategorija();
+    k.setId(0);
+    k.setNaziv("Odaberite kategoriju: ");
+    model.addElement(k);
+
+    model.addAll(new ObradaKategorija().read());
+
+    cmbKategorija.setModel(model);
+    cmbKategorija.repaint();
+}
+
+public void settingsDate(){
+    DatePickerSettings dps = new DatePickerSettings(Locale.of("hr","HR"));
+    dps.setFormatForDatesCommonEra("dd. MM. YYYY.");
+    dps.setTranslationClear("Očisti");
+    dps.setTranslationToday("Danas");
+    dpDatum.setSettings(dps);
+
+
+}
+
     @Override
     public void load() {
         DefaultListModel<DnevnaPotrosnja> model = new DefaultListModel<>();
@@ -53,16 +109,33 @@ public ProzorDnevnaPotrosnja() {
     public void fillModel() {
         var e = obrada.getEntitet();
         //e.setDatum(new Date(txtDatum.getText()));
-        //e.setKorisnik(txtKorisnik.getText());
-        //e.setKategorija(txtKategorija.getText());
+        e.setKorisnik((Korisnik) cmbKorisnik.getSelectedItem());
+        e.setKategorija((Kategorija) cmbKategorija.getSelectedItem());
         e.setPotrosnja(new BigDecimal(txtPotrosnja.getText()));
+
+        LocalDate ld = dpDatum.getDate();
+
+        e.setDatum(Date.from(ld.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+
     }
 
     @Override
     public void fillView() {
         var e = obrada.getEntitet();
 
+        cmbKategorija.setSelectedItem(e.getKategorija());
+        cmbKorisnik.setSelectedItem(e.getKorisnik());
         txtPotrosnja.setText(e.getPotrosnja().toString());
-        
+
+        if(e.getDatum()==null){
+            dpDatum.setDate(null);
+        }else{
+            LocalDate ld = e.getDatum().toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+            dpDatum.setDate(ld);
+
+        }
+
     }
 }
