@@ -13,6 +13,22 @@ public class ObradaDnevnaPotrosnja extends Obrada<DnevnaPotrosnja> {
         return session.createQuery("from DnevnaPotrosnja", DnevnaPotrosnja.class).list();
     }
 
+    public List<DnevnaPotrosnja> read(String uvjet) {
+        uvjet = uvjet==null ? "" : uvjet;
+        uvjet = uvjet.trim();
+        uvjet = "%"+uvjet+"%";
+
+        List<DnevnaPotrosnja> lista = session
+                .createQuery("from DnevnaPotrosnja dp " +
+                        "inner join korisnik k on dp.korisnik=k.id"+
+                        //"where concat(k.ime,' ',k.prezime,' ',dp.kategorija,' ',dp.potrosnja) " +
+                        "where k.ime "+
+                        "like :uvjet order by dp.potrosnja", DnevnaPotrosnja.class)
+                .setParameter("uvjet",uvjet)
+                .list();
+        return lista;
+    }
+
     @Override
     protected void controlUnos() throws BudgetException {
         controlKorisnik();
