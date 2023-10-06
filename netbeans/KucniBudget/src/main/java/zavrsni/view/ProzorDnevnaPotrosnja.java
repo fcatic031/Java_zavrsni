@@ -2,8 +2,6 @@ package zavrsni.view;
 
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
-import com.github.lgooddatepicker.components.DateTimePicker;
-import com.github.lgooddatepicker.components.TimePickerSettings;
 import zavrsni.controller.ObradaDnevnaPotrosnja;
 import zavrsni.controller.ObradaKategorija;
 import zavrsni.controller.ObradaKorisnik;
@@ -14,12 +12,11 @@ import zavrsni.model.Korisnik;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -30,6 +27,9 @@ public class ProzorDnevnaPotrosnja implements ViewInterface {
     private JComboBox cmbKorisnik;
     private JComboBox cmbKategorija;
     private DatePicker dpDatum;
+    private JTextField txtTrazi;
+    private JButton btnTrazi;
+    private JButton btnJSON;
 
 
     private ObradaDnevnaPotrosnja obrada;
@@ -55,6 +55,21 @@ public ProzorDnevnaPotrosnja() {
 
             fillView();
 
+        }
+    });
+    btnTrazi.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    });
+    btnTrazi.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            DefaultListModel<DnevnaPotrosnja> model = new DefaultListModel<>();
+            model.addAll(obrada.read(txtTrazi.getText()));
+            lstValues.setModel(model);
+            lstValues.repaint();
         }
     });
 }
@@ -108,7 +123,6 @@ public void settingsDate(){
     @Override
     public void fillModel() {
         var e = obrada.getEntitet();
-        //e.setDatum(new Date(txtDatum.getText()));
         e.setKorisnik((Korisnik) cmbKorisnik.getSelectedItem());
         e.setKategorija((Kategorija) cmbKategorija.getSelectedItem());
         e.setPotrosnja(new BigDecimal(txtPotrosnja.getText()));
