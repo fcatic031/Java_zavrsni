@@ -1,5 +1,6 @@
 package zavrsni.view;
 
+import com.github.lgooddatepicker.components.DatePicker;
 import zavrsni.controller.ObradaKorisnik;
 import zavrsni.model.Korisnik;
 import zavrsni.util.Alati;
@@ -29,6 +30,7 @@ public class ProzorKorisnik implements ViewInterface{
     private JTextField txtTrazi;
     private JLabel lblTrazi;
     private JButton btnTrazi;
+    private DatePicker dpDatum;
     private ObradaKorisnik obrada;
 
 public ProzorKorisnik() {
