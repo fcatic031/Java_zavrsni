@@ -8,6 +8,7 @@ import zavrsni.controller.ObradaKorisnik;
 import zavrsni.model.DnevnaPotrosnja;
 import zavrsni.model.Kategorija;
 import zavrsni.model.Korisnik;
+import zavrsni.util.Alati;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -30,6 +31,7 @@ public class ProzorDnevnaPotrosnja implements ViewInterface {
     private JTextField txtTrazi;
     private JButton btnTrazi;
     private JButton btnJSON;
+    private JButton btnNatrag;
 
 
     private ObradaDnevnaPotrosnja obrada;
@@ -70,6 +72,15 @@ public ProzorDnevnaPotrosnja() {
             model.addAll(obrada.read(txtTrazi.getText()));
             lstValues.setModel(model);
             lstValues.repaint();
+        }
+    });
+    btnNatrag.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JPanel panel1 = new Izbornik().panel;
+            JFrame frame = Alati.getFrame();
+            Alati.runApp(panel1,"Izbornik");
+            Alati.disposeApp(frame);
         }
     });
 }
