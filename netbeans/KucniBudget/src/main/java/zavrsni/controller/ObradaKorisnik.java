@@ -99,14 +99,14 @@ public class ObradaKorisnik extends Obrada<Korisnik> {
 
 
     public Korisnik autoriziraj(String email, String lozinka) {
-        Korisnik o;
+        Korisnik k;
 
         try {
-            o = session.createQuery("from Korisnik k where k.email=:email", Korisnik.class).setParameter("email", email).getSingleResult();
+            k = session.createQuery("from Korisnik k where k.email=:email", Korisnik.class).setParameter("email", email).getSingleResult();
 
             Argon2 argon2 = Argon2Factory.create();
 
-            return argon2.verify(o.getLozinka(), lozinka.toCharArray()) ? o : null;
+            return argon2.verify(k.getLozinka(), lozinka.toCharArray()) ? k : null;
 
         } catch (Exception e) {
             return null;

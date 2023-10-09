@@ -127,7 +127,6 @@ public class Start {
         String json = gson.toJson(target, listType);
 
         System.out.println(json);
-
     }
 
     void ucitajIzJSON(){
@@ -170,7 +169,6 @@ public class Start {
             if(f.getDeclaringClass() == Obitelj.class && f.getName().equals("clanovi")){
                 return true;
             }
-
 
             return false;
         }
