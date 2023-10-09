@@ -192,7 +192,7 @@
           <text value="Traži"/>
         </properties>
       </component>
-      <component id="fbabf" class="com.github.lgooddatepicker.components.DatePicker" binding="dpDatum">
+      <component id="592b2" class="com.github.lgooddatepicker.components.DatePicker" binding="dpDatum">
         <constraints>
           <grid row="9" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>

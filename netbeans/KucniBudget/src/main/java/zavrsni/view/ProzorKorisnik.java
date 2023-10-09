@@ -1,6 +1,7 @@
 package zavrsni.view;
 
 import com.github.lgooddatepicker.components.DatePicker;
+import com.github.lgooddatepicker.components.DatePickerSettings;
 import zavrsni.controller.ObradaKorisnik;
 import zavrsni.model.Korisnik;
 import zavrsni.util.Alati;
@@ -12,6 +13,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.Locale;
 
 public class ProzorKorisnik implements ViewInterface{
     protected JPanel panel;
@@ -35,6 +40,8 @@ public class ProzorKorisnik implements ViewInterface{
 
 public ProzorKorisnik() {
     obrada = new ObradaKorisnik();
+    settingsDate();
+
     load();
     lstValues.addListSelectionListener(new ListSelectionListener() {
         @Override
@@ -89,6 +96,16 @@ public ProzorKorisnik() {
 
 }
 
+    public void settingsDate(){
+        DatePickerSettings dps = new DatePickerSettings(Locale.of("hr","HR"));
+        dps.setFormatForDatesCommonEra("dd. MM. YYYY.");
+        dps.setTranslationClear("Očisti");
+        dps.setTranslationToday("Danas");
+        dpDatum.setSettings(dps);
+
+
+    }
+
     @Override
     public void load() {
         DefaultListModel <Korisnik> model = new DefaultListModel<>();
@@ -104,7 +121,9 @@ public ProzorKorisnik() {
         e.setIme(txtIme.getText());
         e.setPrezime(txtPrezime.getText());
         e.setEmail(txtEmail.getText());
-        //e.setDatumRodjenja();
+        LocalDate ld = dpDatum.getDate();
+
+        e.setDatumRodjenja(Date.from(ld.atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
         //e.setObitelj();
     }
@@ -117,8 +136,15 @@ public ProzorKorisnik() {
         txtPrezime.setText(e.getPrezime());
         txtEmail.setText(e.getEmail());
         txtObitelj.setText(e.getObitelj().getObiteljskoPrezime());
-        txtDatumRodjenja.setText(e.getDatumRodjenja().toString());
+        if(e.getDatumRodjenja()==null){
+            dpDatum.setDate(null);
+        }else{
+            LocalDate ld = e.getDatumRodjenja().toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+            dpDatum.setDate(ld);
 
+        }
 
     }
 }

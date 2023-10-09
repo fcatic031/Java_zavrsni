@@ -20,9 +20,10 @@ public class ObradaDnevnaPotrosnja extends Obrada<DnevnaPotrosnja> {
 
         List<DnevnaPotrosnja> lista = session
                 .createQuery("from DnevnaPotrosnja dp " +
-                        "inner join korisnik k on dp.korisnik=k.id"+
-                        //"where concat(k.ime,' ',k.prezime,' ',dp.kategorija,' ',dp.potrosnja) " +
-                        "where k.ime "+
+                        "inner join Korisnik k on dp.korisnik_id=k.id"+
+                        "where concat(k.ime,' ',k.prezime,' ',k.ime,' ') " +
+                        //"where dp.potrosnja "+
+                        //"where dp.korisnik "+
                         "like :uvjet order by dp.potrosnja", DnevnaPotrosnja.class)
                 .setParameter("uvjet",uvjet)
                 .list();
