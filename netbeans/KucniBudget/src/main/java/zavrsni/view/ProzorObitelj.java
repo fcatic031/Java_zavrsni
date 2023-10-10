@@ -1,6 +1,7 @@
 package zavrsni.view;
 
 
+import zavrsni.controller.ObradaKorisnik;
 import zavrsni.controller.ObradaObitelj;
 import zavrsni.model.Korisnik;
 import zavrsni.model.Obitelj;
@@ -12,6 +13,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ProzorObitelj implements ViewInterface{
     protected JPanel panel;
@@ -27,6 +30,8 @@ public class ProzorObitelj implements ViewInterface{
 
     public ProzorObitelj() {
         obrada= new ObradaObitelj();
+        ObradaKorisnik ok = new ObradaKorisnik();
+        ProzorKorisnik pk = new ProzorKorisnik();
         load();
         btnDodaj.addActionListener(new ActionListener() {
             @Override
@@ -112,6 +117,27 @@ public class ProzorObitelj implements ViewInterface{
             }
         });
 
+        lstClanova.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                if (e.getClickCount()==2){
+
+                    Korisnik k = (Korisnik) lstClanova.getSelectedValue();
+
+                    JPanel panel1 = new ProzorKorisnik().panel;
+                    JFrame frame = Alati.getFrame();
+                    Alati.runApp(panel1,"Korisnik");
+                    //Alati.disposeApp(frame);
+                    //pk.lstValues.getSelectedValue()=k;
+                    pk.fillView(k);
+                    //ObradaKorisnik ok = new ObradaKorisnik();
+
+                    //ok.setEntitet(k);
+
+                }
+            }
+        });
     }
 
     @Override

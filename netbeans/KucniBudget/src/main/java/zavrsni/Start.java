@@ -97,6 +97,8 @@ public class Start {
         k.setPrezime("Probanic");
         k.setEmail("proba@gmail.com");
         k.setDatumRodjenja(new Date());
+        k.setSpol(true);
+        k.setUloga(false);
 
         Argon2 argon2 = Argon2Factory.create();
         String hash = argon2.hash(10, 65536, 1, "lozinka".toCharArray());

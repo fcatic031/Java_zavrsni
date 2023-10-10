@@ -9,6 +9,7 @@ import zavrsni.model.DnevnaPotrosnja;
 import zavrsni.model.Kategorija;
 import zavrsni.model.Korisnik;
 import zavrsni.util.Alati;
+import zavrsni.util.BudgetException;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -32,6 +33,9 @@ public class ProzorDnevnaPotrosnja implements ViewInterface {
     private JButton btnTrazi;
     private JButton btnJSON;
     private JButton btnNatrag;
+    private JButton btnDodaj;
+    private JButton btnPromjeni;
+    private JButton btnObrisi;
 
 
     private ObradaDnevnaPotrosnja obrada;
@@ -81,6 +85,63 @@ public ProzorDnevnaPotrosnja() {
             JFrame frame = Alati.getFrame();
             Alati.runApp(panel1,"Izbornik");
             Alati.disposeApp(frame);
+        }
+    });
+    btnDodaj.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            obrada.setEntitet(new DnevnaPotrosnja());
+            fillModel();
+            try {
+                obrada.create();
+                load();
+            } catch (BudgetException ex){
+                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),ex.getPoruka());
+            }
+        }
+    });
+    btnPromjeni.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (lstValues.getSelectedValue()==null){
+                return;
+            }
+
+            var dnevnaPotrosnja = lstValues.getSelectedValue();
+            obrada.setEntitet((DnevnaPotrosnja) dnevnaPotrosnja);
+            fillModel();
+            try {
+                obrada.update();
+                load();
+            } catch (BudgetException ex){
+                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),ex.getPoruka());
+                obrada.refresh();
+            }
+        }
+    });
+    btnObrisi.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (lstValues.getSelectedValue()==null){
+                return;
+            }
+            var dnevnaPotrosnja = lstValues.getSelectedValue();
+            obrada.setEntitet((DnevnaPotrosnja) dnevnaPotrosnja);
+
+            if (JOptionPane.showConfirmDialog(JOptionPane.getRootFrame(), ((Korisnik)((DnevnaPotrosnja) dnevnaPotrosnja).getKorisnik()).getIme()
+                            +" "+((Korisnik)((DnevnaPotrosnja) dnevnaPotrosnja).getKorisnik()).getPrezime()
+                            +"\n"+((DnevnaPotrosnja) dnevnaPotrosnja).getDatum().toString()
+                            +"\n"+((Kategorija)((DnevnaPotrosnja) dnevnaPotrosnja).getKategorija()).getNaziv(), "Sigurno obrisati?",
+                    JOptionPane.YES_NO_OPTION)!=JOptionPane.YES_OPTION){
+                return;
+            }
+
+            try {
+                obrada.delete();
+                load();
+            } catch (BudgetException ex){
+                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),ex.getPoruka());
+            }
         }
     });
 }

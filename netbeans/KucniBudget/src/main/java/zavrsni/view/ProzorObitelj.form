@@ -66,9 +66,7 @@
           <component id="cd71b" class="javax.swing.JList" binding="lstClanova">
             <constraints/>
             <properties>
-              <model>
-                <item value="&lt;Korisnik&gt;"/>
-              </model>
+              <model/>
             </properties>
           </component>
         </children>
