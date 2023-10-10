@@ -90,8 +90,11 @@ public class ObradaKorisnik extends Obrada<Korisnik> {
             throw new BudgetException("Datum rodjenja je prazan");
         }
     }
-    private void controlSpol() {
-        //zasad ne znam tocno kako bi gresku prikazao kod unosa spola
+    private void controlSpol() throws BudgetException{
+        Boolean spol = entitet.isSpol();
+        if (spol == null){
+            throw new BudgetException("Spol je null");
+        }
     }
     private void controlObitelj() {
         //korisnik moze biti bez obitelji

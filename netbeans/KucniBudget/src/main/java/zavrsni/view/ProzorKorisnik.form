@@ -18,9 +18,7 @@
           <component id="ee593" class="javax.swing.JList" binding="lstValues">
             <constraints/>
             <properties>
-              <model>
-                <item value="&lt;Korisnik&gt;"/>
-              </model>
+              <model/>
             </properties>
           </component>
         </children>

@@ -25,7 +25,6 @@ public class ProzorKorisnik implements ViewInterface{
     private JTextField txtIme;
     private JTextField txtPrezime;
     private JTextField txtEmail;
-    private JTextField txtDatumRodjenja;
     private JTextField txtLozinka;
     private JButton btnNazad;
     private JButton btnDodaj;
@@ -40,6 +39,7 @@ public class ProzorKorisnik implements ViewInterface{
     private JRadioButton rbtnMusko;
     private JLabel lblSpolError;
     private ObradaKorisnik obrada;
+
 
 public ProzorKorisnik() {
     obrada = new ObradaKorisnik();
@@ -65,18 +65,56 @@ public ProzorKorisnik() {
     btnDodaj.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            obrada.setEntitet(new Korisnik());
+            fillModel();
+            try {
+                obrada.create();
+                load();
+            } catch (BudgetException ex){
+                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),ex.getPoruka());
+            }
         }
     });
     btnPromjeni.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
+            if (lstValues.getSelectedValue()==null){
+                return;
+            }
 
+            var korisnik = lstValues.getSelectedValue();
+            obrada.setEntitet((Korisnik) korisnik);
+            fillModel();
+            try {
+                obrada.update();
+                load();
+            } catch (BudgetException ex){
+                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),ex.getPoruka());
+                obrada.refresh();
+            }
         }
+
     });
     btnObrisi.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
+            if (lstValues.getSelectedValue()==null){
+                return;
+            }
+            var korisnik = lstValues.getSelectedValue();
+            obrada.setEntitet((Korisnik) korisnik);
+
+            if (JOptionPane.showConfirmDialog(JOptionPane.getRootFrame(), ((Korisnik) korisnik).getIme() +" "+((Korisnik) korisnik).getPrezime(), "Sigurno obrisati?",
+                    JOptionPane.YES_NO_OPTION)!=JOptionPane.YES_OPTION){
+                return;
+            }
+
+            try {
+                obrada.delete();
+                load();
+            } catch (BudgetException ex){
+                JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),ex.getPoruka());
+            }
 
         }
     });
@@ -206,4 +244,33 @@ public ProzorKorisnik() {
         }
 
     }
+
+    public void fillView(Korisnik e) {
+        //e = obrada.getEntitet();
+
+        txtIme.setText(e.getIme());
+        txtPrezime.setText(e.getPrezime());
+        txtEmail.setText(e.getEmail());
+        cmbObitelj.setSelectedItem(e.getObitelj());
+
+        if (e.isSpol()){
+            rbtnMusko.setSelected(true);
+            rbtnZensko.setSelected(false);
+        } else {
+            rbtnZensko.setSelected(true);
+            rbtnMusko.setSelected(false);
+        }
+
+        if(e.getDatumRodjenja()==null){
+            dpDatum.setDate(null);
+        }else{
+            LocalDate ld = e.getDatumRodjenja().toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+            dpDatum.setDate(ld);
+
+        }
+
+    }
+
 }

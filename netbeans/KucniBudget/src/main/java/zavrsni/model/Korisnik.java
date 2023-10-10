@@ -15,7 +15,7 @@ public class Korisnik extends Entitet{
 	private String email;
 	private Date datumRodjenja;
 	private Boolean spol;
-	//ULOGA -> false korisnik, true operater
+	//ULOGA -> false operater, true korisnik
 	private Boolean uloga;
 	private String lozinka;
 	@ManyToOne
