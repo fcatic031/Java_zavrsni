@@ -50,5 +50,14 @@ public Izbornik() {
             Alati.disposeApp(frame);
         }
     });
+    btnStatistika.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JPanel panel1 = new ProzorStatistika().panel;
+            JFrame frame = Alati.getFrame();
+            Alati.runApp(panel1,"Statistika");
+            Alati.disposeApp(frame);
+        }
+    });
 }
 }
