@@ -4,6 +4,7 @@ import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import org.apache.commons.validator.routines.EmailValidator;
 import zavrsni.model.Korisnik;
+import zavrsni.model.Obitelj;
 import zavrsni.util.BudgetException;
 
 import java.text.Collator;
@@ -28,6 +29,21 @@ public class ObradaKorisnik extends Obrada<Korisnik> {
                 " where concat(k.ime,' ',k.prezime,' ',k.ime,' ') like :uvjet "
                 +" order by k.prezime,k.ime",Korisnik.class)
                 .setParameter("uvjet",uvjet)
+                .list();
+
+        Collator spCollator = Collator.getInstance(Locale.of("hr", "HR"));
+
+        list.sort((e1, e2)-> spCollator.compare(e1.getPrezime(), e2.getPrezime()));
+
+        return list;
+    }
+
+    public List<Korisnik> read(Obitelj o) {
+
+        List<Korisnik> list = session.createQuery("from Korisnik k " +
+                        " where k.obitelj=:o "  //mozda ide like :o umjesto =:o
+                        +"order by k.ime ",Korisnik.class)
+                .setParameter("o",o)
                 .list();
 
         Collator spCollator = Collator.getInstance(Locale.of("hr", "HR"));

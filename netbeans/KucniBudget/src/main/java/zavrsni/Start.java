@@ -152,7 +152,6 @@ public class Start {
                     System.out.println(e.getPoruka());
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }

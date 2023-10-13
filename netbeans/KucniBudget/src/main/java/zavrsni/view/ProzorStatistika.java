@@ -12,6 +12,7 @@ import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.xy.IntervalXYDataset;
 import zavrsni.controller.ObradaKorisnik;
 import zavrsni.controller.ObradaObitelj;
+import zavrsni.model.DnevnaPotrosnja;
 import zavrsni.model.Korisnik;
 import zavrsni.model.Obitelj;
 
@@ -19,6 +20,7 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.math.BigDecimal;
 
 public class ProzorStatistika {
     protected JPanel panel;
@@ -32,7 +34,6 @@ public class ProzorStatistika {
         obrada= new ObradaObitelj();
         obradaKorisnik = new ObradaKorisnik();
         load();
-        prviGraf(new Obitelj());
 
 
     lstValues.addListSelectionListener(new ListSelectionListener() {
@@ -45,7 +46,7 @@ public class ProzorStatistika {
                 return;
             }
             obrada.setEntitet((Obitelj) lstValues.getSelectedValue());
-
+            prviGraf((Obitelj) lstValues.getSelectedValue(),2023);
             loadClanovi();
         }
     });
@@ -77,33 +78,47 @@ public class ProzorStatistika {
         lstValues.repaint();
     }
 
-    private void prviGraf(Obitelj o){
-
+    private void prviGraf(Obitelj o,int godina){
+        BigDecimal ukupno;
+        double[] podaci= new double[12];
         for (int i =0; i<12;i++){
-
+            //localdate
+            for(DnevnaPotrosnja dp: obradaKorisnik.getEntitet().getPotrosnje()){
+                ukupno = new BigDecimal(0);
+                Korisnik k = dp.getKorisnik();
+                for(Korisnik clan : o.getClanovi()){
+                    if (k==clan){
+                        ukupno.add(dp.getPotrosnja());
+                    }
+                }
+                podaci[i] =ukupno.doubleValue();
+            }
         }
-        double[] dataArray = {2.00,3.22,4.00};
+
+        //double[] dataArray = {2.00,3.22,4.00};
         //JFreeChart chart = ChartFactory.createHistogram("Po mjesecu" , "Mjeseci","Potrošnja",dataset);
-        JFreeChart chart = getHistogramChart("Test", dataArray);
+        JFreeChart chart = getHistogramChart("Test", podaci);
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setMaximumDrawHeight(3000);
         chartPanel.setMaximumDrawWidth(3000);
 
         panelGraf1.setLayout(new BorderLayout());
         panelGraf1.add(chartPanel, BorderLayout.CENTER);
-        panelGraf1.validate();
 
-        //frame.add(chartPanel);
-        //frame.setSize(2500, 600);
-        //frame.setLocationRelativeTo(null);
-        //frame.setVisible(true);
+        panelGraf1.validate();
+        JFrame frame = new JFrame();
+        frame.setContentPane(panelGraf1);
+        frame.add(chartPanel);
+        frame.setSize(800, 600);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     private static JFreeChart getHistogramChart(String name, double[] dataArray)
     {
         String plotTitle = name;
-        String xAxisLabel = "Length of transaction";
-        String yAxis = "Frequency";
+        String xAxisLabel = "Mjeseci";
+        String yAxis = "Potrošnja";
         PlotOrientation orientation = PlotOrientation.VERTICAL;
 
         DefaultCategoryDataset dataSet = new DefaultCategoryDataset();

@@ -39,6 +39,7 @@ public class ProzorKorisnik implements ViewInterface{
     private JRadioButton rbtnMusko;
     private JLabel lblSpolError;
     private ObradaKorisnik obrada;
+    private Korisnik korisnik;
 
 
 public ProzorKorisnik() {
@@ -150,7 +151,118 @@ public ProzorKorisnik() {
         }
     });
 }
+    public ProzorKorisnik(Korisnik k){
+        obrada = new ObradaKorisnik();
+        loadObitelj();
+        settingsDate();
+        settingsSpol();
+        load();
 
+        fillViewOne(k);
+
+        lstValues.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (e.getValueIsAdjusting()){
+                    return;
+                }
+                if (lstValues.getSelectedValue()==null){
+                    return;
+                }
+                obrada.setEntitet((Korisnik) lstValues.getSelectedValue());
+
+                fillView();
+            }
+        });
+        btnDodaj.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                obrada.setEntitet(new Korisnik());
+                fillModel();
+                try {
+                    obrada.create();
+                    load();
+                } catch (BudgetException ex){
+                    JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),ex.getPoruka());
+                }
+            }
+        });
+        btnPromjeni.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (lstValues.getSelectedValue()==null){
+                    return;
+                }
+
+                var korisnik = lstValues.getSelectedValue();
+                obrada.setEntitet((Korisnik) korisnik);
+                fillModel();
+                try {
+                    obrada.update();
+                    load();
+                } catch (BudgetException ex){
+                    JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),ex.getPoruka());
+                    obrada.refresh();
+                }
+            }
+
+        });
+        btnObrisi.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (lstValues.getSelectedValue()==null){
+                    return;
+                }
+                var korisnik = lstValues.getSelectedValue();
+                obrada.setEntitet((Korisnik) korisnik);
+
+                if (JOptionPane.showConfirmDialog(JOptionPane.getRootFrame(), ((Korisnik) korisnik).getIme() +" "+((Korisnik) korisnik).getPrezime(), "Sigurno obrisati?",
+                        JOptionPane.YES_NO_OPTION)!=JOptionPane.YES_OPTION){
+                    return;
+                }
+
+                try {
+                    obrada.delete();
+                    load();
+                } catch (BudgetException ex){
+                    JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),ex.getPoruka());
+                }
+
+            }
+        });
+        btnNazad.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JPanel panel1 = new Izbornik().panel;
+                JFrame frame = Alati.getFrame();
+                Alati.runApp(panel1,"Izbornik");
+                Alati.disposeApp(frame);
+            }
+        });
+        btnTrazi.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DefaultListModel<Korisnik> model = new DefaultListModel<>();
+                model.addAll(obrada.read(txtTrazi.getText()));
+                lstValues.setModel(model);
+                lstValues.repaint();
+            }
+        });
+
+        rbtnMusko.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                settingsSpol();
+            }
+        });
+        rbtnZensko.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                settingsSpol();
+            }
+        });
+
+    }
     private void settingsDate(){
         DatePickerSettings dps = new DatePickerSettings(Locale.of("hr","HR"));
         dps.setFormatForDatesCommonEra("dd. MM. YYYY.");
@@ -245,9 +357,9 @@ public ProzorKorisnik() {
 
     }
 
-    public void fillView(Korisnik e) {
+    public void fillViewOne(Korisnik e) {
         //e = obrada.getEntitet();
-
+        lstValues.setSelectedValue(e,true);
         txtIme.setText(e.getIme());
         txtPrezime.setText(e.getPrezime());
         txtEmail.setText(e.getEmail());

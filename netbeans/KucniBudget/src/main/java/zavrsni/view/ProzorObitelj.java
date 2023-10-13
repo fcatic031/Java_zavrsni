@@ -26,6 +26,7 @@ public class ProzorObitelj implements ViewInterface{
     private JButton btnObrisati;
     private JButton btnNatrag;
     private JList lstClanova;
+    private JButton btnStatistika;
     private ObradaObitelj obrada;
 
     public ProzorObitelj() {
@@ -96,7 +97,6 @@ public class ProzorObitelj implements ViewInterface{
                         JOptionPane.YES_NO_OPTION)!=JOptionPane.YES_OPTION){
                     return;
                 }
-
                 try {
                     obrada.delete();
                     load();
@@ -124,16 +124,10 @@ public class ProzorObitelj implements ViewInterface{
                 if (e.getClickCount()==2){
 
                     Korisnik k = (Korisnik) lstClanova.getSelectedValue();
-
-                    JPanel panel1 = new ProzorKorisnik().panel;
+                    JPanel panel1 = new ProzorKorisnik(k).panel;
                     JFrame frame = Alati.getFrame();
                     Alati.runApp(panel1,"Korisnik");
-                    //Alati.disposeApp(frame);
-                    //pk.lstValues.getSelectedValue()=k;
-                    pk.fillView(k);
-                    //ObradaKorisnik ok = new ObradaKorisnik();
 
-                    //ok.setEntitet(k);
 
                 }
             }
