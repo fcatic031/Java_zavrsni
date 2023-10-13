@@ -13,7 +13,9 @@ public class Izbornik {
     private JButton btnKorisnik;
     private JButton btnObitelj;
     private JButton btnKategorija;
-public Izbornik() {
+    private JLabel lblAdmin;
+
+    public Izbornik() {
     btnObitelj.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
