@@ -4,6 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 @Entity
@@ -53,6 +56,9 @@ public class DnevnaPotrosnja extends Entitet{
 
 	@Override
 	public String toString() {
-		return getDatum().toString()+" "+getKorisnik().getPrezime()+" "+getKorisnik().getIme();
+		Date date = getDatum();
+		DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy. ");
+		String strDate = dateFormat.format(date);
+		return strDate+" "+getKorisnik().getPrezime()+" "+getKorisnik().getIme()+"-->"+getPotrosnja().toString();
 	}
 }
