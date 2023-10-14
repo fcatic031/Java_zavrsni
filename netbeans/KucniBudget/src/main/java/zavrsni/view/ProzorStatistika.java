@@ -81,18 +81,41 @@ public class ProzorStatistika {
     private void prviGraf(Obitelj o,int godina){
         BigDecimal ukupno;
         double[] podaci= new double[12];
-        for (int i =0; i<12;i++){
+/*
             //localdate
             for(DnevnaPotrosnja dp: obradaKorisnik.getEntitet().getPotrosnje()){
-                ukupno = new BigDecimal(0);
-                Korisnik k = dp.getKorisnik();
-                for(Korisnik clan : o.getClanovi()){
-                    if (k==clan){
-                        ukupno.add(dp.getPotrosnja());
+                if (dp.getDatum().getYear()==godina){
+                    for (int i=0;i<12;i++){
+                        ukupno = new BigDecimal(0);
+                        if (dp.getDatum().getMonth()==i){
+                            Korisnik k = dp.getKorisnik();
+                            for(Korisnik clan : o.getClanovi()){
+                                if (k==clan){
+                                    ukupno.add(dp.getPotrosnja());
+                                }
+                            }
+                        }
+                        podaci[i] =ukupno.doubleValue();
                     }
                 }
-                podaci[i] =ukupno.doubleValue();
             }
+            */
+        double ukupno2;
+        for (Korisnik clan: o.getClanovi()){
+            for (int i = 0; i<12; i++){
+                ukupno2 = 0d;
+                ukupno = new BigDecimal(0);
+                for(DnevnaPotrosnja dp : clan.getPotrosnje()){
+                    if (dp.getDatum().getYear()==(godina-1970)){
+                        ukupno.add(dp.getPotrosnja());
+                        ukupno2 += dp.getPotrosnja().doubleValue();
+                    }
+                }
+                System.out.println(ukupno2);
+                //podaci [i] = ukupno.doubleValue();
+                podaci [i] = ukupno2;
+            }
+
         }
 
         //double[] dataArray = {2.00,3.22,4.00};
@@ -114,8 +137,7 @@ public class ProzorStatistika {
         frame.setVisible(true);
     }
 
-    private static JFreeChart getHistogramChart(String name, double[] dataArray)
-    {
+    private static JFreeChart getHistogramChart(String name, double[] dataArray) {
         String plotTitle = name;
         String xAxisLabel = "Mjeseci";
         String yAxis = "Potrošnja";
