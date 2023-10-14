@@ -233,9 +233,9 @@ public ProzorKorisnik() {
         btnNazad.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JPanel panel1 = new Izbornik().panel;
+                JPanel panel1 = new ProzorObitelj().panel;
                 JFrame frame = Alati.getFrame();
-                Alati.runApp(panel1,"Izbornik");
+                Alati.runApp(panel1,"Obitelj");
                 Alati.disposeApp(frame);
             }
         });

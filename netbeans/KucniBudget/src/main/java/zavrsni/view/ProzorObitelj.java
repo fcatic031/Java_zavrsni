@@ -127,7 +127,7 @@ public class ProzorObitelj implements ViewInterface{
                     JPanel panel1 = new ProzorKorisnik(k).panel;
                     JFrame frame = Alati.getFrame();
                     Alati.runApp(panel1,"Korisnik");
-
+                    Alati.disposeApp(frame);
 
                 }
             }
