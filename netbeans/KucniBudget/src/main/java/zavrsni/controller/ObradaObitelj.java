@@ -29,9 +29,9 @@ public class ObradaObitelj extends Obrada<Obitelj> {
             Korisnik kor;
             StringBuilder sb = new StringBuilder("Obitelj "+entitet.getObiteljskoPrezime()+" ima clanove: ");
             for (Korisnik k : entitet.getClanovi()){
-                sb.append(k.getIme());
+                sb.append("\n"+k.getIme());
                 if (k!=entitet.getClanovi().get(entitet.getClanovi().size()-1)){
-                    sb.append(", \n");
+                    sb.append(", ");
                 }
             }
             throw new BudgetException(sb.toString());

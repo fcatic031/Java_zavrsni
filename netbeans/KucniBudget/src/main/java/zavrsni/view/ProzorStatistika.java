@@ -8,18 +8,21 @@ import org.jfree.chart.axis.CategoryLabelPositions;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.data.xy.IntervalXYDataset;
+import zavrsni.controller.ObradaKategorija;
 import zavrsni.controller.ObradaKorisnik;
 import zavrsni.controller.ObradaObitelj;
 import zavrsni.model.DnevnaPotrosnja;
+import zavrsni.model.Kategorija;
 import zavrsni.model.Korisnik;
 import zavrsni.model.Obitelj;
+import zavrsni.util.Alati;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 
 public class ProzorStatistika {
@@ -28,11 +31,17 @@ public class ProzorStatistika {
     private JList lstClanova;
     private JPanel panelGraf1;
     private JCheckBox chbClanovi;
+    private JComboBox cmbKategorija;
+    private JButton btnGraf;
+    private JButton btnNazad;
+    private JComboBox cmbGodina;
     private ObradaObitelj obrada;
     private ObradaKorisnik obradaKorisnik;
     public ProzorStatistika() {
         obrada= new ObradaObitelj();
         obradaKorisnik = new ObradaKorisnik();
+        loadKategorija();
+        loadGodina();
         load();
 
 
@@ -46,7 +55,6 @@ public class ProzorStatistika {
                 return;
             }
             obrada.setEntitet((Obitelj) lstValues.getSelectedValue());
-            prviGraf((Obitelj) lstValues.getSelectedValue(),2023);
             loadClanovi();
         }
     });
@@ -56,7 +64,22 @@ public class ProzorStatistika {
 
         }
     });
-}
+        btnGraf.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                prviGraf((Obitelj) lstValues.getSelectedValue(),2020,(Kategorija) cmbKategorija.getSelectedItem());
+            }
+        });
+        btnNazad.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JPanel panel1 = new Izbornik().panel;
+                JFrame frame = Alati.getFrame();
+                Alati.runApp(panel1,"Izbornik");
+                Alati.disposeApp(frame);
+            }
+        });
+    }
     private void loadClanovi(){
         DefaultListModel<Korisnik> model = new DefaultListModel<>();
         Obitelj e = obrada.getEntitet();
@@ -78,37 +101,21 @@ public class ProzorStatistika {
         lstValues.repaint();
     }
 
-    private void prviGraf(Obitelj o,int godina){
+    private void prviGraf(Obitelj o, int godina,Kategorija kategorija){
         BigDecimal ukupno;
         double[] podaci= new double[12];
-/*
-            //localdate
-            for(DnevnaPotrosnja dp: obradaKorisnik.getEntitet().getPotrosnje()){
-                if (dp.getDatum().getYear()==godina){
-                    for (int i=0;i<12;i++){
-                        ukupno = new BigDecimal(0);
-                        if (dp.getDatum().getMonth()==i){
-                            Korisnik k = dp.getKorisnik();
-                            for(Korisnik clan : o.getClanovi()){
-                                if (k==clan){
-                                    ukupno.add(dp.getPotrosnja());
-                                }
-                            }
-                        }
-                        podaci[i] =ukupno.doubleValue();
-                    }
-                }
-            }
-            */
+
         double ukupno2;
+        double ukupno3=0;
         for (Korisnik clan: o.getClanovi()){
             for (int i = 0; i<12; i++){
-                ukupno2 = 0d;
+                ukupno2 = 0;
                 ukupno = new BigDecimal(0);
                 for(DnevnaPotrosnja dp : clan.getPotrosnje()){
-                    if (dp.getDatum().getYear()==(godina-1970)){
+                    if (dp.getDatum().getYear()==(godina-1900) && dp.getDatum().getMonth()==i ){
                         ukupno.add(dp.getPotrosnja());
                         ukupno2 += dp.getPotrosnja().doubleValue();
+                        ukupno3 +=dp.getPotrosnja().doubleValue();
                     }
                 }
                 System.out.println(ukupno2);
@@ -120,21 +127,22 @@ public class ProzorStatistika {
 
         //double[] dataArray = {2.00,3.22,4.00};
         //JFreeChart chart = ChartFactory.createHistogram("Po mjesecu" , "Mjeseci","Potrošnja",dataset);
-        JFreeChart chart = getHistogramChart("Test", podaci);
+        JFreeChart chart = getHistogramChart(o.getObiteljskoPrezime()+": "+godina, podaci);
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setMaximumDrawHeight(3000);
         chartPanel.setMaximumDrawWidth(3000);
-
         panelGraf1.setLayout(new BorderLayout());
         panelGraf1.add(chartPanel, BorderLayout.CENTER);
-
         panelGraf1.validate();
+
         JFrame frame = new JFrame();
         frame.setContentPane(panelGraf1);
         frame.add(chartPanel);
         frame.setSize(800, 600);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        //lblGraf.setText("Ukupno potroseno: "+ukupno3);
+
     }
 
     private static JFreeChart getHistogramChart(String name, double[] dataArray) {
@@ -144,9 +152,11 @@ public class ProzorStatistika {
         PlotOrientation orientation = PlotOrientation.VERTICAL;
 
         DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
+        String[] mjeseci = {"Siječanj","Veljača","Ožujak","Travanj","Svibanj","Lipanj",
+        "Srpanj","Kolovoz","Rujan","Listopad","Studeni","Prosinac"};
         for (int i = 0; i < dataArray.length; i++)
         {
-            dataSet.addValue(dataArray[i], (Integer) 0, (Integer) i);
+            dataSet.addValue(dataArray[i], (Integer) 0, (String) mjeseci[i]);
         }
         boolean show = true;
         boolean toolTips = false;
@@ -155,6 +165,7 @@ public class ProzorStatistika {
                 yAxis, dataSet, orientation, show, toolTips, urls);
         chart.setBackgroundPaint(Color.WHITE);
 
+        //Kopirano iz stackflow-a
         // Set a very small font for the labels, and rotate them...
         CategoryPlot plot = chart.getCategoryPlot();
         CategoryAxis domainAxis = plot.getDomainAxis();
@@ -164,4 +175,26 @@ public class ProzorStatistika {
         return chart;
     }
 
+    public void loadKategorija(){
+        DefaultComboBoxModel<Kategorija> model = new DefaultComboBoxModel<>();
+        Kategorija k = new Kategorija();
+        k.setId(0);
+        k.setNaziv("Odaberite kategoriju: ");
+        model.addElement(k);
+
+        model.addAll(new ObradaKategorija().read());
+
+        cmbKategorija.setModel(model);
+        cmbKategorija.repaint();
+    }
+
+    public void loadGodina(){
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+
+        for (int i=2013;i<=2023;i++){
+            model.addElement(i+".");
+        }
+        cmbGodina.setModel(model);
+        cmbGodina.repaint();
+    }
 }

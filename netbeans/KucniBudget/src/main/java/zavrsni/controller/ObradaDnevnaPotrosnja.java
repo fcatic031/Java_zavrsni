@@ -22,9 +22,7 @@ public class ObradaDnevnaPotrosnja extends Obrada<DnevnaPotrosnja> {
                 .createQuery("from DnevnaPotrosnja dp " +
                         "inner join dp.korisnik as korisnik "+
                         "inner join dp.kategorija as kategorija "+
-                        "where concat(korisnik.ime,' ',korisnik.prezime,' ',korisnik.ime,' ',kategorija.naziv) " +
-                        //"where dp.potrosnja "+
-                        //"where dp.korisnik "+
+                        "where concat(korisnik.ime,' ',korisnik.prezime,' ',korisnik.ime,' ',kategorija.naziv,' ',year(dp.datum)) " +
                         "like :uvjet " +
                         "order by dp.potrosnja",
                         DnevnaPotrosnja.class)
