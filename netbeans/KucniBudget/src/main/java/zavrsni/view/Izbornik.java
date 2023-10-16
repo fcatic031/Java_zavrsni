@@ -3,6 +3,7 @@ package zavrsni.view;
 import zavrsni.util.Alati;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,8 +15,10 @@ public class Izbornik {
     private JButton btnObitelj;
     private JButton btnKategorija;
     private JLabel lblAdmin;
+    private JLabel lblNaslov;
 
     public Izbornik() {
+        lblNaslov.setFont(new Font("Ariel",Font.PLAIN,30));
     btnObitelj.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
