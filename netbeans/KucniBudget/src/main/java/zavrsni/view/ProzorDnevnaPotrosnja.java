@@ -144,6 +144,15 @@ public ProzorDnevnaPotrosnja() {
             }
         }
     });
+    btnJSON.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JPanel panel1 = new ProzorJSON(txtTrazi.getText()).panel;
+            JFrame frame = Alati.getFrame();
+            Alati.runApp(panel1,"JSON - Dnevne potrošnje");
+            //Alati.disposeApp(frame);
+        }
+    });
 }
 
 public void loadKorisnik(){
