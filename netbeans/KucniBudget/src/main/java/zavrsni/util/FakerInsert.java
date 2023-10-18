@@ -92,7 +92,7 @@ public class FakerInsert {
             k.setEmail(k.getIme().trim().toLowerCase().replace(" ", "").substring(0, 1)+k.getPrezime().trim().toLowerCase().replace(" ", "")+"@"+faker.internet().domainName());
             k.setDatumRodjenja(faker.date().birthday(15, 82));
             k.setSpol(faker.bool().bool());
-            k.setUloga(true);
+            k.setUloga(false);
             k.setLozinka(hash);
             session.persist(k);
             korisnici.add(k);

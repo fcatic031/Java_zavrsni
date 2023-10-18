@@ -57,12 +57,20 @@ public class Autorizacija {
                 System.out.println("Neispravna kombinacija");
                 return;
             }
+            Alati.OPERATER = k;
 
+            if (k.getUloga()){
+                JPanel panel1 = new Izbornik().panel;
+                JFrame frame = Alati.getFrame();
+                Alati.runApp(panel1,"Izbornik");
+                Alati.disposeApp(frame);
+            } else{
+                JPanel panel1 = new IzbornikKorisnik().panel;
+                JFrame frame = Alati.getFrame();
+                Alati.runApp(panel1,"Izbornik");
+                Alati.disposeApp(frame);
+            }
 
-            JPanel panel1 = new Izbornik().panel;
-            JFrame frame = Alati.getFrame();
-            Alati.runApp(panel1,"Izbornik");
-            Alati.disposeApp(frame);
             //System.out.println("Uspjeh");
         }
     });

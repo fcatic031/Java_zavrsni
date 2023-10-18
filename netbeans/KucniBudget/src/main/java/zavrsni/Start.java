@@ -43,6 +43,7 @@ public class Start {
         //new FakerInsert();
         //dodavanjeObitelji();
         //dodavanjeKorisnika();
+        //dodavanjeOperatatera();
         //new Start();
 
         JPanel panel = new SplashScreen().panel;
@@ -84,11 +85,10 @@ public class Start {
             json = gson.toJson(o);
             System.out.println(o.getObiteljskoPrezime());
         }
-        //System.out.println(json);
     }
 
 
-    private static void dodavanjeKorisnika(){
+    private static void dodavanjeOperatatera(){
         //zbog uporabe kao operatera
         ObradaKorisnik ok = new ObradaKorisnik();
 
@@ -98,7 +98,7 @@ public class Start {
         k.setEmail("proba@gmail.com");
         k.setDatumRodjenja(new Date());
         k.setSpol(true);
-        k.setUloga(false);
+        k.setUloga(true);
 
         Argon2 argon2 = Argon2Factory.create();
         String hash = argon2.hash(10, 65536, 1, "lozinka".toCharArray());
@@ -116,6 +116,32 @@ public class Start {
 
     }
 
+    private static void dodavanjeKorisnika(){
+        //zbog uporabe kao operatera
+        ObradaKorisnik ok = new ObradaKorisnik();
+
+        Korisnik k = new Korisnik();
+        k.setIme("Probar");
+        k.setPrezime("Probancic");
+        k.setEmail("proba1@gmail.com");
+        k.setDatumRodjenja(new Date());
+        k.setSpol(true);
+        k.setUloga(false);
+
+        Argon2 argon2 = Argon2Factory.create();
+        String hash = argon2.hash(10, 65536, 1, "lozinka".toCharArray());
+        k.setLozinka(hash);
+        k.setObitelj(null);
+
+        ok.setEntitet(k);
+        try {
+            ok.create();
+        } catch (BudgetException b){
+            System.out.println(b.getPoruka());
+        }
+
+
+    }
     private  void radSJSON() {
 
 
