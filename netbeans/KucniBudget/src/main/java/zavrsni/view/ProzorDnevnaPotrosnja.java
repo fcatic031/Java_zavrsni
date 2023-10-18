@@ -155,6 +155,116 @@ public ProzorDnevnaPotrosnja() {
     });
 }
 
+
+    public ProzorDnevnaPotrosnja(Korisnik k) {
+        obrada = new ObradaDnevnaPotrosnja();
+
+        loadKorisnik();
+        loadKategorija();
+        settingsDate();
+        load(k);
+
+        lstValues.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (e.getValueIsAdjusting()){
+                    return;
+                }
+                if (lstValues.getSelectedValue()==null){
+                    return;
+                }
+                obrada.setEntitet((DnevnaPotrosnja) lstValues.getSelectedValue());
+
+                fillView();
+
+            }
+        });
+
+        btnTrazi.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DefaultListModel<DnevnaPotrosnja> model = new DefaultListModel<>();
+                model.addAll(obrada.read(txtTrazi.getText()));
+                lstValues.setModel(model);
+                lstValues.repaint();
+            }
+        });
+        btnNatrag.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JPanel panel1 = new IzbornikKorisnik().panel;
+                JFrame frame = Alati.getFrame();
+                Alati.runApp(panel1,"Izbornik");
+                Alati.disposeApp(frame);
+            }
+        });
+        btnDodaj.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                obrada.setEntitet(new DnevnaPotrosnja());
+                fillModel();
+                try {
+                    obrada.create();
+                    load();
+                } catch (BudgetException ex){
+                    JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),ex.getPoruka());
+                }
+            }
+        });
+        btnPromjeni.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (lstValues.getSelectedValue()==null){
+                    return;
+                }
+
+                var dnevnaPotrosnja = lstValues.getSelectedValue();
+                obrada.setEntitet((DnevnaPotrosnja) dnevnaPotrosnja);
+                fillModel();
+                try {
+                    obrada.update();
+                    load();
+                } catch (BudgetException ex){
+                    JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),ex.getPoruka());
+                    obrada.refresh();
+                }
+            }
+        });
+        btnObrisi.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (lstValues.getSelectedValue()==null){
+                    return;
+                }
+                var dnevnaPotrosnja = lstValues.getSelectedValue();
+                obrada.setEntitet((DnevnaPotrosnja) dnevnaPotrosnja);
+
+                if (JOptionPane.showConfirmDialog(JOptionPane.getRootFrame(), ((Korisnik)((DnevnaPotrosnja) dnevnaPotrosnja).getKorisnik()).getIme()
+                                +" "+((Korisnik)((DnevnaPotrosnja) dnevnaPotrosnja).getKorisnik()).getPrezime()
+                                +"\n"+((DnevnaPotrosnja) dnevnaPotrosnja).getDatum().toString()
+                                +"\n"+((Kategorija)((DnevnaPotrosnja) dnevnaPotrosnja).getKategorija()).getNaziv(), "Sigurno obrisati?",
+                        JOptionPane.YES_NO_OPTION)!=JOptionPane.YES_OPTION){
+                    return;
+                }
+
+                try {
+                    obrada.delete();
+                    load();
+                } catch (BudgetException ex){
+                    JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),ex.getPoruka());
+                }
+            }
+        });
+        btnJSON.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JPanel panel1 = new ProzorJSON(txtTrazi.getText()).panel;
+                JFrame frame = Alati.getFrame();
+                Alati.runApp(panel1,"JSON - Dnevne potrošnje");
+                //Alati.disposeApp(frame);
+            }
+        });
+    }
 public void loadKorisnik(){
     DefaultComboBoxModel<Korisnik> model = new DefaultComboBoxModel<>();
     Korisnik k = new Korisnik();
@@ -201,6 +311,13 @@ public void settingsDate(){
 
     }
 
+    public void load(Korisnik k){
+        DefaultListModel<DnevnaPotrosnja> model = new DefaultListModel<>();
+        model.addAll(obrada.read(k.getIme()+" "+k.getPrezime()));
+        lstValues.setModel(model);
+        lstValues.repaint();
+
+    }
     @Override
     public void fillModel() {
         var e = obrada.getEntitet();
