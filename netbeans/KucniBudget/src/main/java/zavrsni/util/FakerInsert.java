@@ -11,8 +11,10 @@ import com.github.javafaker.Faker;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import zavrsni.controller.ObradaKorisnik;
 import zavrsni.model.*;
 
 /**
@@ -21,9 +23,9 @@ import zavrsni.model.*;
  */
 public class FakerInsert {
     
-    private static final int BROJ_OBITELJI=460;
-    private static final int BROJ_KATEGORIJA=20;
-    private static final int BROJ_KORISNIKA=2000;
+    private static final int BROJ_OBITELJI=40;
+    private static final int BROJ_KATEGORIJA=15;
+    private static final int BROJ_KORISNIKA=200;
     private static final int BROJ_POTROSNJI=15000;
     private static final int BROJ_OPERATERA=33;
     private Session session;
@@ -48,7 +50,9 @@ public class FakerInsert {
         kreirajObitelji();
         kreirajKategorije();
         kreirajKorisnike();
+        dodavanjeKorisnika(); //kao primjer s poznatim emailom i lozinkom
         kreirajPotrosnje();
+        dodavanjeOperatatera();
         session.getTransaction().commit();
 
     }
@@ -104,7 +108,7 @@ public class FakerInsert {
         DnevnaPotrosnja d;
         for (int i=0; i<BROJ_POTROSNJI;i++){
             d = new DnevnaPotrosnja();
-            d.setDatum(faker.date().birthday(0, 10));
+            d.setDatum(faker.date().birthday(0, 3));
             d.setKorisnik(korisnici.get(faker.number().numberBetween(0, BROJ_KORISNIKA-1)));
             d.setKategorija(kategorije.get(faker.number().numberBetween(0, BROJ_KATEGORIJA-1)));
             d.setPotrosnja(new BigDecimal(faker.number().numberBetween(2, 1000)));
@@ -112,5 +116,52 @@ public class FakerInsert {
             potrosnje.add(d);
         }
     }
+
+    private void dodavanjeOperatatera(){
+        //zbog uporabe kao operatera -> proba@gmail.com
+        ObradaKorisnik ok = new ObradaKorisnik();
+
+        Korisnik k = new Korisnik();
+        k.setIme("Proba");
+        k.setPrezime("Probanic");
+        k.setEmail("proba@gmail.com");
+        k.setDatumRodjenja(new Date());
+        k.setSpol(true);
+        k.setUloga(true);
+
+        Argon2 argon2 = Argon2Factory.create();
+        String hash = argon2.hash(10, 65536, 1, "lozinka".toCharArray());
+        k.setUloga(true);
+        k.setLozinka(hash);
+        k.setObitelj(null);
+
+        //ok.setEntitet(k);
+        session.persist(k);
+
+    }
+    private void dodavanjeKorisnika(){
+        //zbog uporabe kao primjer korisnika
+        //ObradaKorisnik ok = new ObradaKorisnik();
+
+        Korisnik k = new Korisnik();
+        k.setIme("Probar");
+        k.setPrezime("Probancic");
+        k.setEmail("proba1@gmail.com");
+        k.setDatumRodjenja(new Date());
+        k.setSpol(true);
+        k.setUloga(false);
+
+        Argon2 argon2 = Argon2Factory.create();
+        String hash = argon2.hash(10, 65536, 1, "lozinka".toCharArray());
+        k.setLozinka(hash);
+        Obitelj o = new Obitelj();
+        o = obitelji.get(faker.number().numberBetween(0, BROJ_OBITELJI-1));
+        k.setObitelj(o);
+
+
+        //ok.setEntitet(k);
+        session.persist(k);
+    }
+
 
 }

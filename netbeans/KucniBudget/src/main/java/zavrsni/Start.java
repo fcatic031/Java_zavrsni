@@ -46,11 +46,10 @@ public class Start {
         //dodavanjeOperatatera();
         //new Start();
 
-        JPanel panel = new SplashScreen().panel;
-        Alati.runApp(panel,"LOADING...");
-
-
-
+        JPanel panel = new SplashScreen(true).panel;
+        Alati.runApp(panel,"LOADING...",true);
+        //Alati.panelSplash = new SplashScreen(true).panel;
+        //Alati.runApp(Alati.panelSplash,"Loading",true);
     }
 
     private Start(){
@@ -72,79 +71,9 @@ public class Start {
         System.out.println("GOTOVOOO");
     }
 
-    private static void JSON(){
-        FakerInsert faker = new FakerInsert();
-        //Gson gson = new Gson();
-        GsonBuilder builder = new GsonBuilder();
-        builder.setPrettyPrinting();
-        Gson gson = builder.create();
-        //Obitelj obitelj = gson.fromJson();
-        String json;
-        for (Obitelj o : faker.obitelji){
-
-            json = gson.toJson(o);
-            System.out.println(o.getObiteljskoPrezime());
-        }
-    }
 
 
-    private static void dodavanjeOperatatera(){
-        //zbog uporabe kao operatera
-        ObradaKorisnik ok = new ObradaKorisnik();
-
-        Korisnik k = new Korisnik();
-        k.setIme("Proba");
-        k.setPrezime("Probanic");
-        k.setEmail("proba@gmail.com");
-        k.setDatumRodjenja(new Date());
-        k.setSpol(true);
-        k.setUloga(true);
-
-        Argon2 argon2 = Argon2Factory.create();
-        String hash = argon2.hash(10, 65536, 1, "lozinka".toCharArray());
-        k.setUloga(true);
-        k.setLozinka(hash);
-        k.setObitelj(null);
-
-        ok.setEntitet(k);
-        try {
-            ok.create();
-        } catch (BudgetException b){
-            System.out.println(b.getPoruka());
-        }
-
-
-    }
-
-    private static void dodavanjeKorisnika(){
-        //zbog uporabe kao operatera
-        ObradaKorisnik ok = new ObradaKorisnik();
-
-        Korisnik k = new Korisnik();
-        k.setIme("Probar");
-        k.setPrezime("Probancic");
-        k.setEmail("proba1@gmail.com");
-        k.setDatumRodjenja(new Date());
-        k.setSpol(true);
-        k.setUloga(false);
-
-        Argon2 argon2 = Argon2Factory.create();
-        String hash = argon2.hash(10, 65536, 1, "lozinka".toCharArray());
-        k.setLozinka(hash);
-        k.setObitelj(null);
-
-        ok.setEntitet(k);
-        try {
-            ok.create();
-        } catch (BudgetException b){
-            System.out.println(b.getPoruka());
-        }
-
-
-    }
     private  void radSJSON() {
-
-
         Type listType = new TypeToken<List<DnevnaPotrosnja>>() {}.getType();
         List<DnevnaPotrosnja> target = new ObradaDnevnaPotrosnja().read();
 
@@ -197,7 +126,6 @@ public class Start {
             if(f.getDeclaringClass() == Obitelj.class && f.getName().equals("clanovi")){
                 return true;
             }
-
             return false;
         }
 
@@ -206,5 +134,4 @@ public class Start {
         }
 
     }
-
 }
