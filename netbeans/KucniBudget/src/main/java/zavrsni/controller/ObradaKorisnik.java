@@ -80,17 +80,17 @@ public class ObradaKorisnik extends Obrada<Korisnik> {
     }
 
     private void controlIme() throws BudgetException {
-        if(entitet.getIme()==null || entitet.getIme().isEmpty()){
+        if(entitet.getIme()==null || entitet.getIme().trim().isEmpty()){
             throw new BudgetException("Ne postoji ime korisnika");
         }
     }
     private void controlPrezime() throws BudgetException{
-        if (entitet.getPrezime()==null || entitet.getPrezime().isEmpty()){
+        if (entitet.getPrezime()==null || entitet.getPrezime().trim().isEmpty()){
             throw new BudgetException("Ne postoji prezime korisnika");
         }
     }
     private void controlEmail() throws  BudgetException{
-        if (entitet.getEmail()==null || entitet.getEmail().isEmpty()){
+        if (entitet.getEmail()==null || entitet.getEmail().trim().isEmpty()){
             throw new BudgetException("E-mail je prazan ili ne postoji");
         }
         if (!entitet.getEmail().contains("@")){

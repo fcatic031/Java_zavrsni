@@ -43,7 +43,7 @@ public class ObradaObitelj extends Obrada<Obitelj> {
         if (entitet.getObiteljskoPrezime()==null){
             throw new BudgetException("Obiteljsko prezime je nula");
         }
-        if (entitet.getObiteljskoPrezime().isEmpty()){
+        if (entitet.getObiteljskoPrezime().trim().isEmpty()){
             throw new BudgetException("Obiteljsko prezime je prazan");
         }
     }

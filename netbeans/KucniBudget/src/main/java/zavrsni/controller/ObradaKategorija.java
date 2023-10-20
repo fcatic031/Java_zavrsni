@@ -33,7 +33,7 @@ public class ObradaKategorija extends Obrada<Kategorija> {
     }
 
     private void controlKategorijaNaziv() throws BudgetException {
-        if (entitet.getNaziv().isEmpty() || entitet.getNaziv()==null){
+        if (entitet.getNaziv().trim().isEmpty() || entitet.getNaziv()==null){
             throw new BudgetException("Kategorija nema naziv");
         }
     }
