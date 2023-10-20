@@ -22,36 +22,36 @@ public class Izbornik {
     btnObitelj.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            JPanel panel1 = new ProzorObitelj().panel;
+            //JPanel panel1 = new ProzorObitelj().panel;
             JFrame frame = Alati.getFrame();
-            Alati.runApp(panel1,"Obitelj");
+            Alati.runApp(Alati.panelObitelj,"Obitelj",true);
             Alati.disposeApp(frame);
         }
     });
     btnKategorija.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            JPanel panel1 = new ProzorKategorija().panel;
+            //JPanel panel1 = new ProzorKategorija().panel;
             JFrame frame = Alati.getFrame();
-            Alati.runApp(panel1,"Kategorija");
+            Alati.runApp(Alati.panelKategorija,"Kategorija",true);
             Alati.disposeApp(frame);
         }
     });
     btnKorisnik.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            JPanel panel1 = new ProzorKorisnik().panel;
+            //JPanel panel1 = new ProzorKorisnik().panel;
             JFrame frame = Alati.getFrame();
-            Alati.runApp(panel1,"Korisnik");
+            Alati.runApp(Alati.panelKorisnik,"Korisnik",true);
             Alati.disposeApp(frame);
         }
     });
     btnPotrosnja.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            JPanel panel1 = new ProzorDnevnaPotrosnja().panel;
+            //JPanel panel1 = new ProzorDnevnaPotrosnja().panel;
             JFrame frame = Alati.getFrame();
-            Alati.runApp(panel1,"Dnevna potrošnja");
+            Alati.runApp(Alati.panelDnevnaPotrosnja,"Dnevna potrošnja",true);
             Alati.disposeApp(frame);
         }
     });
@@ -60,7 +60,7 @@ public class Izbornik {
         public void actionPerformed(ActionEvent e) {
             JPanel panel1 = new ProzorStatistika().panel;
             JFrame frame = Alati.getFrame();
-            Alati.runApp(panel1,"Statistika");
+            Alati.runApp(panel1,"Statistika",true);
             Alati.disposeApp(frame);
         }
     });

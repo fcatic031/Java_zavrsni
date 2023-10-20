@@ -26,7 +26,7 @@ public class ProzorObitelj implements ViewInterface{
     private JButton btnObrisati;
     private JButton btnNatrag;
     private JList lstClanova;
-    private JButton btnStatistika;
+    private JButton btnPotrosnje;
     private ObradaObitelj obrada;
 
     public ProzorObitelj() {
@@ -112,7 +112,7 @@ public class ProzorObitelj implements ViewInterface{
             public void actionPerformed(ActionEvent e) {
                 JPanel panel1 = new Izbornik().panel;
                 JFrame frame = Alati.getFrame();
-                Alati.runApp(panel1,"Izbornik");
+                Alati.runApp(panel1,"Izbornik",true);
                 Alati.disposeApp(frame);
             }
         });
@@ -126,10 +126,21 @@ public class ProzorObitelj implements ViewInterface{
                     Korisnik k = (Korisnik) lstClanova.getSelectedValue();
                     JPanel panel1 = new ProzorKorisnik(k).panel;
                     JFrame frame = Alati.getFrame();
-                    Alati.runApp(panel1,"Korisnik");
+                    Alati.runApp(panel1,"Korisnik",true);
                     Alati.disposeApp(frame);
 
                 }
+            }
+        });
+        btnPotrosnje.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //treba doraditi
+                //Obitelj o = (Obitelj) lstValues.getSelectedValue();
+                //JPanel panel1 = new ProzorDnevnaPotrosnja(o).panel;
+                //JFrame frame = Alati.getFrame();
+                //Alati.runApp(panel1,"Dnevne potrošnje",true);
+                //Alati.disposeApp(frame);
             }
         });
     }

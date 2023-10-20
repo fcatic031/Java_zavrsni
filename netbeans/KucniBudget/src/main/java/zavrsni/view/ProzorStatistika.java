@@ -67,7 +67,9 @@ public class ProzorStatistika {
         btnGraf.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                prviGraf((Obitelj) lstValues.getSelectedValue(),2020,(Kategorija) cmbKategorija.getSelectedItem());
+                int godina = (2023-cmbGodina.getItemCount())+cmbGodina.getSelectedIndex()+1; //+1 zbog prvog item-a
+
+                prviGraf((Obitelj) lstValues.getSelectedValue(),godina,(Kategorija) cmbKategorija.getSelectedItem());
             }
         });
         btnNazad.addActionListener(new ActionListener() {
@@ -75,7 +77,7 @@ public class ProzorStatistika {
             public void actionPerformed(ActionEvent e) {
                 JPanel panel1 = new Izbornik().panel;
                 JFrame frame = Alati.getFrame();
-                Alati.runApp(panel1,"Izbornik");
+                Alati.runApp(panel1,"Izbornik",true);
                 Alati.disposeApp(frame);
             }
         });
@@ -112,13 +114,16 @@ public class ProzorStatistika {
                 ukupno2 = 0;
                 ukupno = new BigDecimal(0);
                 for(DnevnaPotrosnja dp : clan.getPotrosnje()){
-                    if (dp.getDatum().getYear()==(godina-1900) && dp.getDatum().getMonth()==i ){
-                        ukupno.add(dp.getPotrosnja());
+                    if (cmbGodina.getSelectedIndex()==0 && dp.getDatum().getMonth()==i){
                         ukupno2 += dp.getPotrosnja().doubleValue();
-                        ukupno3 +=dp.getPotrosnja().doubleValue();
+                    }
+                    if (cmbGodina.getSelectedIndex()!=0 && dp.getDatum().getYear()==(godina-1900) && dp.getDatum().getMonth()==i ){
+                        //ukupno.add(dp.getPotrosnja());
+                        ukupno2 += dp.getPotrosnja().doubleValue();
+                        //ukupno3 +=dp.getPotrosnja().doubleValue();
                     }
                 }
-                System.out.println(ukupno2);
+                //System.out.println(ukupno2);
                 //podaci [i] = ukupno.doubleValue();
                 podaci [i] = ukupno2;
             }
@@ -127,7 +132,7 @@ public class ProzorStatistika {
 
         //double[] dataArray = {2.00,3.22,4.00};
         //JFreeChart chart = ChartFactory.createHistogram("Po mjesecu" , "Mjeseci","Potrošnja",dataset);
-        JFreeChart chart = getHistogramChart(o.getObiteljskoPrezime()+": "+godina, podaci);
+        JFreeChart chart = getHistogramChart(o.getObiteljskoPrezime()+": "+(cmbGodina.getSelectedIndex()!=0 ? godina : ""), podaci);
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setMaximumDrawHeight(3000);
         chartPanel.setMaximumDrawWidth(3000);
@@ -190,8 +195,8 @@ public class ProzorStatistika {
 
     public void loadGodina(){
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-
-        for (int i=2013;i<=2023;i++){
+        model.addElement("Odaberi godinu");
+        for (int i=2020;i<=2023;i++){
             model.addElement(i+".");
         }
         cmbGodina.setModel(model);

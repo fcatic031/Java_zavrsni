@@ -21,7 +21,7 @@ public class IzbornikKorisnik {
             public void actionPerformed(ActionEvent e) {
                 JPanel panel1 = new ProzorDnevnaPotrosnja(Alati.OPERATER).panel;
                 JFrame frame = Alati.getFrame();
-                Alati.runApp(panel1,"Potrošnje");
+                Alati.runApp(panel1,"Potrošnje",true);
                 Alati.disposeApp(frame);
             }
         });

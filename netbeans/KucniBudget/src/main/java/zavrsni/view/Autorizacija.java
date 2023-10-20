@@ -60,14 +60,18 @@ public class Autorizacija {
             Alati.OPERATER = k;
 
             if (k.getUloga()){
-                JPanel panel1 = new Izbornik().panel;
+                Alati.panelSplash= new SplashScreen(false).panel;
                 JFrame frame = Alati.getFrame();
-                Alati.runApp(panel1,"Izbornik");
+                Alati.runApp(Alati.panelSplash,"LOADING...",true);
                 Alati.disposeApp(frame);
             } else{
-                JPanel panel1 = new IzbornikKorisnik().panel;
+                Alati.panelIzbornik = new IzbornikKorisnik().panel;
                 JFrame frame = Alati.getFrame();
-                Alati.runApp(panel1,"Izbornik");
+                Alati.runApp(Alati.panelIzbornik,"Izbornik",true);
+
+                Alati.panelDnevnaPotrosnja= new ProzorDnevnaPotrosnja(k).panel;
+                Alati.runApp(Alati.panelDnevnaPotrosnja,"Dnevna potrošnja",false);
+
                 Alati.disposeApp(frame);
             }
 

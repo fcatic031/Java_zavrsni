@@ -98,7 +98,7 @@ public class ProzorKategorija implements ViewInterface {
             public void actionPerformed(ActionEvent e) {
                 JPanel panel1 = new Izbornik().panel;
                 JFrame frame = Alati.getFrame();
-                Alati.runApp(panel1,"Izbornik");
+                Alati.runApp(panel1,"Izbornik",true);
                 Alati.disposeApp(frame);
             }
         });

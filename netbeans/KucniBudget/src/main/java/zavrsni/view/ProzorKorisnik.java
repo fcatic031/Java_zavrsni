@@ -12,8 +12,7 @@ import zavrsni.util.BudgetException;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -124,7 +123,7 @@ public ProzorKorisnik() {
         public void actionPerformed(ActionEvent e) {
             JPanel panel1 = new Izbornik().panel;
             JFrame frame = Alati.getFrame();
-            Alati.runApp(panel1,"Izbornik");
+            Alati.runApp(panel1,"Izbornik",true);
             Alati.disposeApp(frame);
         }
     });
@@ -148,6 +147,21 @@ public ProzorKorisnik() {
         @Override
         public void actionPerformed(ActionEvent e) {
             settingsSpol();
+        }
+    });
+    lstValues.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            super.mouseClicked(e);
+            if (e.getClickCount()==2){
+
+                Korisnik k = (Korisnik) lstValues.getSelectedValue();
+                JPanel panel1 = new ProzorDnevnaPotrosnja(k).panel;
+                JFrame frame = Alati.getFrame();
+                Alati.runApp(panel1,"Dnevne potrošnje",true);
+                Alati.disposeApp(frame);
+
+            }
         }
     });
 }
@@ -233,9 +247,9 @@ public ProzorKorisnik() {
         btnNazad.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JPanel panel1 = new ProzorObitelj().panel;
+                //JPanel panel1 = new ProzorObitelj().panel;
                 JFrame frame = Alati.getFrame();
-                Alati.runApp(panel1,"Obitelj");
+                Alati.runApp(Alati.panelObitelj,"Obitelj",true);
                 Alati.disposeApp(frame);
             }
         });
@@ -259,6 +273,21 @@ public ProzorKorisnik() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 settingsSpol();
+            }
+        });
+        lstValues.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                if (e.getClickCount()==2){
+
+                    Korisnik k = (Korisnik) lstValues.getSelectedValue();
+                    JPanel panel1 = new ProzorDnevnaPotrosnja(k).panel;
+                    JFrame frame = Alati.getFrame();
+                    Alati.runApp(panel1,"Dnevne potrošnje",true);
+                    Alati.disposeApp(frame);
+
+                }
             }
         });
 

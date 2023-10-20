@@ -83,7 +83,7 @@ public ProzorDnevnaPotrosnja() {
         public void actionPerformed(ActionEvent e) {
             JPanel panel1 = new Izbornik().panel;
             JFrame frame = Alati.getFrame();
-            Alati.runApp(panel1,"Izbornik");
+            Alati.runApp(panel1,"Izbornik",true);
             Alati.disposeApp(frame);
         }
     });
@@ -149,7 +149,7 @@ public ProzorDnevnaPotrosnja() {
         public void actionPerformed(ActionEvent e) {
             JPanel panel1 = new ProzorJSON(txtTrazi.getText()).panel;
             JFrame frame = Alati.getFrame();
-            Alati.runApp(panel1,"JSON - Dnevne potrošnje");
+            Alati.runApp(panel1,"JSON - Dnevne potrošnje",true);
             //Alati.disposeApp(frame);
         }
     });
@@ -159,7 +159,7 @@ public ProzorDnevnaPotrosnja() {
     public ProzorDnevnaPotrosnja(Korisnik k) {
         obrada = new ObradaDnevnaPotrosnja();
 
-        loadKorisnik();
+        loadKorisnik(k);
         loadKategorija();
         settingsDate();
         load(k);
@@ -192,9 +192,8 @@ public ProzorDnevnaPotrosnja() {
         btnNatrag.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JPanel panel1 = new IzbornikKorisnik().panel;
                 JFrame frame = Alati.getFrame();
-                Alati.runApp(panel1,"Izbornik");
+                Alati.runApp(Alati.panelIzbornik,"Izbornik",true);
                 Alati.disposeApp(frame);
             }
         });
@@ -205,7 +204,7 @@ public ProzorDnevnaPotrosnja() {
                 fillModel();
                 try {
                     obrada.create();
-                    load();
+                    load(k);
                 } catch (BudgetException ex){
                     JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),ex.getPoruka());
                 }
@@ -223,7 +222,7 @@ public ProzorDnevnaPotrosnja() {
                 fillModel();
                 try {
                     obrada.update();
-                    load();
+                    load(k);
                 } catch (BudgetException ex){
                     JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),ex.getPoruka());
                     obrada.refresh();
@@ -249,7 +248,7 @@ public ProzorDnevnaPotrosnja() {
 
                 try {
                     obrada.delete();
-                    load();
+                    load(k);
                 } catch (BudgetException ex){
                     JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),ex.getPoruka());
                 }
@@ -258,9 +257,9 @@ public ProzorDnevnaPotrosnja() {
         btnJSON.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JPanel panel1 = new ProzorJSON(txtTrazi.getText()).panel;
+                JPanel panel1 = new ProzorJSON(k.getIme()+" "+k.getPrezime()).panel;
                 JFrame frame = Alati.getFrame();
-                Alati.runApp(panel1,"JSON - Dnevne potrošnje");
+                Alati.runApp(panel1,"JSON - Dnevne potrošnje",true);
                 //Alati.disposeApp(frame);
             }
         });
@@ -274,6 +273,16 @@ public void loadKorisnik(){
     model.addElement(k);
 
     model.addAll(new ObradaKorisnik().read());
+
+    cmbKorisnik.setModel(model);
+    cmbKorisnik.repaint();
+}
+
+public void loadKorisnik(Korisnik k){
+    DefaultComboBoxModel<Korisnik> model = new DefaultComboBoxModel<>();
+    model.addElement(k);
+
+    //model.addAll(new ObradaKorisnik().read());
 
     cmbKorisnik.setModel(model);
     cmbKorisnik.repaint();
