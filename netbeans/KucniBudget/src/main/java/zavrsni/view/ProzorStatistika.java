@@ -23,6 +23,8 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
 
 public class ProzorStatistika {
@@ -30,7 +32,6 @@ public class ProzorStatistika {
     private JList lstValues;
     private JList lstClanova;
     private JPanel panelGraf1;
-    private JCheckBox chbClanovi;
     private JComboBox cmbKategorija;
     private JButton btnGraf;
     private JButton btnNazad;
@@ -58,27 +59,43 @@ public class ProzorStatistika {
             loadClanovi();
         }
     });
-    lstClanova.addListSelectionListener(new ListSelectionListener() {
-        @Override
-        public void valueChanged(ListSelectionEvent e) {
 
-        }
-    });
         btnGraf.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int godina = (2023-cmbGodina.getItemCount())+cmbGodina.getSelectedIndex()+1; //+1 zbog prvog item-a
 
-                prviGraf((Obitelj) lstValues.getSelectedValue(),godina,(Kategorija) cmbKategorija.getSelectedItem());
+                obiteljGraf((Obitelj) lstValues.getSelectedValue(),godina,(Kategorija) cmbKategorija.getSelectedItem());
             }
         });
         btnNazad.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JPanel panel1 = new Izbornik().panel;
                 JFrame frame = Alati.getFrame();
-                Alati.runApp(panel1,"Izbornik",true);
+                Alati.runApp(Alati.panelIzbornik,"Izbornik",true);
                 Alati.disposeApp(frame);
+            }
+        });
+        lstValues.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                if (e.getClickCount()==2){
+                    int godina = (2023-cmbGodina.getItemCount())+cmbGodina.getSelectedIndex()+1; //+1 zbog prvog item-a
+                    obiteljGraf((Obitelj) lstValues.getSelectedValue(),godina,(Kategorija) cmbKategorija.getSelectedItem());
+                }
+            }
+        });
+        lstClanova.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                if (e.getClickCount()==2){
+                    int godina = (2023-cmbGodina.getItemCount())+cmbGodina.getSelectedIndex()+1; //+1 zbog prvog item-a
+
+                    korisnikGraf((Korisnik) lstClanova.getSelectedValue(),godina,(Kategorija) cmbKategorija.getSelectedItem());
+
+                }
             }
         });
     }
@@ -103,36 +120,39 @@ public class ProzorStatistika {
         lstValues.repaint();
     }
 
-    private void prviGraf(Obitelj o, int godina,Kategorija kategorija){
-        BigDecimal ukupno;
+    private void obiteljGraf(Obitelj o, int godina,Kategorija kategorija){
         double[] podaci= new double[12];
-
         double ukupno2;
-        double ukupno3=0;
-        for (Korisnik clan: o.getClanovi()){
             for (int i = 0; i<12; i++){
                 ukupno2 = 0;
-                ukupno = new BigDecimal(0);
-                for(DnevnaPotrosnja dp : clan.getPotrosnje()){
-                    if (cmbGodina.getSelectedIndex()==0 && dp.getDatum().getMonth()==i){
-                        ukupno2 += dp.getPotrosnja().doubleValue();
-                    }
-                    if (cmbGodina.getSelectedIndex()!=0 && dp.getDatum().getYear()==(godina-1900) && dp.getDatum().getMonth()==i ){
-                        //ukupno.add(dp.getPotrosnja());
-                        ukupno2 += dp.getPotrosnja().doubleValue();
-                        //ukupno3 +=dp.getPotrosnja().doubleValue();
+                for (Korisnik clan: o.getClanovi()) {
+                    for (DnevnaPotrosnja dp : clan.getPotrosnje()) {
+                        if (dp.getDatum().getMonth() == i) {
+                            //nisu određene ni godina ni kategorija
+                            if (cmbGodina.getSelectedIndex() == 0 && cmbKategorija.getSelectedIndex() == 0) {
+                                ukupno2 += dp.getPotrosnja().doubleValue();
+                            }
+                            //određena godina ali ne kategorija
+                            if (cmbKategorija.getSelectedIndex()==0 && cmbGodina.getSelectedIndex() != 0 && dp.getDatum().getYear() == (godina - 1900)) {
+                                ukupno2 += dp.getPotrosnja().doubleValue();
+                            }
+                            //određena kategorija ali ne godina
+                            if (cmbGodina.getSelectedIndex() == 0 && cmbKategorija.getSelectedIndex()!=0 && dp.getKategorija() == kategorija) {
+                                ukupno2 += dp.getPotrosnja().doubleValue();
+                            }
+                            //određena godina i kategorija
+                            if (cmbKategorija.getSelectedIndex()!=0  && cmbGodina.getSelectedIndex() != 0 && dp.getDatum().getYear() == (godina - 1900) && dp.getKategorija() == kategorija) {
+                                ukupno2 += dp.getPotrosnja().doubleValue();
+                            }
+                        }
                     }
                 }
-                //System.out.println(ukupno2);
-                //podaci [i] = ukupno.doubleValue();
                 podaci [i] = ukupno2;
-            }
-
         }
 
-        //double[] dataArray = {2.00,3.22,4.00};
-        //JFreeChart chart = ChartFactory.createHistogram("Po mjesecu" , "Mjeseci","Potrošnja",dataset);
-        JFreeChart chart = getHistogramChart(o.getObiteljskoPrezime()+": "+(cmbGodina.getSelectedIndex()!=0 ? godina : ""), podaci);
+        JFreeChart chart = getHistogramChart(o.getObiteljskoPrezime()+": "+
+                (cmbGodina.getSelectedIndex()!=0 ? godina : "") +": "+
+                (cmbKategorija.getSelectedIndex()!=0 ? kategorija.getNaziv() : ""), podaci);
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setMaximumDrawHeight(3000);
         chartPanel.setMaximumDrawWidth(3000);
@@ -146,8 +166,52 @@ public class ProzorStatistika {
         frame.setSize(800, 600);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        //lblGraf.setText("Ukupno potroseno: "+ukupno3);
+    }
 
+    private void korisnikGraf(Korisnik k, int godina,Kategorija kategorija){
+        double[] podaci= new double[12];
+        double ukupno2;
+        for (int i = 0; i<12; i++){
+            ukupno2 = 0;
+                for (DnevnaPotrosnja dp : k.getPotrosnje()) {
+                    if (dp.getDatum().getMonth() == i) {
+                        //nisu određene ni godina ni kategorija
+                        if (cmbGodina.getSelectedIndex() == 0 && cmbKategorija.getSelectedIndex() == 0) {
+                            ukupno2 += dp.getPotrosnja().doubleValue();
+                        }
+                        //određena godina ali ne kategorija
+                        if (cmbKategorija.getSelectedIndex()==0 && cmbGodina.getSelectedIndex() != 0 && dp.getDatum().getYear() == (godina - 1900)) {
+                            ukupno2 += dp.getPotrosnja().doubleValue();
+                        }
+                        //određena kategorija ali ne godina
+                        if (cmbGodina.getSelectedIndex() == 0 && cmbKategorija.getSelectedIndex()!=0 && dp.getKategorija() == kategorija) {
+                            ukupno2 += dp.getPotrosnja().doubleValue();
+                        }
+                        //određena godina i kategorija
+                        if (cmbKategorija.getSelectedIndex()!=0  && cmbGodina.getSelectedIndex() != 0 && dp.getDatum().getYear() == (godina - 1900) && dp.getKategorija() == kategorija) {
+                            ukupno2 += dp.getPotrosnja().doubleValue();
+                        }
+                    }
+                }
+            podaci [i] = ukupno2;
+        }
+
+        JFreeChart chart = getHistogramChart(k.getIme()+" "+k.getPrezime()+": "+
+                (cmbGodina.getSelectedIndex()!=0 ? godina : "") +" : "+
+                (cmbKategorija.getSelectedIndex()!=0 ? kategorija.getNaziv() : ""), podaci);
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setMaximumDrawHeight(3000);
+        chartPanel.setMaximumDrawWidth(3000);
+        panelGraf1.setLayout(new BorderLayout());
+        panelGraf1.add(chartPanel, BorderLayout.CENTER);
+        panelGraf1.validate();
+
+        JFrame frame = new JFrame();
+        frame.setContentPane(panelGraf1);
+        frame.add(chartPanel);
+        frame.setSize(800, 600);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     private static JFreeChart getHistogramChart(String name, double[] dataArray) {
@@ -184,7 +248,7 @@ public class ProzorStatistika {
         DefaultComboBoxModel<Kategorija> model = new DefaultComboBoxModel<>();
         Kategorija k = new Kategorija();
         k.setId(0);
-        k.setNaziv("Odaberite kategoriju: ");
+        k.setNaziv("Sve kategorije ");
         model.addElement(k);
 
         model.addAll(new ObradaKategorija().read());
@@ -195,7 +259,7 @@ public class ProzorStatistika {
 
     public void loadGodina(){
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-        model.addElement("Odaberi godinu");
+        model.addElement("Neodređeno ");
         for (int i=2020;i<=2023;i++){
             model.addElement(i+".");
         }
