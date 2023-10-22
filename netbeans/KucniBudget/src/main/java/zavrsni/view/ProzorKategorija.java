@@ -21,6 +21,7 @@ public class ProzorKategorija implements ViewInterface {
     private JLabel lblNaziv;
     private JTextField txtNaziv;
     private JButton btnNatrag;
+    private JLabel lblBroj;
     private ObradaKategorija obrada;
 
     public ProzorKategorija() {
@@ -109,6 +110,7 @@ public class ProzorKategorija implements ViewInterface {
         DefaultListModel<Kategorija> model = new DefaultListModel<>();
         model.addAll(obrada.read());
         lstValues.setModel(model);
+        lblBroj.setText("Broj kategorija: "+ lstValues.getModel().getSize());
         lstValues.repaint();
     }
 

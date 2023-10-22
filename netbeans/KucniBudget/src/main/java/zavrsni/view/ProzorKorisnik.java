@@ -284,7 +284,7 @@ public ProzorKorisnik() {
                     Korisnik k = (Korisnik) lstValues.getSelectedValue();
                     JPanel panel1 = new ProzorDnevnaPotrosnja(k).panel;
                     JFrame frame = Alati.getFrame();
-                    Alati.runApp(panel1,"Dnevne potrošnje",true);
+                    Alati.runApp(panel1,"Dnevne potrošnje -"+k.getIme(),true);
                     Alati.disposeApp(frame);
 
                 }

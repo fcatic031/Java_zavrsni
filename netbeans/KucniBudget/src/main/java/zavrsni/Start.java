@@ -41,9 +41,6 @@ public class Start {
     public static void main(String[] args) {
         //HibernateUtil.getSession();
         //new FakerInsert();
-        //dodavanjeObitelji();
-        //dodavanjeKorisnika();
-        //dodavanjeOperatatera();
         //new Start();
 
         JPanel panel = new SplashScreen(true).panel;
@@ -54,21 +51,6 @@ public class Start {
 
     private Start(){
         radSJSON();
-    }
-
-    private static void dodavanjeObitelji(){
-
-        ObradaObitelj ob = new ObradaObitelj();
-
-        Obitelj o = new Obitelj();
-        o.setObiteljskoPrezime(null);
-        ob.setEntitet(o);
-        try {
-            ob.create();
-        } catch (BudgetException b){
-            System.out.println(b.getPoruka());
-        }
-        System.out.println("GOTOVOOO");
     }
 
 

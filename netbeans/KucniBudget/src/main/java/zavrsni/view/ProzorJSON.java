@@ -5,6 +5,9 @@ import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
 import zavrsni.controller.ObradaDnevnaPotrosnja;
 import zavrsni.model.DnevnaPotrosnja;
 import zavrsni.model.Kategorija;
@@ -13,8 +16,12 @@ import zavrsni.model.Obitelj;
 import zavrsni.util.BudgetException;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -23,13 +30,13 @@ import java.util.List;
 public class ProzorJSON {
     private JTextArea txtJSON;
     protected JPanel panel;
-    private JButton button1;
-
+    private JButton btnDownload;
+    private ObradaDnevnaPotrosnja obrada;
 
 public ProzorJSON(String uvjet) {
     radSJSON(uvjet);
-}
 
+}
 
     private  void radSJSON(String uvjet) {
 
@@ -39,7 +46,7 @@ public ProzorJSON(String uvjet) {
 
 
         Gson gson = new GsonBuilder()
-                //.setDateFormat("yyyy-MM-dd HH:mm:ss")
+                .setDateFormat("yyyy-MM-dd HH:mm:ss")
                 .setExclusionStrategies(new ProzorJSON.CustomExclusionStrategy()).create();
         String json = gson.toJson(target, listType);
         txtJSON.setText(json);
@@ -94,5 +101,7 @@ public ProzorJSON(String uvjet) {
         }
 
     }
+
+
 
 }

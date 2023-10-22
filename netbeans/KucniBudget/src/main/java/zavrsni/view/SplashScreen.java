@@ -27,7 +27,6 @@ public class SplashScreen {
 
         @Override
         public void run(){
-
             if (pocetak) {
                 lblSlika.setIcon(new ImageIcon(new ImageIcon("src\\main\\resources\\HomeBudgetSlika.jpeg").getImage().getScaledInstance(500, 500, Image.SCALE_DEFAULT)));
                 loadingBar(progressBar, 0, 50);
@@ -44,8 +43,7 @@ public class SplashScreen {
                 lblSlika.setIcon(null);
             } else {
                 //lblSlika.setIcon(new ImageIcon(new ImageIcon("src\\main\\resources\\HomeBudgetSlika.jpeg").getImage().getScaledInstance(500, 500, Image.SCALE_DEFAULT)));
-
-                JFrame frame = Alati.getFrame();
+                JFrame frame2 = Alati.getFrame();
                 Alati.panelIzbornik = new Izbornik().panel;
                 loadingBar(progressBar, 0, 20);
 
@@ -61,7 +59,7 @@ public class SplashScreen {
                 Alati.panelDnevnaPotrosnja = new ProzorDnevnaPotrosnja().panel;
                 loadingBar(progressBar, 80, 100);
 
-                Alati.disposeApp(frame);
+                Alati.disposeApp(frame2);
                 Alati.runApp(Alati.panelIzbornik,"Izbornik",true);
 
             }

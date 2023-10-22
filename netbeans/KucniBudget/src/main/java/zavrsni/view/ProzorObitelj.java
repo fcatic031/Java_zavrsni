@@ -26,7 +26,7 @@ public class ProzorObitelj implements ViewInterface{
     private JButton btnObrisati;
     private JButton btnNatrag;
     private JList lstClanova;
-    private JButton btnPotrosnje;
+    private JLabel lblClanovi;
     private ObradaObitelj obrada;
 
     public ProzorObitelj() {
@@ -124,27 +124,30 @@ public class ProzorObitelj implements ViewInterface{
                 if (e.getClickCount()==2){
 
                     Korisnik k = (Korisnik) lstClanova.getSelectedValue();
-                    JPanel panel1 = new ProzorKorisnik(k).panel;
+                    Alati.panelKorisnik = new ProzorKorisnik(k).panel;
                     JFrame frame = Alati.getFrame();
-                    Alati.runApp(panel1,"Korisnik",true);
+                    Alati.runApp(Alati.panelKorisnik,"Korisnik",true);
                     Alati.disposeApp(frame);
 
                 }
             }
         });
-        btnPotrosnje.addActionListener(new ActionListener() {
+        lstValues.addMouseListener(new MouseAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                //treba doraditi
-                //Obitelj o = (Obitelj) lstValues.getSelectedValue();
-                //JPanel panel1 = new ProzorDnevnaPotrosnja(o).panel;
-                //JFrame frame = Alati.getFrame();
-                //Alati.runApp(panel1,"Dnevne potrošnje",true);
-                //Alati.disposeApp(frame);
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                if (e.getClickCount()==2){
+
+                    Obitelj o = (Obitelj) lstValues.getSelectedValue();
+                    JPanel panel1 = new ProzorDnevnaPotrosnja(o).panel;
+                    JFrame frame = Alati.getFrame();
+                    Alati.runApp(panel1,"Dnevna potrošnja -"+o.getObiteljskoPrezime(),true);
+                    Alati.disposeApp(frame);
+
+                }
             }
         });
     }
-
     @Override
     public void load() {
         DefaultListModel<Obitelj> model = new DefaultListModel<>();
@@ -157,8 +160,8 @@ public class ProzorObitelj implements ViewInterface{
     public void loadClanovi(){
         DefaultListModel<Korisnik> model = new DefaultListModel<>();
         Obitelj e = obrada.getEntitet();
+        int i = 0;
         if (lstValues.getSelectedValue()!=null){
-            int i = 0;
             for (Korisnik k : e.getClanovi()){
                 model.add(i,k);
                 i++;
@@ -166,6 +169,7 @@ public class ProzorObitelj implements ViewInterface{
             lstClanova.setModel(model);
             lstClanova.repaint();
         }
+        lblClanovi.setText("Članovi ("+i+")");
     }
 
 

@@ -12,10 +12,11 @@ public class IzbornikKorisnik {
     private JButton btnStatistika;
     private JLabel lblNaslov;
     protected JPanel panel;
+    private JLabel lblKorisnik;
 
     public IzbornikKorisnik(){
         lblNaslov.setFont(new Font("Ariel",Font.PLAIN,30));
-
+        lblKorisnik.setText(Alati.OPERATER.getPrezime()+" "+Alati.OPERATER.getIme());
         btnPotrosnja.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

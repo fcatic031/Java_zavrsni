@@ -1,6 +1,8 @@
 package zavrsni.util;
 
+import zavrsni.controller.ObradaObitelj;
 import zavrsni.model.Korisnik;
+import zavrsni.model.Obitelj;
 
 import javax.swing.*;
 
@@ -16,6 +18,21 @@ public class Alati {
 
     public static String getOperater(){
         return OPERATER.getIme()+" "+ OPERATER.getPrezime()+" ("+OPERATER.getUloga()+ ")";
+    }
+
+    private static void dodavanjeObitelji(){
+
+        ObradaObitelj ob = new ObradaObitelj();
+
+        Obitelj o = new Obitelj();
+        o.setObiteljskoPrezime(null);
+        ob.setEntitet(o);
+        try {
+            ob.create();
+        } catch (BudgetException b){
+            System.out.println(b.getPoruka());
+        }
+        System.out.println("GOTOVOOO");
     }
 
     public static void runApp(JPanel panel,String title,Boolean visible){

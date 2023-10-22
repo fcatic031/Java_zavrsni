@@ -1,6 +1,7 @@
 package zavrsni.controller;
 
 import zavrsni.model.DnevnaPotrosnja;
+import zavrsni.model.Obitelj;
 import zavrsni.util.BudgetException;
 
 import java.math.BigDecimal;
@@ -27,6 +28,25 @@ public class ObradaDnevnaPotrosnja extends Obrada<DnevnaPotrosnja> {
                         "order by dp.potrosnja",
                         DnevnaPotrosnja.class)
                 .setParameter("uvjet",uvjet)
+                .list();
+        return lista;
+    }
+    public List<DnevnaPotrosnja> read(Obitelj o) {
+        //uvjet = uvjet==null ? "" : uvjet;
+        //uvjet = uvjet.trim();
+        //uvjet = "%"+uvjet+"%";
+        Integer obiteljID = o.getId();
+
+        List<DnevnaPotrosnja> lista = session
+                .createQuery("from DnevnaPotrosnja dp " +
+                                "inner join dp.korisnik as korisnik "+
+                                //"inner join dp.kategorija as kategorija "+
+                                //"where concat(korisnik.ime,' ',korisnik.prezime,' ',korisnik.ime,' ',kategorija.naziv,' ',year(dp.datum)) " +
+                                //"like :uvjet " +
+                                "where korisnik.obitelj.id=:o "+
+                                "order by dp.potrosnja",
+                        DnevnaPotrosnja.class)
+                .setParameter("o",obiteljID)
                 .list();
         return lista;
     }
