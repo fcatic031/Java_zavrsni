@@ -11,6 +11,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ProzorKategorija implements ViewInterface {
     protected JPanel panel;
@@ -101,6 +103,21 @@ public class ProzorKategorija implements ViewInterface {
                 JFrame frame = Alati.getFrame();
                 Alati.runApp(panel1,"Izbornik",true);
                 Alati.disposeApp(frame);
+            }
+        });
+        lstValues.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                if (e.getClickCount() == 2) {
+
+                    Kategorija k = (Kategorija) lstValues.getSelectedValue();
+                    JPanel panel1 = new ProzorDnevnaPotrosnja(k).panel;
+                    JFrame frame = Alati.getFrame();
+                    Alati.runApp(panel1, "Dnevna potrošnja - " + k.getNaziv(), true);
+                    Alati.disposeApp(frame);
+
+                }
             }
         });
     }

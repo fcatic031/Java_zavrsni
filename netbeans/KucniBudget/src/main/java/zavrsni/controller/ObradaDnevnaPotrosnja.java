@@ -1,7 +1,10 @@
 package zavrsni.controller;
 
 import zavrsni.model.DnevnaPotrosnja;
+import zavrsni.model.Kategorija;
+import zavrsni.model.Korisnik;
 import zavrsni.model.Obitelj;
+import zavrsni.util.Alati;
 import zavrsni.util.BudgetException;
 
 import java.math.BigDecimal;
@@ -11,6 +14,7 @@ public class ObradaDnevnaPotrosnja extends Obrada<DnevnaPotrosnja> {
 
     @Override
     public List<DnevnaPotrosnja> read() {
+
         return session.createQuery("from DnevnaPotrosnja", DnevnaPotrosnja.class).list();
     }
 
@@ -31,10 +35,26 @@ public class ObradaDnevnaPotrosnja extends Obrada<DnevnaPotrosnja> {
                 .list();
         return lista;
     }
+
+    public List<DnevnaPotrosnja> read(Korisnik k) {
+        Integer korisnikID = k.getId();
+
+        List<DnevnaPotrosnja> lista = session
+                .createQuery("from DnevnaPotrosnja dp " +
+                                "inner join dp.korisnik as korisnik "+
+                                //"inner join dp.kategorija as kategorija "+
+                                //"where concat(korisnik.ime,' ',korisnik.prezime,' ',korisnik.ime,' ',kategorija.naziv,' ',year(dp.datum)) " +
+                                //"like :uvjet " +
+                                "where korisnik.id=:k "+
+                                "order by dp.potrosnja",
+                        DnevnaPotrosnja.class)
+                .setParameter("k",korisnikID)
+                .list();
+
+        return lista;
+    }
+
     public List<DnevnaPotrosnja> read(Obitelj o) {
-        //uvjet = uvjet==null ? "" : uvjet;
-        //uvjet = uvjet.trim();
-        //uvjet = "%"+uvjet+"%";
         Integer obiteljID = o.getId();
 
         List<DnevnaPotrosnja> lista = session
@@ -48,9 +68,92 @@ public class ObradaDnevnaPotrosnja extends Obrada<DnevnaPotrosnja> {
                         DnevnaPotrosnja.class)
                 .setParameter("o",obiteljID)
                 .list();
+
         return lista;
     }
 
+    public List<DnevnaPotrosnja> read(Kategorija k) {
+        Integer kategorijaID = k.getId();
+
+        List<DnevnaPotrosnja> lista = session
+                .createQuery("from DnevnaPotrosnja dp " +
+                                //"inner join dp.korisnik as korisnik "+
+                                //"inner join dp.kategorija as kategorija "+
+                                //"where concat(korisnik.ime,' ',korisnik.prezime,' ',korisnik.ime,' ',kategorija.naziv,' ',year(dp.datum)) " +
+                                //"like :uvjet " +
+                                "where dp.kategorija.id=:k "+
+                                "order by dp.potrosnja",
+                        DnevnaPotrosnja.class)
+                .setParameter("k",kategorijaID)
+                .list();
+
+        return lista;
+    }
+
+    public List<DnevnaPotrosnja> read(Obitelj o,String uvjet) {
+        uvjet = uvjet==null ? "" : uvjet;
+        uvjet = uvjet.trim();
+        uvjet = "%"+uvjet+"%";
+        Integer obiteljID = o.getId();
+
+        List<DnevnaPotrosnja> lista = session
+                .createQuery("from DnevnaPotrosnja dp " +
+                                "inner join dp.korisnik as korisnik "+
+                                "inner join dp.kategorija as kategorija "+
+                                "where concat(korisnik.ime,' ',korisnik.prezime,' ',korisnik.ime,' ',kategorija.naziv,' ',year(dp.datum)) " +
+                                "like :uvjet and " +
+                                "korisnik.obitelj.id=:o "+
+                                "order by dp.potrosnja",
+                        DnevnaPotrosnja.class)
+                .setParameter("o",obiteljID)
+                .setParameter("uvjet",uvjet)
+                .list();
+
+        return lista;
+    }
+
+    public List<DnevnaPotrosnja> read(Korisnik k,String uvjet) {
+        uvjet = uvjet==null ? "" : uvjet;
+        uvjet = uvjet.trim();
+        uvjet = "%"+uvjet+"%";
+        Integer korisnikID = k.getId();
+
+        List<DnevnaPotrosnja> lista = session
+                .createQuery("from DnevnaPotrosnja dp " +
+                                "inner join dp.korisnik as korisnik "+
+                                "inner join dp.kategorija as kategorija "+
+                                "where concat(korisnik.ime,' ',korisnik.prezime,' ',korisnik.ime,' ',kategorija.naziv,' ',year(dp.datum)) " +
+                                "like :uvjet and " +
+                                "korisnik.id=:k "+
+                                "order by dp.potrosnja",
+                        DnevnaPotrosnja.class)
+                .setParameter("k",korisnikID)
+                .setParameter("uvjet",uvjet)
+                .list();
+
+        return lista;
+    }
+
+    public List<DnevnaPotrosnja> read(Kategorija k,String uvjet) {
+        uvjet = uvjet==null ? "" : uvjet;
+        uvjet = uvjet.trim();
+        uvjet = "%"+uvjet+"%";
+        Integer kategorijaID = k.getId();
+
+        List<DnevnaPotrosnja> lista = session
+                .createQuery("from DnevnaPotrosnja dp " +
+                                "inner join dp.korisnik as korisnik "+
+                                "inner join dp.kategorija as kategorija "+
+                                "where concat(korisnik.ime,' ',korisnik.prezime,' ',korisnik.ime,' ',year(dp.datum)) " +
+                                "like :uvjet and " +
+                                "dp.kategorija.id=:k "+
+                                "order by dp.potrosnja",
+                        DnevnaPotrosnja.class)
+                .setParameter("k",kategorijaID)
+                .list();
+
+        return lista;
+    }
     @Override
     protected void controlUnos() throws BudgetException {
         controlKorisnik();
@@ -62,7 +165,10 @@ public class ObradaDnevnaPotrosnja extends Obrada<DnevnaPotrosnja> {
 
     @Override
     protected void controlPromjena() throws BudgetException {
-
+        controlKorisnik();
+        controlKategorija();
+        controlDatum();
+        controlPotrosnja();
     }
 
     @Override
