@@ -15,6 +15,7 @@ public class Alati {
     public static JPanel panelDnevnaPotrosnja;
     public static JPanel panelKategorija;
     public static JPanel panelSplash;
+    public static Integer potrosnje;
 
     public static String getOperater(){
         return OPERATER.getIme()+" "+ OPERATER.getPrezime()+" ("+OPERATER.getUloga()+ ")";
