@@ -33,7 +33,6 @@ public class ProzorStatistika {
     private JList lstClanova;
     private JPanel panelGraf1;
     private JComboBox cmbKategorija;
-    private JButton btnGraf;
     private JButton btnNazad;
     private JComboBox cmbGodina;
     private ObradaObitelj obrada;
@@ -44,8 +43,6 @@ public class ProzorStatistika {
         loadKategorija();
         loadGodina();
         load();
-
-
     lstValues.addListSelectionListener(new ListSelectionListener() {
         @Override
         public void valueChanged(ListSelectionEvent e) {
@@ -60,14 +57,6 @@ public class ProzorStatistika {
         }
     });
 
-        btnGraf.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int godina = (2023-cmbGodina.getItemCount())+cmbGodina.getSelectedIndex()+1; //+1 zbog prvog item-a
-
-                obiteljGraf((Obitelj) lstValues.getSelectedValue(),godina,(Kategorija) cmbKategorija.getSelectedItem());
-            }
-        });
         btnNazad.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -80,6 +69,7 @@ public class ProzorStatistika {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                panelGraf1.removeAll();
                 if (e.getClickCount()==2){
                     int godina = (2023-cmbGodina.getItemCount())+cmbGodina.getSelectedIndex()+1; //+1 zbog prvog item-a
                     obiteljGraf((Obitelj) lstValues.getSelectedValue(),godina,(Kategorija) cmbKategorija.getSelectedItem());
@@ -90,6 +80,7 @@ public class ProzorStatistika {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                panelGraf1.removeAll();
                 if (e.getClickCount()==2){
                     int godina = (2023-cmbGodina.getItemCount())+cmbGodina.getSelectedIndex()+1; //+1 zbog prvog item-a
 
@@ -150,9 +141,9 @@ public class ProzorStatistika {
                 podaci [i] = ukupno2;
         }
 
-        JFreeChart chart = getHistogramChart(o.getObiteljskoPrezime()+": "+
-                (cmbGodina.getSelectedIndex()!=0 ? godina : "") +": "+
-                (cmbKategorija.getSelectedIndex()!=0 ? kategorija.getNaziv() : ""), podaci);
+        JFreeChart chart = getHistogramChart(o.getObiteljskoPrezime()+" : "+
+                (cmbGodina.getSelectedIndex()!=0 ? godina : cmbGodina.getItemAt(1) +"-"+cmbGodina.getItemAt(cmbGodina.getItemCount()-1)) +" : "+
+                (cmbKategorija.getSelectedIndex()!=0 ? kategorija.getNaziv() : "Sve kategorije"), podaci);
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setMaximumDrawHeight(3000);
         chartPanel.setMaximumDrawWidth(3000);
