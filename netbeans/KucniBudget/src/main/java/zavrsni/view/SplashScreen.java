@@ -27,7 +27,7 @@ public class SplashScreen {
 
         @Override
         public void run(){
-            if (pocetak) {
+            if(pocetak) {
                 lblSlika.setIcon(new ImageIcon(new ImageIcon("src\\main\\resources\\HomeBudgetSlika.jpeg").getImage().getScaledInstance(500, 500, Image.SCALE_DEFAULT)));
                 loadingBar(progressBar, 0, 50);
                 Session s = HibernateUtil.getSession();
@@ -40,9 +40,9 @@ public class SplashScreen {
                 JFrame frame = Alati.getFrame();
                 Alati.runApp(panel1, "Autorizacija", true);
                 Alati.disposeApp(frame);
-                lblSlika.setIcon(null);
             } else {
-                //lblSlika.setIcon(new ImageIcon(new ImageIcon("src\\main\\resources\\HomeBudgetSlika.jpeg").getImage().getScaledInstance(500, 500, Image.SCALE_DEFAULT)));
+                //lblSlika.setIcon(new ImageIcon(new ImageIcon("src\\main\\resources\\HomeBudgetSlika2.jpeg").getImage().getScaledInstance(500, 500, Image.SCALE_DEFAULT)));
+                lblSlika2.setText("Očitavanje");
                 JFrame frame2 = Alati.getFrame();
                 Alati.panelIzbornik = new Izbornik().panel;
                 loadingBar(progressBar, 0, 20);
@@ -63,6 +63,7 @@ public class SplashScreen {
                 Alati.runApp(Alati.panelIzbornik,"Izbornik",true);
 
             }
+
         }
 
         public void loadingBar(JProgressBar progressBar,int min,int max){
