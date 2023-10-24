@@ -113,6 +113,7 @@ public class ProzorStatistika {
 
     private void obiteljGraf(Obitelj o, int godina,Kategorija kategorija){
         double[] podaci= new double[12];
+        double ukupno=0;
         double ukupno2;
             for (int i = 0; i<12; i++){
                 ukupno2 = 0;
@@ -138,12 +139,14 @@ public class ProzorStatistika {
                         }
                     }
                 }
+
+                ukupno+=ukupno2;
                 podaci [i] = ukupno2;
         }
 
         JFreeChart chart = getHistogramChart(o.getObiteljskoPrezime()+" : "+
                 (cmbGodina.getSelectedIndex()!=0 ? godina : cmbGodina.getItemAt(1) +"-"+cmbGodina.getItemAt(cmbGodina.getItemCount()-1)) +" : "+
-                (cmbKategorija.getSelectedIndex()!=0 ? kategorija.getNaziv() : "Sve kategorije"), podaci);
+                (cmbKategorija.getSelectedIndex()!=0 ? kategorija.getNaziv() : "Sve kategorije")+" : "+ukupno+" €", podaci);
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setMaximumDrawHeight(3000);
         chartPanel.setMaximumDrawWidth(3000);
@@ -161,6 +164,7 @@ public class ProzorStatistika {
 
     private void korisnikGraf(Korisnik k, int godina,Kategorija kategorija){
         double[] podaci= new double[12];
+        double ukupno=0;
         double ukupno2;
         for (int i = 0; i<12; i++){
             ukupno2 = 0;
@@ -184,12 +188,13 @@ public class ProzorStatistika {
                         }
                     }
                 }
+            ukupno +=ukupno2;
             podaci [i] = ukupno2;
         }
 
         JFreeChart chart = getHistogramChart(k.getIme()+" "+k.getPrezime()+": "+
-                (cmbGodina.getSelectedIndex()!=0 ? godina : "") +" : "+
-                (cmbKategorija.getSelectedIndex()!=0 ? kategorija.getNaziv() : ""), podaci);
+                (cmbGodina.getSelectedIndex()!=0 ? godina : cmbGodina.getItemAt(1) +"-"+cmbGodina.getItemAt(cmbGodina.getItemCount()-1)) +" : "+
+                (cmbKategorija.getSelectedIndex()!=0 ? kategorija.getNaziv() : "Sve kategorije")+" : "+ukupno+" €", podaci);
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setMaximumDrawHeight(3000);
         chartPanel.setMaximumDrawWidth(3000);
@@ -208,7 +213,7 @@ public class ProzorStatistika {
     private static JFreeChart getHistogramChart(String name, double[] dataArray) {
         String plotTitle = name;
         String xAxisLabel = "Mjeseci";
-        String yAxis = "Potrošnja";
+        String yAxisLabel = "Potrošnja";
         PlotOrientation orientation = PlotOrientation.VERTICAL;
 
         DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
@@ -222,7 +227,7 @@ public class ProzorStatistika {
         boolean toolTips = false;
         boolean urls = false;
         JFreeChart chart = ChartFactory.createBarChart(plotTitle, xAxisLabel,
-                yAxis, dataSet, orientation, show, toolTips, urls);
+                yAxisLabel, dataSet, orientation, show, toolTips, urls);
         chart.setBackgroundPaint(Color.WHITE);
 
         //Kopirano iz stackflow-a
