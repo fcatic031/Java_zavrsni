@@ -38,11 +38,70 @@ public ProzorJSON(String uvjet) {
 
 }
 
+    public ProzorJSON(Kategorija k,String uvjet) {
+        radSJSON(k, uvjet);
+    }
+
+    public ProzorJSON(Korisnik k,String uvjet) {
+        radSJSON(k,uvjet);
+
+    }
+
+
+    public ProzorJSON(Obitelj o,String uvjet) {
+        radSJSON(o,uvjet);
+
+    }
+
     private  void radSJSON(String uvjet) {
 
 
         Type listType = new TypeToken<List<DnevnaPotrosnja>>() {}.getType();
         List<DnevnaPotrosnja> target = new ObradaDnevnaPotrosnja().read(uvjet);
+
+
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                .setExclusionStrategies(new ProzorJSON.CustomExclusionStrategy()).create();
+        String json = gson.toJson(target, listType);
+        txtJSON.setText(json);
+        //System.out.println(json);
+    }
+
+    private  void radSJSON(Obitelj o, String uvjet) {
+
+
+        Type listType = new TypeToken<List<DnevnaPotrosnja>>() {}.getType();
+        List<DnevnaPotrosnja> target = new ObradaDnevnaPotrosnja().read(o,uvjet);
+
+
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                .setExclusionStrategies(new ProzorJSON.CustomExclusionStrategy()).create();
+        String json = gson.toJson(target, listType);
+        txtJSON.setText(json);
+        //System.out.println(json);
+    }
+
+    private  void radSJSON(Kategorija k, String uvjet) {
+
+
+        Type listType = new TypeToken<List<DnevnaPotrosnja>>() {}.getType();
+        List<DnevnaPotrosnja> target = new ObradaDnevnaPotrosnja().read(k,uvjet);
+
+
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                .setExclusionStrategies(new ProzorJSON.CustomExclusionStrategy()).create();
+        String json = gson.toJson(target, listType);
+        txtJSON.setText(json);
+        //System.out.println(json);
+    }
+
+    private  void radSJSON(Korisnik k,String uvjet) {
+
+        Type listType = new TypeToken<List<DnevnaPotrosnja>>() {}.getType();
+        List<DnevnaPotrosnja> target = new ObradaDnevnaPotrosnja().read(k,uvjet);
 
 
         Gson gson = new GsonBuilder()

@@ -45,8 +45,10 @@ public class Start {
 
         JPanel panel = new SplashScreen(true).panel;
         Alati.runApp(panel,"Loading...",true);
+        //Alati.panelSplashFact=true;
         //Alati.panelSplash = new SplashScreen(true).panel;
         //Alati.runApp(Alati.panelSplash,"Loading",true);
+
     }
 
     private Start(){

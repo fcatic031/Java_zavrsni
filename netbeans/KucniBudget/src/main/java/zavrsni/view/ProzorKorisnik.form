@@ -92,22 +92,6 @@
           <text value="Spol"/>
         </properties>
       </component>
-      <component id="3e96" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="14" column="3" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Lozinka"/>
-        </properties>
-      </component>
-      <component id="2bf3e" class="javax.swing.JTextField" binding="txtLozinka">
-        <constraints>
-          <grid row="15" column="3" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
-        <properties/>
-      </component>
       <component id="2e819" class="javax.swing.JLabel">
         <constraints>
           <grid row="10" column="3" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -206,6 +190,14 @@
         </constraints>
         <properties>
           <text value=""/>
+        </properties>
+      </component>
+      <component id="38cb1" class="javax.swing.JRadioButton" binding="rbtnUloga">
+        <constraints>
+          <grid row="15" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Uloga operatera"/>
         </properties>
       </component>
     </children>

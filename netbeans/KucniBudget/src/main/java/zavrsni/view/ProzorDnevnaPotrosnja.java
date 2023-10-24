@@ -92,6 +92,9 @@ public ProzorDnevnaPotrosnja() {
         public void actionPerformed(ActionEvent e) {
             obrada.setEntitet(new DnevnaPotrosnja());
             fillModel();
+            if (txtPotrosnja.getText().isEmpty()){
+                txtPotrosnja.setText("0");
+            }
             try {
                 obrada.create();
                 load();
@@ -149,7 +152,7 @@ public ProzorDnevnaPotrosnja() {
         public void actionPerformed(ActionEvent e) {
             JPanel panel1 = new ProzorJSON(txtTrazi.getText()).panel;
             JFrame frame = Alati.getFrame();
-            Alati.runApp(panel1,"JSON - Dnevne potrošnje",true);
+            Alati.runAppAdd(panel1,"JSON - Dnevne potrošnje",true);
             //Alati.disposeApp(frame);
         }
     });
@@ -266,9 +269,9 @@ public ProzorDnevnaPotrosnja() {
         btnJSON.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JPanel panel1 = new ProzorJSON(k.getIme()+" "+k.getPrezime()).panel;
+                JPanel panel1 = new ProzorJSON(k,txtTrazi.getText()).panel;
                 JFrame frame = Alati.getFrame();
-                Alati.runApp(panel1,"JSON - Dnevne potrošnje",true);
+                Alati.runAppAdd(panel1,"JSON - Dnevne potrošnje",true);
                 //Alati.disposeApp(frame);
             }
         });
@@ -377,9 +380,9 @@ public ProzorDnevnaPotrosnja() {
         btnJSON.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //JPanel panel1 = new ProzorJSON(k.getIme()+" "+k.getPrezime()).panel;
-                //JFrame frame = Alati.getFrame();
-                //Alati.runApp(panel1,"JSON - Dnevne potrošnje",true);
+                JPanel panel1 = new ProzorJSON(o,txtTrazi.getText()).panel;
+                JFrame frame = Alati.getFrame();
+                Alati.runAppAdd(panel1,"JSON - Dnevne potrošnje",true);
                 //Alati.disposeApp(frame);
             }
         });
@@ -425,13 +428,8 @@ public ProzorDnevnaPotrosnja() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame frame = Alati.getFrame();
-                //Alati.runApp((Alati.OPERATER.getUloga()) ? (Alati.panelKorisnik,"Korisnik",true) : (Alati.getPanelIzbornikKorisnik,"Korisnik",true);
-                //(Alati.OPERATER.getUloga()) ? Alati.runApp(Alati.panelKorisnik,"Korisnik",true) : Alati.runApp(Alati.PanelIzbornikKorisnik,"Izbornik",true);
-                if(Alati.OPERATER.getUloga()){
-                    Alati.runApp(Alati.panelKorisnik,"Korisnik",true);
-                } else {
-                    Alati.runApp(Alati.panelIzbornik,"Izbornik",true);
-                }
+
+                Alati.runApp(Alati.panelKategorija,"Kategorija",true);
                 Alati.disposeApp(frame);
             }
         });
@@ -495,9 +493,10 @@ public ProzorDnevnaPotrosnja() {
         btnJSON.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //JPanel panel1 = new ProzorJSON(k.getIme()+" "+k.getPrezime()).panel;
-                //JFrame frame = Alati.getFrame();
-                //Alati.runApp(panel1,"JSON - Dnevne potrošnje",true);
+                JPanel panel1 = new ProzorJSON(k,txtTrazi.getText()).panel;
+                JFrame frame = Alati.getFrame();
+                Alati.runAppAdd(panel1,"JSON - Dnevne potrošnje",true);
+
                 //Alati.disposeApp(frame);
             }
         });
@@ -636,7 +635,6 @@ public void settingsDate(){
                     .atZone(ZoneId.systemDefault())
                     .toLocalDate();
             dpDatum.setDate(ld);
-
         }
 
     }

@@ -60,9 +60,11 @@ public class Autorizacija {
             Alati.OPERATER = k;
 
             if (k.getUloga()){
-                Alati.panelSplash= new SplashScreen(false).panel;
+                //Alati.panelSplash= new SplashScreen(false).panel;
+                JPanel panel1 = new SplashScreen(false).panel;
+                //Alati.panelSplashFact=false;
                 JFrame frame = Alati.getFrame();
-                Alati.runApp(Alati.panelSplash,"LOADING...",true);
+                Alati.runApp(panel1,"LOADING...",true);
                 Alati.disposeApp(frame);
             } else{
                 Alati.panelIzbornik = new IzbornikKorisnik().panel;

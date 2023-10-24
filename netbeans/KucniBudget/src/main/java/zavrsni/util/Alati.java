@@ -15,11 +15,9 @@ public class Alati {
     public static JPanel panelDnevnaPotrosnja;
     public static JPanel panelKategorija;
     public static JPanel panelSplash;
-    public static Integer potrosnje;
+    public static boolean panelSplashFact;
 
-    public static String getOperater(){
-        return OPERATER.getIme()+" "+ OPERATER.getPrezime()+" ("+OPERATER.getUloga()+ ")";
-    }
+    public static Integer potrosnje;
 
     private static void dodavanjeObitelji(){
 
@@ -40,6 +38,19 @@ public class Alati {
         frame= new JFrame();
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setTitle(title);
+        frame.setSize(800,600);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(visible);
+    }
+
+
+    public static void runAppAdd(JPanel panel,String title,Boolean visible){
+        //samo je različito to da se cijela aplikacije ne zatvara koristenjem ove naredbe
+        frame= new JFrame();
+        frame.setContentPane(panel);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setTitle(title);
         frame.setSize(800,600);
         frame.pack();

@@ -24,7 +24,6 @@ public class ProzorKorisnik implements ViewInterface{
     private JTextField txtIme;
     private JTextField txtPrezime;
     private JTextField txtEmail;
-    private JTextField txtLozinka;
     private JButton btnNazad;
     private JButton btnDodaj;
     private JButton btnPromjeni;
@@ -37,6 +36,7 @@ public class ProzorKorisnik implements ViewInterface{
     private JRadioButton rbtnZensko;
     private JRadioButton rbtnMusko;
     private JLabel lblSpolError;
+    private JRadioButton rbtnUloga;
     private ObradaKorisnik obrada;
     private Korisnik korisnik;
 
@@ -350,6 +350,7 @@ public ProzorKorisnik() {
         } else{
             lblSpolError.setText("Spol nije označen");
         }
+        e.setUloga(rbtnUloga.isSelected() ? true : false);
 
         LocalDate ld = dpDatum.getDate();
 
@@ -373,6 +374,8 @@ public ProzorKorisnik() {
             rbtnZensko.setSelected(true);
             rbtnMusko.setSelected(false);
         }
+
+        rbtnUloga.setSelected(e.getUloga() ? true : false);
 
         if(e.getDatumRodjenja()==null){
             dpDatum.setDate(null);

@@ -19,6 +19,7 @@ public class Izbornik {
 
     public Izbornik() {
         lblNaslov.setFont(new Font("Ariel",Font.PLAIN,30));
+        lblAdmin.setText("Operater ("+Alati.OPERATER.getIme()+" "+Alati.OPERATER.getPrezime()+")");
     btnObitelj.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {

@@ -35,7 +35,6 @@ public class FakerInsert {
     private List<Korisnik> korisnici;
     private List<DnevnaPotrosnja> potrosnje;
     private List<Korisnik> operateri;
-    private final String[] uloge = {"Backend developer","Frontend developer","UI Designer","Human Resources"};
 
     public FakerInsert(){
         faker = new Faker();
@@ -49,8 +48,8 @@ public class FakerInsert {
         session.getTransaction().begin();
         kreirajObitelji();
         kreirajKategorije();
-        kreirajKorisnike();
         dodavanjeKorisnika(); //kao primjer s poznatim emailom i lozinkom
+        kreirajKorisnike();
         kreirajPotrosnje();
         dodavanjeOperatatera();
         session.getTransaction().commit();
@@ -88,7 +87,7 @@ public class FakerInsert {
             k = new Korisnik();
             k.setIme(faker.hobbit().character());
             o = new Obitelj();
-            o = obitelji.get(faker.number().numberBetween(0, BROJ_OBITELJI-1));
+            o = obitelji.get(faker.number().numberBetween(0, BROJ_OBITELJI));
             k.setObitelj(o);
             //npr jon snow je stark
             int luck = faker.number().numberBetween(0, 100);
@@ -109,8 +108,8 @@ public class FakerInsert {
         for (int i=0; i<BROJ_POTROSNJI;i++){
             d = new DnevnaPotrosnja();
             d.setDatum(faker.date().birthday(0, 3));
-            d.setKorisnik(korisnici.get(faker.number().numberBetween(0, BROJ_KORISNIKA-1)));
-            d.setKategorija(kategorije.get(faker.number().numberBetween(0, BROJ_KATEGORIJA-1)));
+            d.setKorisnik(korisnici.get(faker.number().numberBetween(0, BROJ_KORISNIKA)));
+            d.setKategorija(kategorije.get(faker.number().numberBetween(0, BROJ_KATEGORIJA)));
             d.setPotrosnja(new BigDecimal(faker.number().numberBetween(2, 1000)));
             session.persist(d);
             potrosnje.add(d);
@@ -158,9 +157,8 @@ public class FakerInsert {
         o = obitelji.get(faker.number().numberBetween(0, BROJ_OBITELJI-1));
         k.setObitelj(o);
 
-
-        //ok.setEntitet(k);
         session.persist(k);
+        korisnici.add(k);
     }
 
 

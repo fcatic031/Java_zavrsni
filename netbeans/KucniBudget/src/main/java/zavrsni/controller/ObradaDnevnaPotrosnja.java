@@ -130,7 +130,6 @@ public class ObradaDnevnaPotrosnja extends Obrada<DnevnaPotrosnja> {
                 .setParameter("k",korisnikID)
                 .setParameter("uvjet",uvjet)
                 .list();
-
         return lista;
     }
 
@@ -146,10 +145,11 @@ public class ObradaDnevnaPotrosnja extends Obrada<DnevnaPotrosnja> {
                                 "inner join dp.kategorija as kategorija "+
                                 "where concat(korisnik.ime,' ',korisnik.prezime,' ',korisnik.ime,' ',year(dp.datum)) " +
                                 "like :uvjet and " +
-                                "dp.kategorija.id=:k "+
+                                "kategorija.id=:k "+
                                 "order by dp.potrosnja",
                         DnevnaPotrosnja.class)
                 .setParameter("k",kategorijaID)
+                .setParameter("uvjet",uvjet)
                 .list();
 
         return lista;
@@ -193,6 +193,7 @@ public class ObradaDnevnaPotrosnja extends Obrada<DnevnaPotrosnja> {
     }
     private void controlPotrosnja() throws BudgetException{
         var x = entitet.getPotrosnja();
+
         if (x==null || x.compareTo(BigDecimal.ZERO)==0){
             throw new BudgetException("Nema unosa potrosnja");
         }
