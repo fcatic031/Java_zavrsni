@@ -64,7 +64,7 @@ public class Autorizacija {
                 JPanel panel1 = new SplashScreen(false).panel;
                 //Alati.panelSplashFact=false;
                 JFrame frame = Alati.getFrame();
-                Alati.runApp(panel1,"LOADING...",true);
+                Alati.runAppAdd(panel1,"LOADING...",true);
                 Alati.disposeApp(frame);
             } else{
                 Alati.panelIzbornik = new IzbornikKorisnik().panel;
