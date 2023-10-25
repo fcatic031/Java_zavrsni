@@ -199,8 +199,6 @@ public ProzorDnevnaPotrosnja() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame frame = Alati.getFrame();
-                //Alati.runApp((Alati.OPERATER.getUloga()) ? (Alati.panelKorisnik,"Korisnik",true) : (Alati.getPanelIzbornikKorisnik,"Korisnik",true);
-                //(Alati.OPERATER.getUloga()) ? Alati.runApp(Alati.panelKorisnik,"Korisnik",true) : Alati.runApp(Alati.PanelIzbornikKorisnik,"Izbornik",true);
                 if(Alati.OPERATER.getUloga()){
                     Alati.runApp(Alati.panelKorisnik,"Korisnik",true);
                 } else {
