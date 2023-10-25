@@ -39,83 +39,16 @@ import java.util.List;
 public class Start {
 
     public static void main(String[] args) {
-        //HibernateUtil.getSession();
         //new FakerInsert();
-        //new Start();
-
-        JPanel panel = new SplashScreen(true).panel;
-        Alati.runApp(panel,"Loading...",true);
-        //Alati.panelSplashFact=true;
-        //Alati.panelSplash = new SplashScreen(true).panel;
-        //Alati.runApp(Alati.panelSplash,"Loading",true);
+        new Start();
 
     }
 
     private Start(){
-        radSJSON();
-    }
-
-
-
-    private  void radSJSON() {
-        Type listType = new TypeToken<List<DnevnaPotrosnja>>() {}.getType();
-        List<DnevnaPotrosnja> target = new ObradaDnevnaPotrosnja().read();
-
-
-        Gson gson = new GsonBuilder()
-
-                //.setDateFormat("yyyy-MM-dd HH:mm:ss")
-                .setExclusionStrategies(new CustomExclusionStrategy()).create();
-        String json = gson.toJson(target, listType);
-
-        System.out.println(json);
-    }
-
-    void ucitajIzJSON(){
-        try {
-
-            //Nov 28, 2018, 7:09:02?AM
-            Type listType = new TypeToken<List<DnevnaPotrosnja>>(){}.getType();
-            Gson gson = new GsonBuilder()
-                    .setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-            List<DnevnaPotrosnja> list = gson.fromJson(Files.readString(Path.of("podaci.json")), listType);
-
-
-            ObradaDnevnaPotrosnja odp = new ObradaDnevnaPotrosnja();
-            for(DnevnaPotrosnja dp : list){
-                dp.setId(null);
-                odp.setEntitet(dp);
-                try {
-                    odp.create();
-                } catch (BudgetException e) {
-                    System.out.println(e.getPoruka());
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    public class CustomExclusionStrategy implements ExclusionStrategy {
-
-        public boolean shouldSkipField(FieldAttributes f) {
-
-            if(f.getDeclaringClass() == Kategorija.class && f.getName().equals("potrosnje")){
-                return true;
-            }
-
-            if(f.getDeclaringClass() == Korisnik.class && f.getName().equals("potrosnje")){
-                return true;
-            }
-
-            if(f.getDeclaringClass() == Obitelj.class && f.getName().equals("clanovi")){
-                return true;
-            }
-            return false;
-        }
-
-        public boolean shouldSkipClass(Class<?> clazz) {
-            return false;
-        }
+        JPanel panel = new SplashScreen(true).panel;
+        Alati.runApp(panel,"Loading...",true);
 
     }
+
+
 }
