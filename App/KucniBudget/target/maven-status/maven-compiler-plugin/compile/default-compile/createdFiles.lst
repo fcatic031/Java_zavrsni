@@ -1,0 +1,8 @@
+zavrsni\model\Kategorija.class
+zavrsni\model\Obitelj.class
+zavrsni\util\FakerInsert.class
+zavrsni\model\Entitet.class
+zavrsni\util\HibernateUtil.class
+zavrsni\model\DnevnaPotrosnja.class
+zavrsni\model\Korisnik.class
+zavrsni\Start.class
